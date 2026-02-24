@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import html2canvas from "html2canvas";
 
 interface Dish {
   originalName: string;
@@ -144,8 +145,41 @@ export default function Home() {
     }
   };
 
-  const handlePrint = () => {
-    window.print();
+  const captureRef = useRef<HTMLDivElement>(null);
+  const [saving, setSaving] = useState(false);
+
+  const handleSaveImage = async () => {
+    if (!captureRef.current) return;
+    setSaving(true);
+    try {
+      const canvas = await html2canvas(captureRef.current, {
+        backgroundColor: "#0A0A0A",
+        scale: 2,
+        useCORS: true,
+      });
+      canvas.toBlob(async (blob) => {
+        if (!blob) return;
+        const fileName = `menumenu-${menu?.restaurantName?.replace(/\s+/g, "-") || "menu"}.png`;
+        const file = new File([blob], fileName, { type: "image/png" });
+
+        if (navigator.share && navigator.canShare?.({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file] });
+          } catch { /* user cancelled */ }
+        } else {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = fileName;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+        setSaving(false);
+      }, "image/png");
+    } catch (err) {
+      console.error("Save image failed:", err);
+      setSaving(false);
+    }
   };
 
   const handleShare = async () => {
@@ -279,20 +313,22 @@ export default function Home() {
                 </svg>
                 Share
               </button>
-              <button onClick={handlePrint} style={{
+              <button onClick={handleSaveImage} disabled={saving} style={{
                 background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
-                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
+                borderRadius: "8px", color: "var(--foreground-muted)", cursor: saving ? "default" : "pointer",
+                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px",
+                opacity: saving ? 0.5 : 1,
               }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-                  <rect x="6" y="14" width="12" height="8" />
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
                 </svg>
-                PDF
+                {saving ? "Saving..." : "Save"}
               </button>
             </div>
           </div>
 
+          {/* Capture area for Save Image */}
+          <div ref={captureRef}>
           {/* Hero Table Image */}
           <div className="menu-hero">
             {heroLoading ? (
@@ -354,6 +390,7 @@ export default function Home() {
               <p>Translated by <span className="gradient-text">menumenu</span></p>
             </div>
           </div>
+          </div>{/* /captureRef */}
         </div>
       )}
     </main>
