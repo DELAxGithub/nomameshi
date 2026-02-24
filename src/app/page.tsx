@@ -95,6 +95,23 @@ export default function Home() {
     }
   };
 
+  const resizeImage = (dataUrl: string, maxWidth = 1600): Promise<string> => {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        if (img.width <= maxWidth) { resolve(dataUrl); return; }
+        const scale = maxWidth / img.width;
+        const canvas = document.createElement("canvas");
+        canvas.width = maxWidth;
+        canvas.height = img.height * scale;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+      };
+      img.src = dataUrl;
+    });
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -104,7 +121,8 @@ export default function Home() {
       reader.onerror = () => reject(new Error("Failed to read file"));
       reader.readAsDataURL(file);
     });
-    await analyzeImage(dataUrl);
+    const resized = await resizeImage(dataUrl);
+    await analyzeImage(resized);
   };
 
   const handlePaste = async () => {
@@ -120,7 +138,8 @@ export default function Home() {
             reader.onerror = () => reject(new Error("Failed to read clipboard image"));
             reader.readAsDataURL(blob);
           });
-          await analyzeImage(dataUrl);
+          const resized = await resizeImage(dataUrl);
+          await analyzeImage(resized);
           return;
         }
       }
