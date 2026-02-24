@@ -26,15 +26,34 @@ interface MenuResult {
 export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
   const [menu, setMenu] = useState<MenuResult | null>(null);
-  const [dishImages, setDishImages] = useState<Record<string, string>>({});
-  const [loadingImages, setLoadingImages] = useState<Record<string, boolean>>({});
+  const [heroImage, setHeroImage] = useState<string | null>(null);
+  const [heroLoading, setHeroLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const generateTableImage = async (sections: Section[]) => {
+    setHeroLoading(true);
+    try {
+      const allDishes = sections.flatMap(s => s.dishes.map(d => d.imageQuery));
+      const res = await fetch("/api/search-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ dishes: allDishes }),
+      });
+      const data = await res.json();
+      if (data.imageUrl) {
+        setHeroImage(data.imageUrl);
+      }
+    } catch (err) {
+      console.error("Table image generation failed:", err);
+    } finally {
+      setHeroLoading(false);
+    }
+  };
 
   const analyzeImage = async (dataUrl: string) => {
     setAnalyzing(true);
     setMenu(null);
-    setDishImages({});
-    setLoadingImages({});
+    setHeroImage(null);
     setError(null);
 
     try {
@@ -51,19 +70,22 @@ export default function Home() {
       }
 
       const data = await res.json();
+      let menuData: MenuResult;
 
       if (data.sections) {
-        setMenu(data);
+        menuData = data;
       } else if (data.dishes) {
-        // Backward compat: flat dishes array
-        setMenu({
+        menuData = {
           restaurantName: data.restaurantName || null,
           restaurantVibe: data.restaurant_vibe || "",
           sections: [{ originalTitle: "MENU", translatedTitle: "メニュー", dishes: data.dishes }],
-        });
+        };
       } else {
         throw new Error("No menu data found");
       }
+
+      setMenu(menuData);
+      generateTableImage(menuData.sections);
     } catch (err) {
       console.error("Failed to analyze", err);
       const msg = err instanceof Error ? err.message : String(err);
@@ -105,27 +127,6 @@ export default function Home() {
       setError("No image found in clipboard.");
     } catch {
       setError("Clipboard access denied. Please use the upload button.");
-    }
-  };
-
-  const generateImage = async (key: string, query: string) => {
-    if (dishImages[key] || loadingImages[key]) return;
-    setLoadingImages(prev => ({ ...prev, [key]: true }));
-
-    try {
-      const res = await fetch("/api/search-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
-      });
-      const data = await res.json();
-      if (data.imageUrl) {
-        setDishImages(prev => ({ ...prev, [key]: data.imageUrl }));
-      }
-    } catch (err) {
-      console.error("Image generation failed:", err);
-    } finally {
-      setLoadingImages(prev => ({ ...prev, [key]: false }));
     }
   };
 
@@ -203,7 +204,7 @@ export default function Home() {
         <div className="animate-fade-in">
           {/* Toolbar */}
           <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
-            <button onClick={() => { setMenu(null); setDishImages({}); }} style={{
+            <button onClick={() => { setMenu(null); setHeroImage(null); }} style={{
               background: "none", border: "none", color: "var(--foreground-muted)",
               cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "0.9rem"
             }}>
@@ -221,6 +222,21 @@ export default function Home() {
               </svg>
               Save PDF
             </button>
+          </div>
+
+          {/* Hero Table Image */}
+          <div className="menu-hero">
+            {heroLoading ? (
+              <div className="menu-hero-loading">
+                <div className="loading-spinner" style={{ width: 32, height: 32, borderWidth: 3 }}></div>
+                <p style={{ marginTop: "0.75rem", color: "var(--foreground-muted)", fontSize: "0.85rem" }}>
+                  Generating table spread...
+                </p>
+              </div>
+            ) : heroImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={heroImage} alt="Table spread" className="menu-hero-img" />
+            ) : null}
           </div>
 
           {/* Menu Card */}
@@ -244,56 +260,22 @@ export default function Home() {
                 </div>
 
                 <div className="menu-items">
-                  {section.dishes.map((dish, dIdx) => {
-                    const key = `${sIdx}-${dIdx}`;
-                    const hasImage = !!dishImages[key];
-                    const isLoading = !!loadingImages[key];
-
-                    return (
-                      <div key={dIdx} className="menu-item">
-                        <div className="menu-item-content">
-                          <div className="menu-item-header">
-                            <div className="menu-item-names">
-                              <span className="menu-item-translated">{dish.translatedName}</span>
-                              <span className="menu-item-original">{dish.originalName}</span>
-                            </div>
-                            <div className="menu-item-right">
-                              {dish.price && <span className="menu-item-price">{dish.price}</span>}
-                              <button
-                                className="menu-item-image-btn no-print"
-                                onClick={() => generateImage(key, dish.imageQuery)}
-                                disabled={hasImage || isLoading}
-                                title="Generate food photo"
-                              >
-                                {isLoading ? (
-                                  <div className="loading-spinner" style={{ width: 16, height: 16, borderWidth: 2 }}></div>
-                                ) : hasImage ? (
-                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><path d="M20 6L9 17l-5-5" /></svg>
-                                ) : (
-                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                    <circle cx="8.5" cy="8.5" r="1.5" />
-                                    <path d="M21 15l-5-5L5 21" />
-                                  </svg>
-                                )}
-                              </button>
-                            </div>
+                  {section.dishes.map((dish, dIdx) => (
+                    <div key={dIdx} className="menu-item">
+                      <div className="menu-item-content">
+                        <div className="menu-item-header">
+                          <div className="menu-item-names">
+                            <span className="menu-item-translated">{dish.translatedName}</span>
+                            <span className="menu-item-original">{dish.originalName}</span>
                           </div>
-                          {dish.description && (
-                            <p className="menu-item-description">{dish.description}</p>
-                          )}
+                          {dish.price && <span className="menu-item-price">{dish.price}</span>}
                         </div>
-
-                        {/* Expanded image */}
-                        {hasImage && (
-                          <div className="menu-item-image animate-fade-in">
-                            {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={dishImages[key]} alt={dish.translatedName} />
-                          </div>
+                        {dish.description && (
+                          <p className="menu-item-description">{dish.description}</p>
                         )}
                       </div>
-                    );
-                  })}
+                    </div>
+                  ))}
                 </div>
               </div>
             ))}

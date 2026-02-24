@@ -1,15 +1,19 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+export const maxDuration = 60;
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export async function POST(req: Request) {
     try {
-        const { query } = await req.json();
+        const { dishes } = await req.json();
 
-        if (!query) {
-            return new Response(JSON.stringify({ error: "No query provided" }), { status: 400 });
+        if (!dishes || !Array.isArray(dishes) || dishes.length === 0) {
+            return new Response(JSON.stringify({ error: "No dishes provided" }), { status: 400 });
         }
+
+        const dishList = dishes.slice(0, 30).join(", ");
 
         const model = genAI.getGenerativeModel({
             model: "gemini-2.5-flash-image",
@@ -19,7 +23,7 @@ export async function POST(req: Request) {
         });
 
         const result = await model.generateContent(
-            `Generate a realistic, appetizing food photo of: ${query}. The image should look like professional food photography with good lighting and plating.`
+            `Generate a realistic overhead photo of a beautifully arranged restaurant table spread featuring these dishes: ${dishList}. Shot from directly above, warm natural lighting, dishes on a rustic wooden table with plates, bowls, and utensils. Professional food photography style, appetizing presentation.`
         );
 
         const parts = result.response.candidates?.[0]?.content?.parts || [];
@@ -36,7 +40,7 @@ export async function POST(req: Request) {
 
     } catch (error) {
         const errMsg = error instanceof Error ? error.message : String(error);
-        console.error("Image generation error:", errMsg);
+        console.error("Table image generation error:", errMsg);
         return new Response(JSON.stringify({ error: `Image generation failed: ${errMsg}` }), { status: 500 });
     }
 }
