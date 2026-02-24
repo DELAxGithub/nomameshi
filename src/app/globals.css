@@ -291,6 +291,8 @@ h1, h2, h3, h4, h5, h6 {
     background: white !important;
     border: 1px solid #ddd;
     box-shadow: none;
+    overflow: visible !important;
+    border-radius: 0 !important;
   }
 
   .menu-restaurant-name { color: #111 !important; }
@@ -320,4 +322,12 @@ h1, h2, h3, h4, h5, h6 {
   .menu-item-header { display: flex !important; justify-content: space-between !important; }
   .menu-item-names { display: block !important; }
   .menu-section { break-inside: avoid; }
+  .menu-item { break-inside: avoid; }
+
+  /* Ensure no height/overflow constraints block pagination */
+  main, .container, .animate-fade-in {
+    overflow: visible !important;
+    max-height: none !important;
+    height: auto !important;
+  }
 }
