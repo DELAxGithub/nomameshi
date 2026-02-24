@@ -163,7 +163,7 @@ export default function Home() {
       }
       lines.push("");
     }
-    lines.push("Translated by menumenu");
+    lines.push("Translated by menumenu\nhttps://menumenu-three.vercel.app");
     const text = lines.join("\n");
 
     if (navigator.share) {
