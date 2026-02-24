@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.text();
         console.log("Request body size:", (body.length / 1024 / 1024).toFixed(2), "MB");
-        const { image } = JSON.parse(body);
+        const { image, targetLang = "Japanese" } = JSON.parse(body);
 
         if (!image) {
             return new Response(JSON.stringify({ error: "No image provided" }), { status: 400 });
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
     If it IS a menu, proceed:
     1. **Detect sections**: Group dishes by the sections visible on the menu.
-    2. **Extract & Translate**: For each dish, extract the original name and translate into natural Japanese.
+    2. **Extract & Translate**: For each dish, extract the original name and translate into natural ${targetLang}.
     3. **Image query**: For each dish, create a concise English search query for generating an appetizing food photo.
 
     Output JSON only (no markdown code blocks):
@@ -42,12 +42,12 @@ export async function POST(req: Request) {
       "sections": [
         {
           "originalTitle": "String (section title as written on menu)",
-          "translatedTitle": "String (Japanese translation of section title)",
+          "translatedTitle": "String (${targetLang} translation of section title)",
           "dishes": [
             {
               "originalName": "String",
-              "translatedName": "String (Japanese)",
-              "description": "String (brief Japanese description)",
+              "translatedName": "String (${targetLang})",
+              "description": "String (brief ${targetLang} description)",
               "price": "String or null",
               "imageQuery": "String (English, concise food photo query)"
             }

@@ -23,12 +23,22 @@ interface MenuResult {
   sections: Section[];
 }
 
+const LANGUAGES = [
+  { code: "Japanese", label: "日本語" },
+  { code: "English", label: "English" },
+  { code: "Chinese", label: "中文" },
+  { code: "Korean", label: "한국어" },
+  { code: "Spanish", label: "Español" },
+  { code: "French", label: "Français" },
+];
+
 export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
   const [menu, setMenu] = useState<MenuResult | null>(null);
   const [heroImage, setHeroImage] = useState<string | null>(null);
   const [heroLoading, setHeroLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [targetLang, setTargetLang] = useState("Japanese");
 
   const generateTableImage = async (sections: Section[]) => {
     setHeroLoading(true);
@@ -60,7 +70,7 @@ export default function Home() {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: dataUrl }),
+        body: JSON.stringify({ image: dataUrl, targetLang }),
       });
 
       if (!res.ok) {
@@ -138,6 +148,20 @@ export default function Home() {
     window.print();
   };
 
+  const handleShare = async () => {
+    const text = menu?.restaurantName
+      ? `${menu.restaurantName} — translated by menumenu`
+      : "Menu translated by menumenu";
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: "menumenu", text, url: window.location.href });
+      } catch { /* user cancelled */ }
+    } else {
+      await navigator.clipboard.writeText(window.location.href);
+      alert("Link copied!");
+    }
+  };
+
   return (
     <main className="container" style={{ minHeight: "100vh", padding: "2rem 0" }}>
       {/* Header */}
@@ -199,6 +223,21 @@ export default function Home() {
             Paste Screenshot
           </button>
 
+          {/* Language selector */}
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px", marginTop: "1.5rem" }}>
+            {LANGUAGES.map(lang => (
+              <button key={lang.code} onClick={() => setTargetLang(lang.code)} disabled={analyzing} style={{
+                padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
+                border: targetLang === lang.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
+                background: targetLang === lang.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
+                color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
+                opacity: analyzing ? 0.5 : 1,
+              }}>
+                {lang.label}
+              </button>
+            ))}
+          </div>
+
           <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
             {analyzing ? "Identifying dishes & translating..." : "Take a photo or paste a screenshot."}
           </p>
@@ -215,17 +254,29 @@ export default function Home() {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
               Scan another
             </button>
-            <button onClick={handlePrint} style={{
-              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-              borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
-              padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
-            }}>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-                <rect x="6" y="14" width="12" height="8" />
-              </svg>
-              Save PDF
-            </button>
+            <div style={{ display: "flex", gap: "8px" }}>
+              <button onClick={handleShare} style={{
+                background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
+                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" />
+                </svg>
+                Share
+              </button>
+              <button onClick={handlePrint} style={{
+                background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
+                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
+              }}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                  <rect x="6" y="14" width="12" height="8" />
+                </svg>
+                PDF
+              </button>
+            </div>
           </div>
 
           {/* Hero Table Image */}
