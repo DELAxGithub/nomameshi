@@ -6,124 +6,147 @@ interface Dish {
   originalName: string;
   translatedName: string;
   description: string;
-  price?: string;
-  searchQuery: string;
+  price?: string | null;
+  imageQuery: string;
+}
+
+interface Section {
+  originalTitle: string;
+  translatedTitle: string;
+  dishes: Dish[];
+}
+
+interface MenuResult {
+  restaurantName?: string | null;
+  restaurantVibe?: string;
+  language?: string;
+  sections: Section[];
 }
 
 export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
-  const [results, setResults] = useState<Dish[] | null>(null);
-  const [dishImages, setDishImages] = useState<Record<number, string>>({});
+  const [menu, setMenu] = useState<MenuResult | null>(null);
+  const [dishImages, setDishImages] = useState<Record<string, string>>({});
+  const [loadingImages, setLoadingImages] = useState<Record<string, boolean>>({});
   const [error, setError] = useState<string | null>(null);
 
-  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const analyzeImage = async (dataUrl: string) => {
     setAnalyzing(true);
-    setResults(null);
+    setMenu(null);
     setDishImages({});
+    setLoadingImages({});
     setError(null);
 
-    // Resize and optimize image before sending (limit to 800px width/height)
-    // This prevents payload too large errors and speeds up upload
-    const resizeImage = (file: File): Promise<string> => {
-      return new Promise((resolve) => {
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        img.onload = () => {
-          const canvas = document.createElement("canvas");
-          let width = img.width;
-          let height = img.height;
-          const MAX_SIZE = 800;
-
-          if (width > height) {
-            if (width > MAX_SIZE) {
-              height *= MAX_SIZE / width;
-              width = MAX_SIZE;
-            }
-          } else {
-            if (height > MAX_SIZE) {
-              width *= MAX_SIZE / height;
-              height = MAX_SIZE;
-            }
-          }
-
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext("2d");
-          ctx?.drawImage(img, 0, 0, width, height);
-          resolve(canvas.toDataURL("image/jpeg", 0.7)); // Compress to JPEG 70%
-        };
-      });
-    };
-
     try {
-      // Create preview immediately for UI responsiveness if needed, but we rely on scanning animation
-      const compressedParams = await resizeImage(file);
-
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: compressedParams }),
+        body: JSON.stringify({ image: dataUrl }),
       });
 
       if (!res.ok) {
         const errorText = await res.text();
-        console.error("API Error details:", errorText);
-        throw new Error(`Analysis failed: ${res.status} ${res.statusText}`);
+        console.error("API Error:", errorText);
+        throw new Error(`Analysis failed: ${res.status}`);
       }
 
       const data = await res.json();
 
-      if (data.dishes) {
-        setResults(data.dishes);
-        // Fire and forget image fetching
-        fetchImagesInParallel(data.dishes);
+      if (data.sections) {
+        setMenu(data);
+      } else if (data.dishes) {
+        // Backward compat: flat dishes array
+        setMenu({
+          restaurantName: data.restaurantName || null,
+          restaurantVibe: data.restaurant_vibe || "",
+          sections: [{ originalTitle: "MENU", translatedTitle: "メニュー", dishes: data.dishes }],
+        });
       } else {
-        throw new Error("No dishes found");
+        throw new Error("No menu data found");
       }
     } catch (err) {
       console.error("Failed to analyze", err);
-      setError("Analysis failed. Please check your internet connection or try a smaller image.");
+      const msg = err instanceof Error ? err.message : String(err);
+      setError(`Analysis failed: ${msg}`);
     } finally {
       setAnalyzing(false);
     }
   };
 
-  const fetchImagesInParallel = async (dishes: Dish[]) => {
-    // Process in batches if needed, but for <20 items parallel is fine
-    dishes.forEach((dish, index) => {
-      fetch("/api/search-image", {
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const dataUrl = await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = () => reject(new Error("Failed to read file"));
+      reader.readAsDataURL(file);
+    });
+    await analyzeImage(dataUrl);
+  };
+
+  const handlePaste = async () => {
+    try {
+      const items = await navigator.clipboard.read();
+      for (const item of items) {
+        const imageType = item.types.find(t => t.startsWith("image/"));
+        if (imageType) {
+          const blob = await item.getType(imageType);
+          const dataUrl = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error("Failed to read clipboard image"));
+            reader.readAsDataURL(blob);
+          });
+          await analyzeImage(dataUrl);
+          return;
+        }
+      }
+      setError("No image found in clipboard.");
+    } catch {
+      setError("Clipboard access denied. Please use the upload button.");
+    }
+  };
+
+  const generateImage = async (key: string, query: string) => {
+    if (dishImages[key] || loadingImages[key]) return;
+    setLoadingImages(prev => ({ ...prev, [key]: true }));
+
+    try {
+      const res = await fetch("/api/search-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        // Use the optimized search query from Gemini
-        body: JSON.stringify({ query: dish.searchQuery }),
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.imageUrl) {
-            setDishImages(prev => ({ ...prev, [index]: data.imageUrl }));
-          }
-        })
-        .catch(err => console.error("Image search failed for", dish.originalName, err));
-    });
+        body: JSON.stringify({ query }),
+      });
+      const data = await res.json();
+      if (data.imageUrl) {
+        setDishImages(prev => ({ ...prev, [key]: data.imageUrl }));
+      }
+    } catch (err) {
+      console.error("Image generation failed:", err);
+    } finally {
+      setLoadingImages(prev => ({ ...prev, [key]: false }));
+    }
+  };
+
+  const handlePrint = () => {
+    window.print();
   };
 
   return (
     <main className="container" style={{ minHeight: "100vh", padding: "2rem 0" }}>
       {/* Header */}
-      <div className="animate-fade-in" style={{ textAlign: "center", marginBottom: "3rem", marginTop: "2rem" }}>
+      <div className="animate-fade-in no-print" style={{ textAlign: "center", marginBottom: "3rem", marginTop: "2rem" }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
           <span className="gradient-text">menumenu</span>
         </h1>
         <p style={{ color: "var(--foreground-muted)", fontSize: "1rem" }}>
-          Don't just read the menu. <span style={{ color: "var(--foreground)" }}>See the flavor.</span>
+          Don&apos;t just read the menu. <span style={{ color: "var(--foreground)" }}>See the flavor.</span>
         </p>
       </div>
 
       {error && (
-        <div className="error-message animate-fade-in">
+        <div className="error-message animate-fade-in no-print">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -133,125 +156,152 @@ export default function Home() {
         </div>
       )}
 
-      {!results ? (
-        // SCAN MODE
-        <div className="animate-fade-in glass-panel" style={{ padding: "3rem 2rem", textAlign: "center", transition: "all 0.3s ease" }}>
-
+      {!menu ? (
+        /* SCAN MODE */
+        <div className="animate-fade-in glass-panel" style={{ padding: "3rem 2rem", textAlign: "center" }}>
           <div style={{ marginBottom: "2rem", position: "relative", display: "inline-block" }}>
-            {/* Camera Pulse Effect */}
             <div style={{
-              position: "absolute",
-              inset: "-15px",
-              borderRadius: "50%",
-              border: "2px solid var(--primary)",
-              opacity: analyzing ? 0.5 : 0,
-              transform: analyzing ? "scale(1.1)" : "scale(1)",
-              transition: "all 0.5s ease",
+              position: "absolute", inset: "-15px", borderRadius: "50%",
+              border: "2px solid var(--primary)", opacity: analyzing ? 0.5 : 0,
               animation: analyzing ? "pulse 1.5s infinite" : "none"
             }}></div>
-
-            <div style={{
-              position: "absolute",
-              inset: "-8px",
-              borderRadius: "50%",
-              border: "1px solid var(--secondary)",
-              opacity: analyzing ? 0.8 : 0,
-              animation: analyzing ? "spin 3s linear infinite" : "none"
-            }}></div>
-
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke={analyzing ? "var(--primary)" : "#555"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.3s ease" }}>
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2-2z" />
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke={analyzing ? "var(--primary)" : "#555"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
               <circle cx="12" cy="13" r="4" />
             </svg>
           </div>
 
-          <label
-            htmlFor="menu-upload"
-            className="btn-primary"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              opacity: analyzing ? 0.8 : 1,
-              pointerEvents: analyzing ? "none" : "auto",
-              gap: "10px"
-            }}
-          >
-            {analyzing ? (
-              <>
-                <div className="loading-spinner"></div>
-                Analyzing Menu...
-              </>
-            ) : "Examine Menu"}
+          <label htmlFor="menu-upload" className="btn-primary" style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            width: "100%", opacity: analyzing ? 0.8 : 1,
+            pointerEvents: analyzing ? "none" : "auto", gap: "10px"
+          }}>
+            {analyzing ? (<><div className="loading-spinner"></div>Analyzing Menu...</>) : "Examine Menu"}
           </label>
-          <input
-            id="menu-upload"
-            type="file"
-            accept="image/*"
-            onChange={handleFileUpload}
-            style={{ display: "none" }}
-            disabled={analyzing}
-          />
+          <input id="menu-upload" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }} disabled={analyzing} />
+
+          <button onClick={handlePaste} disabled={analyzing} style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            width: "100%", marginTop: "0.75rem", padding: "0.85rem 1.5rem",
+            background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
+            borderRadius: "12px", color: "var(--foreground-muted)", fontSize: "1rem",
+            cursor: analyzing ? "default" : "pointer", opacity: analyzing ? 0.5 : 1, gap: "8px",
+          }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+            </svg>
+            Paste Screenshot
+          </button>
 
           <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
-            {analyzing ? "Identifying dishes & translating..." : "Take a photo of a menu to instantly visualize it."}
+            {analyzing ? "Identifying dishes & translating..." : "Take a photo or paste a screenshot."}
           </p>
         </div>
       ) : (
-        // RESULTS MODE
+        /* MENU RESULT MODE */
         <div className="animate-fade-in">
-          <button
-            onClick={() => setResults(null)}
-            style={{ background: "none", border: "none", color: "var(--foreground-muted)", marginBottom: "1rem", cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "0.9rem" }}
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-            Scan another
-          </button>
+          {/* Toolbar */}
+          <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+            <button onClick={() => { setMenu(null); setDishImages({}); }} style={{
+              background: "none", border: "none", color: "var(--foreground-muted)",
+              cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "0.9rem"
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
+              Scan another
+            </button>
+            <button onClick={handlePrint} style={{
+              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+              borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
+              padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
+            }}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                <rect x="6" y="14" width="12" height="8" />
+              </svg>
+              Save PDF
+            </button>
+          </div>
 
-          <div style={{ display: "grid", gap: "1.5rem" }}>
-            {results.map((dish, idx) => (
-              <div key={idx} className="glass-panel" style={{ padding: "0", overflow: "hidden", animation: `fadeIn 0.5s ease forwards ${idx * 0.1}s`, opacity: 0 }}>
-                {/* Dynamic Image Area */}
-                <div style={{
-                  height: "250px",
-                  background: "#121212",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "relative",
-                  overflow: "hidden"
-                }}>
-                  {dishImages[idx] ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <div style={{ width: "100%", height: "100%", position: "relative" }}>
-                      <img
-                        src={dishImages[idx]}
-                        alt={dish.translatedName}
-                        style={{ width: "100%", height: "100%", objectFit: "cover", animation: "fadeIn 0.5s ease" }}
-                      />
-                      {/* Gradient overlay for text readability if needed, or subtle vignette */}
-                      <div style={{ position: "absolute", inset: 0, boxShadow: "inset 0 -20px 40px rgba(0,0,0,0.5)" }}></div>
-                    </div>
-                  ) : (
-                    <div className="skeleton" style={{ width: "100%", height: "100%", position: "absolute", top: 0, left: 0 }}></div>
-                  )}
+          {/* Menu Card */}
+          <div className="menu-card">
+            {/* Restaurant Header */}
+            {menu.restaurantName && (
+              <div className="menu-header">
+                <h2 className="menu-restaurant-name">{menu.restaurantName}</h2>
+                {menu.restaurantVibe && (
+                  <p className="menu-vibe">{menu.restaurantVibe}</p>
+                )}
+              </div>
+            )}
+
+            {/* Sections */}
+            {menu.sections.map((section, sIdx) => (
+              <div key={sIdx} className="menu-section">
+                <div className="menu-section-header">
+                  <h3 className="menu-section-title">{section.translatedTitle}</h3>
+                  <span className="menu-section-original">{section.originalTitle}</span>
                 </div>
 
-                <div style={{ padding: "1.5rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
-                    <h3 style={{ fontSize: "1.2rem", fontWeight: "700" }}>{dish.translatedName}</h3>
-                    {dish.price && <span style={{ color: "var(--accent)", fontWeight: "bold" }}>{dish.price}</span>}
-                  </div>
-                  <p style={{ fontSize: "0.9rem", color: "var(--foreground-muted)", fontStyle: "italic", marginBottom: "0.8rem" }}>
-                    {dish.originalName}
-                  </p>
-                  <p style={{ fontSize: "0.95rem", lineHeight: "1.6", color: "#ddd" }}>
-                    {dish.description}
-                  </p>
+                <div className="menu-items">
+                  {section.dishes.map((dish, dIdx) => {
+                    const key = `${sIdx}-${dIdx}`;
+                    const hasImage = !!dishImages[key];
+                    const isLoading = !!loadingImages[key];
+
+                    return (
+                      <div key={dIdx} className="menu-item">
+                        <div className="menu-item-content">
+                          <div className="menu-item-header">
+                            <div className="menu-item-names">
+                              <span className="menu-item-translated">{dish.translatedName}</span>
+                              <span className="menu-item-original">{dish.originalName}</span>
+                            </div>
+                            <div className="menu-item-right">
+                              {dish.price && <span className="menu-item-price">{dish.price}</span>}
+                              <button
+                                className="menu-item-image-btn no-print"
+                                onClick={() => generateImage(key, dish.imageQuery)}
+                                disabled={hasImage || isLoading}
+                                title="Generate food photo"
+                              >
+                                {isLoading ? (
+                                  <div className="loading-spinner" style={{ width: 16, height: 16, borderWidth: 2 }}></div>
+                                ) : hasImage ? (
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2"><path d="M20 6L9 17l-5-5" /></svg>
+                                ) : (
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                    <circle cx="8.5" cy="8.5" r="1.5" />
+                                    <path d="M21 15l-5-5L5 21" />
+                                  </svg>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                          {dish.description && (
+                            <p className="menu-item-description">{dish.description}</p>
+                          )}
+                        </div>
+
+                        {/* Expanded image */}
+                        {hasImage && (
+                          <div className="menu-item-image animate-fade-in">
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img src={dishImages[key]} alt={dish.translatedName} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
+
+            {/* Footer */}
+            <div className="menu-footer">
+              <p>Translated by <span className="gradient-text">menumenu</span></p>
+            </div>
           </div>
         </div>
       )}
