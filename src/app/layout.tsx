@@ -12,17 +12,32 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
+const siteUrl = "https://menumenu-three.vercel.app";
+
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  userScalable: false,
   themeColor: "#050505",
 };
 
 export const metadata: Metadata = {
   title: "menumenu | Visual Graphic Menu",
-  description: "Translate and Visualize Menus Instantly",
+  description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals. See the flavor before you order.",
+  metadataBase: new URL(siteUrl),
+  openGraph: {
+    title: "menumenu — See the Flavor",
+    description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals.",
+    url: siteUrl,
+    siteName: "menumenu",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "menumenu — See the Flavor",
+    description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals.",
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -39,7 +54,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="en">
       <body className={`${inter.variable} ${outfit.variable}`}>
         {children}
       </body>
