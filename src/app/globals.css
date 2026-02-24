@@ -278,6 +278,15 @@ h1, h2, h3, h4, h5, h6 {
 @media print {
   .no-print { display: none !important; }
 
+  /* Reset ALL layout constraints for pagination */
+  *, *::before, *::after {
+    position: static !important;
+    overflow: visible !important;
+    max-height: none !important;
+    float: none !important;
+    z-index: auto !important;
+  }
+
   body {
     background: white !important;
     color: #111 !important;
@@ -291,7 +300,6 @@ h1, h2, h3, h4, h5, h6 {
     background: white !important;
     border: 1px solid #ddd;
     box-shadow: none;
-    overflow: visible !important;
     border-radius: 0 !important;
   }
 
@@ -312,8 +320,8 @@ h1, h2, h3, h4, h5, h6 {
   .menu-header { border-bottom-color: #ccc !important; }
   .menu-footer { border-top-color: #ccc !important; }
 
-  .menu-hero { position: static; max-height: none; margin-bottom: 1rem; border-radius: 8px; }
-  .menu-hero-img { height: auto; border-radius: 8px; }
+  .menu-hero { margin-bottom: 1rem; border-radius: 8px; }
+  .menu-hero-img { height: auto !important; width: 100%; border-radius: 8px; }
 
   /* Force block layout for Safari print compatibility */
   .menu-items,
@@ -323,11 +331,4 @@ h1, h2, h3, h4, h5, h6 {
   .menu-item-names { display: block !important; }
   .menu-section { break-inside: avoid; }
   .menu-item { break-inside: avoid; }
-
-  /* Ensure no height/overflow constraints block pagination */
-  main, .container, .animate-fade-in {
-    overflow: visible !important;
-    max-height: none !important;
-    height: auto !important;
-  }
 }
