@@ -95,34 +95,25 @@ export default function Home() {
     }
   };
 
-  const resizeImage = (dataUrl: string, maxWidth = 1600): Promise<string> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.onload = () => {
-        if (img.width <= maxWidth) { resolve(dataUrl); return; }
-        const scale = maxWidth / img.width;
-        const canvas = document.createElement("canvas");
-        canvas.width = maxWidth;
-        canvas.height = img.height * scale;
-        const ctx = canvas.getContext("2d")!;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.8));
-      };
-      img.src = dataUrl;
-    });
+  const blobToDataUrl = async (blob: Blob, maxWidth = 1600): Promise<string> => {
+    const bitmap = await createImageBitmap(blob);
+    const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1;
+    const w = Math.round(bitmap.width * scale);
+    const h = Math.round(bitmap.height * scale);
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d")!;
+    ctx.drawImage(bitmap, 0, 0, w, h);
+    bitmap.close();
+    return canvas.toDataURL("image/jpeg", 0.8);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const dataUrl = await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = () => reject(new Error("Failed to read file"));
-      reader.readAsDataURL(file);
-    });
-    const resized = await resizeImage(dataUrl);
-    await analyzeImage(resized);
+    const dataUrl = await blobToDataUrl(file);
+    await analyzeImage(dataUrl);
   };
 
   const handlePaste = async () => {
@@ -132,14 +123,8 @@ export default function Home() {
         const imageType = item.types.find(t => t.startsWith("image/"));
         if (imageType) {
           const blob = await item.getType(imageType);
-          const dataUrl = await new Promise<string>((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = () => reject(new Error("Failed to read clipboard image"));
-            reader.readAsDataURL(blob);
-          });
-          const resized = await resizeImage(dataUrl);
-          await analyzeImage(resized);
+          const dataUrl = await blobToDataUrl(blob);
+          await analyzeImage(dataUrl);
           return;
         }
       }
