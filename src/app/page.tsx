@@ -149,16 +149,30 @@ export default function Home() {
   };
 
   const handleShare = async () => {
-    const text = menu?.restaurantName
-      ? `${menu.restaurantName} — translated by menumenu`
-      : "Menu translated by menumenu";
+    if (!menu) return;
+    const lines: string[] = [];
+    if (menu.restaurantName) lines.push(menu.restaurantName);
+    if (menu.restaurantVibe) lines.push(menu.restaurantVibe);
+    lines.push("");
+    for (const section of menu.sections) {
+      lines.push(`── ${section.translatedTitle} (${section.originalTitle}) ──`);
+      for (const dish of section.dishes) {
+        const price = dish.price ? `  ${dish.price}` : "";
+        lines.push(`${dish.translatedName} / ${dish.originalName}${price}`);
+        if (dish.description) lines.push(`  ${dish.description}`);
+      }
+      lines.push("");
+    }
+    lines.push("Translated by menumenu");
+    const text = lines.join("\n");
+
     if (navigator.share) {
       try {
-        await navigator.share({ title: "menumenu", text, url: window.location.href });
+        await navigator.share({ title: "menumenu", text });
       } catch { /* user cancelled */ }
     } else {
-      await navigator.clipboard.writeText(window.location.href);
-      alert("Link copied!");
+      await navigator.clipboard.writeText(text);
+      alert("Copied to clipboard!");
     }
   };
 
