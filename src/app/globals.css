@@ -312,4 +312,12 @@ h1, h2, h3, h4, h5, h6 {
 
   .menu-hero { position: static; max-height: none; margin-bottom: 1rem; border-radius: 8px; }
   .menu-hero-img { height: auto; border-radius: 8px; }
+
+  /* Force block layout for Safari print compatibility */
+  .menu-items,
+  .menu-item,
+  .menu-item-content { display: block !important; }
+  .menu-item-header { display: flex !important; justify-content: space-between !important; }
+  .menu-item-names { display: block !important; }
+  .menu-section { break-inside: avoid; }
 }
