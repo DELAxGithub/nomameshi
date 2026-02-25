@@ -54,7 +54,7 @@ export async function POST(req: Request) {
             {
               "originalName": "String",
               "translatedName": "String (${targetLang})",
-              "description": "String (brief ${targetLang} description)",
+              "description": "String (Provide a helpful ${targetLang} explanation of the dish. Do NOT just repeat the translatedName. If the originalName contains unfamiliar regional cooking styles, unique local ingredients, or proper nouns (e.g. 'Galicia style', 'Guanciale'), briefly explain what they are and how they taste. Keep the explanation concise, maximum 1-2 short sentences to fit in a compact UI.)",
               "price": "String or null",
               "imageQuery": "String (English, concise food photo query)"
             }
