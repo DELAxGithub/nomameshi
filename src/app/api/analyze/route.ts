@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.text();
         console.log("Request body size:", (body.length / 1024 / 1024).toFixed(2), "MB");
-        const { image, targetLang = "Japanese" } = JSON.parse(body);
+        const { image, targetLang = "Japanese", selectedRegion = "auto" } = JSON.parse(body);
 
         if (!image) {
             return new Response(JSON.stringify({ error: "No image provided" }), { status: 400 });
@@ -23,7 +23,12 @@ export async function POST(req: Request) {
         const rawBase64 = image.split(",")[1] || image;
         const base64Data = rawBase64.replace(/\s/g, "");
 
+        const countryContext = selectedRegion !== "auto"
+            ? `USER CONTEXT: The user has indicated this menu is from the country with ISO code "${selectedRegion}". Use this information to immediately determine the local language and culinary context to speed up your analysis.`
+            : "";
+
         const prompt = `
+    ${countryContext}
     You are an expert Menu Translator. Analyze the provided image.
 
     IMPORTANT: First, determine if this image is a restaurant/cafe menu. If it is NOT a menu (e.g., a photo of food, a person, an animal, a landscape, a receipt, or any non-menu image), respond with exactly:

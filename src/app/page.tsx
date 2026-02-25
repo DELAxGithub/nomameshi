@@ -33,6 +33,93 @@ const LANGUAGES = [
   { code: "French", label: "Français" },
 ];
 
+const REGIONS = [
+  { code: "auto", label: "Auto-Detect" },
+  { code: "JP", label: "Japan" },
+  { code: "IT", label: "Italy" },
+  { code: "ES", label: "Spain" },
+  { code: "FR", label: "France" },
+  { code: "US", label: "USA" },
+  { code: "KR", label: "Korea" },
+  { code: "TH", label: "Thailand" },
+  { code: "TW", label: "Taiwan" }
+];
+
+const CULTURAL_TIPS: Record<string, Record<string, string>> = {
+  "JP": {
+    "Japanese": "💡 豆知識: 日本ではお通し（席料）がかかる居酒屋が多く、チップの習慣はありません。",
+    "English": "💡 Tip: Tipping is not customary in Japan and might even be politely refused.",
+    "Chinese": "💡 提示：在日本，居酒屋通常会收取“小菜费”（座席费），而且没有付小费的习惯。",
+    "Korean": "💡 팁: 일본에서는 팁 문화가 없으며, 정중히 거절당할 수도 있습니다.",
+    "Spanish": "💡 Consejo: No se acostumbra dejar propina en Japón.",
+    "French": "💡 Astuce: Le pourboire n'est pas coutumier au Japon."
+  },
+  "IT": {
+    "Japanese": "💡 豆知識: イタリアではコペルト（席料兼パン代）が必須の店が多く、チップは基本的に自由です。",
+    "English": "💡 Tip: Coperto (cover charge) is mandatory in Italy, tipping is mostly optional.",
+    "Chinese": "💡 提示：在意大利，Coperto（座位费和面包费）通常是强制收取的，小费则随客意。",
+    "Korean": "💡 팁: 이탈리아에서는 코페르토(자릿세)가 필수인 곳이 많으며, 팁은 대체로 선택 사항입니다.",
+    "Spanish": "💡 Consejo: El Coperto es un cargo de mesa obligatorio en Italia, la propina es opcional.",
+    "French": "💡 Astuce: Le Coperto est obligatoire en Italie, le pourboire est optionnel."
+  },
+  "ES": {
+    "Japanese": "💡 豆知識: アンダルシア地方などでは、ドリンクを頼むと無料のタパスが付いてくることがあります！",
+    "English": "💡 Tip: Tapas are often free with drinks in parts of Andalusia!",
+    "Chinese": "💡 提示：在安达卢西亚等地区，点饮料通常会免费赠送塔帕斯（Tapas）小吃！",
+    "Korean": "💡 팁: 안달루시아 등 일부 지역에서는 음료를 주문하면 무료 타파스가 나오는 경우가 있습니다!",
+    "Spanish": "💡 Consejo: ¡Las tapas suelen ser gratis con las bebidas en partes de Andalucía!",
+    "French": "💡 Astuce: Les tapas sont souvent accompagnées de boissons en Andalousie !"
+  },
+  "FR": {
+    "Japanese": "💡 豆知識: フランスはサービス料込み（service compris）ですが、小銭を置いていくのがスマートです。",
+    "English": "💡 Tip: Service is usually included (service compris), but leaving a few coins is polite.",
+    "Chinese": "💡 提示：法国账单通常已含服务费（service compris），但留下几枚硬币作为小费被认为是礼貌的做法。",
+    "Korean": "💡 팁: 프랑스에서는 서비스 요금이 포함되어 있지만(service compris), 잔돈을 남겨두는 것이 예의입니다.",
+    "Spanish": "💡 Consejo: El servicio suele estar incluido en Francia, pero dejar algunas monedas es de buena educación.",
+    "French": "💡 Astuce: Le service est compris, mais laisser quelques pièces est poli."
+  },
+  "US": {
+    "Japanese": "💡 豆知識: アメリカの標準的なチップ相場は現在 18% 〜 25% 程度となっています。",
+    "English": "💡 Tip: Standard tipping in the US is currently 18% - 25%.",
+    "Chinese": "💡 提示：目前美国的标准小费比例大约在 18% 到 25% 之间。",
+    "Korean": "💡 팁: 현재 미국의 일반적인 팁 비율은 18% ~ 25% 정도입니다.",
+    "Spanish": "💡 Consejo: La propina estándar en EE.UU. actualmente es del 18% al 25%.",
+    "French": "💡 Astuce: Le pourboire standard aux États-Unis est actuellement de 18% à 25%."
+  },
+  "KR": {
+    "Japanese": "💡 豆知識: 韓国のレストランでは「パンチャン（おかず）」は無料でおかわり自由な店がほとんどです！",
+    "English": "💡 Tip: Banchan (side dishes) are free and refillable in most Korean restaurants!",
+    "Chinese": "💡 提示：在韩国餐厅，Banchan（配菜）通常是免费且可以无限续加的！",
+    "Korean": "💡 팁: 대부분의 한국 식당에서 반찬은 무료이며 리필이 가능합니다!",
+    "Spanish": "💡 Consejo: ¡Los Banchan (guarniciones) son gratis y rellenables en Corea!",
+    "French": "💡 Astuce: Les Banchan (plats d'accompagnement) sont gratuits et à volonté en Corée !"
+  },
+  "TH": {
+    "Japanese": "💡 豆知識: タイではスプーンを右手に持ち、フォークはスプーンにご飯を寄せるために使います。",
+    "English": "💡 Tip: In Thailand, you typically eat with a spoon and use the fork only to push food onto the spoon.",
+    "Chinese": "💡 提示：在泰国，通常用右手拿勺子，叉子仅用来将食物推到勺子里。",
+    "Korean": "💡 팁: 태국에서는 주로 숟가락으로 식사하며, 포크는 음식을 숟가락으로 모으는 데만 사용합니다.",
+    "Spanish": "💡 Consejo: En Tailandia, la cuchara se usa para comer y el tenedor para empujar la comida.",
+    "French": "💡 Astuce: En Thaïlande, mangez avec la cuillère, la fourchette sert à pousser la nourriture."
+  },
+  "TW": {
+    "Japanese": "💡 豆知識: 台湾の屋台や夜市では、食べ歩きよりもその場の小さなテーブルでサッと食べるのが主流です。",
+    "English": "💡 Tip: In Taiwanese night markets, it's common to eat quickly at the small tables provided rather than walking around.",
+    "Chinese": "💡 提示：在台湾夜市，人们通常习惯在摊位旁的小桌子上迅速吃完，而不是边走边吃。",
+    "Korean": "💡 팁: 대만 야시장에서는 돌아다니며 먹기보다 제공된 작은 테이블에서 빨리 먹는 것이 일반적입니다.",
+    "Spanish": "💡 Consejo: En los mercados nocturnos de Taiwán, es común comer rápido en mesas pequeñas.",
+    "French": "💡 Astuce: Sur les marchés de nuit taïwanais, mangez rapidement aux petites tables prévues à cet effet."
+  },
+  "default": {
+    "Japanese": "💡 豆知識: 現地の食文化を知ることは、旅を何倍も豊かにしてくれます！",
+    "English": "💡 Tip: Exploring local flavors is the best way to understand a new culture.",
+    "Chinese": "💡 提示：探索地道美食是了解新文化最好的方式。",
+    "Korean": "💡 팁: 현지의 맛을 즐기는 것은 새로운 문화를 이해하는 가장 좋은 방법입니다!",
+    "Spanish": "💡 Consejo: Explorar los sabores locales es la mejor forma de entender una nueva cultura.",
+    "French": "💡 Astuce: Explorer les saveurs locales est la meilleure façon de comprendre une culture."
+  }
+};
+
 export default function Home() {
   const [analyzing, setAnalyzing] = useState(false);
   const [menu, setMenu] = useState<MenuResult | null>(null);
@@ -40,6 +127,15 @@ export default function Home() {
   const [heroLoading, setHeroLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [targetLang, setTargetLang] = useState("Japanese");
+  const [selectedRegion, setSelectedRegion] = useState("auto");
+  const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
+
+  // Determine the tip language based on the targetLang code
+  const getTipText = (countryCode: string | null) => {
+    const defaultCountry = "default";
+    const tipObj = CULTURAL_TIPS[countryCode || defaultCountry] || CULTURAL_TIPS[defaultCountry];
+    return tipObj[targetLang] || tipObj["English"];
+  };
 
   const generateTableImage = async (sections: Section[]) => {
     setHeroLoading(true);
@@ -61,20 +157,18 @@ export default function Home() {
     }
   };
 
-  const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
-
   const analyzeImage = async (dataUrl: string) => {
     setAnalyzing(true);
     setMenu(null);
     setHeroImage(null);
     setError(null);
-    setDetectedCountry(null);
+    setDetectedCountry(selectedRegion === "auto" ? null : selectedRegion);
 
     try {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: dataUrl, targetLang }),
+        body: JSON.stringify({ image: dataUrl, targetLang, selectedRegion }),
       });
 
       if (!res.ok) {
@@ -301,19 +395,40 @@ export default function Home() {
             Paste Screenshot
           </button>
 
+          {/* Region selector */}
+          <div style={{ marginTop: "2rem" }}>
+            <p style={{ fontSize: "0.8rem", color: "var(--foreground-muted)", marginBottom: "0.5rem" }}>Where are you eating?</p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px" }}>
+              {REGIONS.map(region => (
+                <button key={region.code} onClick={() => setSelectedRegion(region.code)} disabled={analyzing} style={{
+                  padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
+                  border: selectedRegion === region.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
+                  background: selectedRegion === region.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
+                  color: selectedRegion === region.code ? "var(--primary)" : "var(--foreground-muted)",
+                  opacity: analyzing ? 0.5 : 1,
+                }}>
+                  {region.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Language selector */}
-          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px", marginTop: "1.5rem" }}>
-            {LANGUAGES.map(lang => (
-              <button key={lang.code} onClick={() => setTargetLang(lang.code)} disabled={analyzing} style={{
-                padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
-                border: targetLang === lang.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
-                background: targetLang === lang.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
-                color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
-                opacity: analyzing ? 0.5 : 1,
-              }}>
-                {lang.label}
-              </button>
-            ))}
+          <div style={{ marginTop: "1.5rem" }}>
+            <p style={{ fontSize: "0.8rem", color: "var(--foreground-muted)", marginBottom: "0.5rem" }}>Translate menu into</p>
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px" }}>
+              {LANGUAGES.map(lang => (
+                <button key={lang.code} onClick={() => setTargetLang(lang.code)} disabled={analyzing} style={{
+                  padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
+                  border: targetLang === lang.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
+                  background: targetLang === lang.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
+                  color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
+                  opacity: analyzing ? 0.5 : 1,
+                }}>
+                  {lang.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {analyzing ? (
@@ -322,14 +437,7 @@ export default function Home() {
                 {detectedCountry ? `Detected Region: ${detectedCountry}` : "Detecting Region..."}
               </p>
               <p style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: "1.4", fontStyle: "italic" }}>
-                {detectedCountry === "ES" ? "💡 Tip: Tapas are often free with drinks in parts of Andalusia!" :
-                  detectedCountry === "IT" ? "💡 Tip: Coperto is a mandatory table charge in Italy, tipping is mostly optional." :
-                    detectedCountry === "FR" ? "💡 Tip: Service is usually included (service compris), but leaving a few coins is polite." :
-                      detectedCountry === "JP" ? "💡 Tip: Tipping is not customary in Japan and might even be politely refused." :
-                        detectedCountry === "US" ? "💡 Tip: Standard tipping in the US is currently 18% - 25%." :
-                          detectedCountry === "KR" ? "💡 Tip: Banchan (side dishes) are free and refillable in most Korean restaurants!" :
-                            detectedCountry === "TH" ? "💡 Tip: In Thailand, you typically eat with a spoon and use the fork only to push food onto the spoon." :
-                              "💡 Tip: Exploring local flavors is the best way to understand a new culture."}
+                {getTipText(detectedCountry)}
               </p>
             </div>
           ) : (
