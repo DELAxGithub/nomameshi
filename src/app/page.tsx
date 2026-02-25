@@ -433,7 +433,43 @@ export default function Home() {
 
       // Final JSON parse after stream finishes
       const cleanedText = fullText.replace(/```json/g, "").replace(/```/g, "").trim();
-      const data = JSON.parse(cleanedText);
+      let data;
+      try {
+        data = JSON.parse(cleanedText);
+      } catch (parseError) {
+        console.warn("JSON Parse Error. Attempting to repair truncated JSON...");
+        try {
+          let fixedText = cleanedText;
+          if (fixedText.endsWith(",")) fixedText = fixedText.slice(0, -1);
+          if (fixedText.endsWith(":")) fixedText += '""';
+
+          let inString = false;
+          let escapeNext = false;
+          const stack: string[] = [];
+
+          for (let i = 0; i < fixedText.length; i++) {
+            const char = fixedText[i];
+            if (escapeNext) { escapeNext = false; continue; }
+            if (char === '\\') { escapeNext = true; continue; }
+            if (char === '"') { inString = !inString; continue; }
+            if (!inString) {
+              if (char === '{') stack.push('}');
+              else if (char === '[') stack.push(']');
+              else if (char === '}' || char === ']') stack.pop();
+            }
+          }
+
+          if (inString) fixedText += '"';
+          while (stack.length > 0) {
+            fixedText += stack.pop();
+          }
+
+          data = JSON.parse(fixedText);
+          console.log("Successfully repaired truncated JSON.");
+        } catch (repairError) {
+          throw parseError; // Throw original error if repair fails
+        }
+      }
 
       let menuData: MenuResult;
 
@@ -461,7 +497,7 @@ export default function Home() {
     }
   };
 
-  const blobToDataUrl = async (blob: Blob, maxWidth = 1200): Promise<string> => {
+  const blobToDataUrl = async (blob: Blob, maxWidth = 1600): Promise<string> => {
     const bitmap = await createImageBitmap(blob);
     const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1;
     const w = Math.round(bitmap.width * scale);
@@ -472,7 +508,7 @@ export default function Home() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
-    return canvas.toDataURL("image/jpeg", 0.6);
+    return canvas.toDataURL("image/jpeg", 0.8);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
