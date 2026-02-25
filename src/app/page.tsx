@@ -461,7 +461,7 @@ export default function Home() {
     }
   };
 
-  const blobToDataUrl = async (blob: Blob, maxWidth = 1600): Promise<string> => {
+  const blobToDataUrl = async (blob: Blob, maxWidth = 1200): Promise<string> => {
     const bitmap = await createImageBitmap(blob);
     const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1;
     const w = Math.round(bitmap.width * scale);
@@ -472,7 +472,7 @@ export default function Home() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
-    return canvas.toDataURL("image/jpeg", 0.8);
+    return canvas.toDataURL("image/jpeg", 0.6);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

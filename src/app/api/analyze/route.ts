@@ -1,7 +1,7 @@
-
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const maxDuration = 60;
+export const runtime = 'edge';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 const model = genAI.getGenerativeModel({
