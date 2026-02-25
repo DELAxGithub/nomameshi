@@ -395,11 +395,23 @@ export default function Home() {
     setError(null);
     setDetectedCountry(selectedRegion === "auto" ? null : selectedRegion);
 
+    if (!navigator.onLine) {
+      setError("Internet connection lost. Please check your signal.");
+      setAnalyzing(false);
+      return;
+    }
+
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => abortController.abort(), 45000); // 45s timeout
+
+    let fullText = "";
+
     try {
       const res = await fetch("/api/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ image: dataUrl, targetLang, selectedRegion }),
+        signal: abortController.signal,
       });
 
       if (!res.ok) {
@@ -412,23 +424,30 @@ export default function Home() {
       if (!reader) throw new Error("Stream not supported");
 
       const decoder = new TextDecoder("utf-8");
-      let fullText = "";
       let countryFound = false;
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
 
-        const chunk = decoder.decode(value, { stream: true });
-        fullText += chunk;
+          const chunk = decoder.decode(value, { stream: true });
+          fullText += chunk;
 
-        if (!countryFound) {
-          const match = fullText.match(/"detected_country_code"\s*:\s*"([A-Z]{2})"/);
-          if (match) {
-            setDetectedCountry(match[1]);
-            countryFound = true;
+          if (!countryFound) {
+            const match = fullText.match(/"detected_country_code"\s*:\s*"([A-Z]{2})"/);
+            if (match) {
+              setDetectedCountry(match[1]);
+              countryFound = true;
+            }
           }
         }
+      } catch (streamError: any) {
+        console.warn("Stream interrupted, attempting partial parse. Error:", streamError);
+        // If we have no text at all, we must throw. Otherwise, proceed to parse whatever we have.
+        if (!fullText.trim()) throw streamError;
+      } finally {
+        clearTimeout(timeoutId);
       }
 
       // Final JSON parse after stream finishes
@@ -487,10 +506,31 @@ export default function Home() {
 
       setMenu(menuData);
       generateTableImage(menuData.sections);
-    } catch (err) {
+    } catch (err: any) {
+      clearTimeout(timeoutId);
       console.error("Failed to analyze", err);
-      const msg = err instanceof Error ? err.message : String(err);
-      setError(`Analysis failed: ${msg}`);
+
+      let msg = "Analysis failed. Please try again.";
+      if (err.name === 'AbortError') {
+        msg = "Connection timed out. The restaurant's connection might be poor.";
+      } else if (err.message && err.message.includes("Failed to fetch")) {
+        // Only show offline if we don't have partial text
+        if (!fullText) {
+          msg = "Internet connection lost. Please check your signal.";
+        } else {
+          // We shouldn't hit this if fullText has content because of the streamError catch above, but just in case
+          msg = "Connection lost, but showing partial results.";
+        }
+      } else {
+        msg = err.message || msg;
+      }
+
+      // If we got partial text but not enough to even form 'sections' or 'dishes', show the error
+      if (!fullText && !menu) {
+        setError(msg);
+      } else if (!menu) {
+        setError(`Could not generate menu structure. ${msg}`);
+      }
     } finally {
       setAnalyzing(false);
       setDetectedCountry(null);
