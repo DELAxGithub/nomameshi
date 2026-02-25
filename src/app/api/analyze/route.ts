@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export const maxDuration = 60;
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
 export async function POST(req: Request) {
     console.log("Analyze API Request Received");
@@ -30,12 +30,14 @@ export async function POST(req: Request) {
     {"error": "NOT_A_MENU"}
 
     If it IS a menu, proceed:
-    1. **Detect sections**: Group dishes by the sections visible on the menu.
-    2. **Extract & Translate**: For each dish, extract the original name and translate into natural ${targetLang}.
-    3. **Image query**: For each dish, create a concise English search query for generating an appetizing food photo.
+    1. **Detect Country**: Detect the country of the menu based on language, currency, vibe, or dish names.
+    2. **Detect sections**: Group dishes by the sections visible on the menu.
+    3. **Extract & Translate**: For each dish, extract the original name and translate into natural ${targetLang}.
+    4. **Image query**: For each dish, create a concise English search query for generating an appetizing food photo.
 
     Output JSON only (no markdown code blocks):
     {
+      "detected_country_code": "String (ISO 3166-1 alpha-2, e.g. ES, IT, JP, US)",
       "restaurantName": "String (restaurant name if visible, otherwise null)",
       "restaurantVibe": "String (e.g., Traditional Spanish Taberna)",
       "language": "String (detected menu language)",
@@ -59,7 +61,7 @@ export async function POST(req: Request) {
     If no clear sections exist, use a single section with originalTitle as the restaurant name or "MENU".
     `;
 
-        const result = await model.generateContent([
+        const resultStream = await model.generateContentStream([
             prompt,
             {
                 inlineData: {
@@ -69,28 +71,23 @@ export async function POST(req: Request) {
             },
         ]);
 
-        const responseText = result.response.text();
-        const cleanedText = responseText.replace(/```json/g, "").replace(/```/g, "").trim();
+        const stream = new ReadableStream({
+            async start(controller) {
+                try {
+                    for await (const chunk of resultStream.stream) {
+                        const chunkText = chunk.text();
+                        controller.enqueue(new TextEncoder().encode(chunkText));
+                    }
+                    controller.close();
+                } catch (error) {
+                    controller.error(error);
+                }
+            }
+        });
 
-        let data;
-        try {
-            data = JSON.parse(cleanedText);
-        } catch {
-            console.error("JSON parse failed. Raw response:", cleanedText.slice(0, 500));
-            return new Response(
-                JSON.stringify({ error: "Failed to parse menu data. Please try again with a clearer photo." }),
-                { status: 500 }
-            );
-        }
-
-        if (data.error === "NOT_A_MENU") {
-            return new Response(
-                JSON.stringify({ error: "This doesn't appear to be a menu. Please upload a photo of a restaurant menu." }),
-                { status: 400 }
-            );
-        }
-
-        return new Response(JSON.stringify(data));
+        return new Response(stream, {
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+        });
 
     } catch (error) {
         const errMsg = error instanceof Error ? error.message : String(error);

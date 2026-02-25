@@ -61,11 +61,14 @@ export default function Home() {
     }
   };
 
+  const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
+
   const analyzeImage = async (dataUrl: string) => {
     setAnalyzing(true);
     setMenu(null);
     setHeroImage(null);
     setError(null);
+    setDetectedCountry(null);
 
     try {
       const res = await fetch("/api/analyze", {
@@ -80,7 +83,33 @@ export default function Home() {
         throw new Error(`Analysis failed: ${res.status}`);
       }
 
-      const data = await res.json();
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("Stream not supported");
+
+      const decoder = new TextDecoder("utf-8");
+      let fullText = "";
+      let countryFound = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        fullText += chunk;
+
+        if (!countryFound) {
+          const match = fullText.match(/"detected_country_code"\s*:\s*"([A-Z]{2})"/);
+          if (match) {
+            setDetectedCountry(match[1]);
+            countryFound = true;
+          }
+        }
+      }
+
+      // Final JSON parse after stream finishes
+      const cleanedText = fullText.replace(/```json/g, "").replace(/```/g, "").trim();
+      const data = JSON.parse(cleanedText);
+
       let menuData: MenuResult;
 
       if (data.sections) {
@@ -103,6 +132,7 @@ export default function Home() {
       setError(`Analysis failed: ${msg}`);
     } finally {
       setAnalyzing(false);
+      setDetectedCountry(null);
     }
   };
 
@@ -286,9 +316,27 @@ export default function Home() {
             ))}
           </div>
 
-          <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
-            {analyzing ? "Identifying dishes & translating..." : "Take a photo or paste a screenshot."}
-          </p>
+          {analyzing ? (
+            <div className="animate-fade-in" style={{ marginTop: "1.5rem", padding: "1rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px dashed rgba(255,255,255,0.1)" }}>
+              <p style={{ fontSize: "0.75rem", color: "var(--primary)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
+                {detectedCountry ? `Detected Region: ${detectedCountry}` : "Detecting Region..."}
+              </p>
+              <p style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: "1.4", fontStyle: "italic" }}>
+                {detectedCountry === "ES" ? "💡 Tip: Tapas are often free with drinks in parts of Andalusia!" :
+                  detectedCountry === "IT" ? "💡 Tip: Coperto is a mandatory table charge in Italy, tipping is mostly optional." :
+                    detectedCountry === "FR" ? "💡 Tip: Service is usually included (service compris), but leaving a few coins is polite." :
+                      detectedCountry === "JP" ? "💡 Tip: Tipping is not customary in Japan and might even be politely refused." :
+                        detectedCountry === "US" ? "💡 Tip: Standard tipping in the US is currently 18% - 25%." :
+                          detectedCountry === "KR" ? "💡 Tip: Banchan (side dishes) are free and refillable in most Korean restaurants!" :
+                            detectedCountry === "TH" ? "💡 Tip: In Thailand, you typically eat with a spoon and use the fork only to push food onto the spoon." :
+                              "💡 Tip: Exploring local flavors is the best way to understand a new culture."}
+              </p>
+            </div>
+          ) : (
+            <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
+              Take a photo or paste a screenshot.
+            </p>
+          )}
         </div>
       ) : (
         /* MENU RESULT MODE */
@@ -329,67 +377,71 @@ export default function Home() {
 
           {/* Capture area for Save Image */}
           <div ref={captureRef}>
-          {/* Hero Table Image */}
-          <div className="menu-hero">
-            {heroLoading ? (
-              <div className="menu-hero-loading">
-                <div className="loading-spinner" style={{ width: 32, height: 32, borderWidth: 3 }}></div>
-                <p style={{ marginTop: "0.75rem", color: "var(--foreground-muted)", fontSize: "0.85rem" }}>
-                  Generating table spread...
-                </p>
-              </div>
-            ) : heroImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={heroImage} alt="Table spread" className="menu-hero-img" />
-            ) : null}
-          </div>
-
-          {/* Menu Card */}
-          <div className="menu-card">
-            {/* Restaurant Header */}
-            {menu.restaurantName && (
-              <div className="menu-header">
-                <h2 className="menu-restaurant-name">{menu.restaurantName}</h2>
-                {menu.restaurantVibe && (
-                  <p className="menu-vibe">{menu.restaurantVibe}</p>
-                )}
-              </div>
-            )}
-
-            {/* Sections */}
-            {menu.sections.map((section, sIdx) => (
-              <div key={sIdx} className="menu-section">
-                <div className="menu-section-header">
-                  <h3 className="menu-section-title">{section.translatedTitle}</h3>
-                  <span className="menu-section-original">{section.originalTitle}</span>
+            {/* Hero Table Image */}
+            <div className="menu-hero">
+              {heroLoading ? (
+                <div className="menu-hero-loading skeleton" style={{ height: "40vh", width: "100%", borderRadius: "var(--radius-md)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "pulse 2s infinite" }}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                    <polyline points="21 15 16 10 5 21"></polyline>
+                  </svg>
+                  <p style={{ marginTop: "1rem", color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", letterSpacing: "0.05em" }}>
+                    Generating table spread...
+                  </p>
                 </div>
-
-                <div className="menu-items">
-                  {section.dishes.map((dish, dIdx) => (
-                    <div key={dIdx} className="menu-item">
-                      <div className="menu-item-content">
-                        <div className="menu-item-header">
-                          <div className="menu-item-names">
-                            <span className="menu-item-translated">{dish.translatedName}</span>
-                            <span className="menu-item-original">{dish.originalName}</span>
-                          </div>
-                          {dish.price && <span className="menu-item-price">{dish.price}</span>}
-                        </div>
-                        {dish.description && (
-                          <p className="menu-item-description">{dish.description}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Footer */}
-            <div className="menu-footer">
-              <p>Translated by <span className="gradient-text">menumenu</span></p>
+              ) : heroImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={heroImage} alt="Table spread" className="menu-hero-img animate-fade-in" />
+              ) : null}
             </div>
-          </div>
+
+            {/* Menu Card */}
+            <div className="menu-card">
+              {/* Restaurant Header */}
+              {menu.restaurantName && (
+                <div className="menu-header">
+                  <h2 className="menu-restaurant-name">{menu.restaurantName}</h2>
+                  {menu.restaurantVibe && (
+                    <p className="menu-vibe">{menu.restaurantVibe}</p>
+                  )}
+                </div>
+              )}
+
+              {/* Sections */}
+              {menu.sections.map((section, sIdx) => (
+                <div key={sIdx} className="menu-section">
+                  <div className="menu-section-header">
+                    <h3 className="menu-section-title">{section.translatedTitle}</h3>
+                    <span className="menu-section-original">{section.originalTitle}</span>
+                  </div>
+
+                  <div className="menu-items">
+                    {section.dishes.map((dish, dIdx) => (
+                      <div key={dIdx} className="menu-item">
+                        <div className="menu-item-content">
+                          <div className="menu-item-header">
+                            <div className="menu-item-names">
+                              <span className="menu-item-translated">{dish.translatedName}</span>
+                              <span className="menu-item-original">{dish.originalName}</span>
+                            </div>
+                            {dish.price && <span className="menu-item-price">{dish.price}</span>}
+                          </div>
+                          {dish.description && (
+                            <p className="menu-item-description">{dish.description}</p>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+
+              {/* Footer */}
+              <div className="menu-footer">
+                <p>Translated by <span className="gradient-text">menumenu</span></p>
+              </div>
+            </div>
           </div>{/* /captureRef */}
         </div>
       )}
