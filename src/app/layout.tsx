@@ -22,26 +22,26 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "menumenu | Visual Graphic Menu",
+  title: "Nomameshi | Visual Graphic Menu",
   description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals. See the flavor before you order.",
   metadataBase: new URL(siteUrl),
   openGraph: {
-    title: "menumenu — See the Flavor",
+    title: "Nomameshi — See the Flavor",
     description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals.",
     url: siteUrl,
-    siteName: "menumenu",
+    siteName: "Nomameshi",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "menumenu — See the Flavor",
+    title: "Nomameshi — See the Flavor",
     description: "Snap a menu photo, get instant Japanese translation with AI-generated food visuals.",
   },
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "menumenu",
+    title: "Nomameshi",
   },
   formatDetection: {
     telephone: false,

@@ -112,9 +112,12 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
   },
   "ES": {
     "Japanese": [
-      "💡 豆知識: アンダルシア地方などでは、ドリンクを頼むと無料のタパスが付いてくることがあります！",
-      "💡 豆知識: スペインの夕食時間は非常に遅く、夜21時〜22時頃から始まるのが一般的です。",
-      "💡 豆知識: お会計はテーブルで行うのが基本で、店員に「La cuenta, por favor（お勘定を）」と声をかけます。"
+      "💡 豆知識: スペインの朝食は2回。7時に軽くコーヒーだけ、10〜11時にボカディージョで本命の一食。",
+      "💡 豆知識: ランチのピークは14〜15時。13時にレストランへ入ると「まだ準備中」な空気になることも。",
+      "💡 豆知識: メヌー・デル・ディア（Menú del día）はスペインの節約ランチ。前菜・メイン・デザート付きで€10〜13が相場。",
+      "💡 豆知識: パエリアは地中海沿岸生まれの「昼メシ」。夜メニューにあるのはほぼ観光客向けです。",
+      "💡 豆知識: お会計は待っていてもなかなか来ない。こちらから「La cuenta, por favor!（お勘定を）」と言うのが普通。",
+      "💡 豆知識: 飲まない日の最強選択肢はモスト（Mosto）。発酵させていないブドウ果汁でバルで気軽に頼めます。"
     ],
     "English": [
       "💡 Tip: Tapas are often free with drinks in parts of Andalusia!",
@@ -608,7 +611,7 @@ export default function Home() {
       });
       canvas.toBlob(async (blob) => {
         if (!blob) return;
-        const fileName = `menumenu-${menu?.restaurantName?.replace(/\s+/g, "-") || "menu"}.png`;
+        const fileName = `Nomameshi-${menu?.restaurantName?.replace(/\s+/g, "-") || "menu"}.png`;
         const file = new File([blob], fileName, { type: "image/png" });
 
         if (navigator.share && navigator.canShare?.({ files: [file] })) {
@@ -646,12 +649,12 @@ export default function Home() {
       }
       lines.push("");
     }
-    lines.push("Translated by menumenu\nhttps://menumenu-three.vercel.app");
+    lines.push("Translated by Nomameshi\nhttps://menumenu-three.vercel.app");
     const text = lines.join("\n");
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: "menumenu", text });
+        await navigator.share({ title: "Nomameshi", text });
       } catch { /* user cancelled */ }
     } else {
       await navigator.clipboard.writeText(text);
@@ -664,7 +667,7 @@ export default function Home() {
       {/* Header */}
       <div className="animate-fade-in no-print" style={{ textAlign: "center", marginBottom: "3rem", marginTop: "2rem" }}>
         <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
-          <span className="gradient-text">menumenu</span>
+          <span className="gradient-text">Nomameshi</span>
         </h1>
         <p style={{ color: "var(--foreground-muted)", fontSize: "1rem" }}>
           Don&apos;t just read the menu. <span style={{ color: "var(--foreground)" }}>See the flavor.</span>
@@ -895,7 +898,7 @@ export default function Home() {
 
               {/* Footer */}
               <div className="menu-footer">
-                <p>Translated by <span className="gradient-text">menumenu</span></p>
+                <p>Translated by <span className="gradient-text">Nomameshi</span></p>
               </div>
             </div>
           </div>{/* /captureRef */}
