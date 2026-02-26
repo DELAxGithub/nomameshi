@@ -854,9 +854,15 @@ export default function Home() {
 
             {/* Menu Card */}
             <div className="menu-card">
+              <div style={{ padding: "1.5rem 1.5rem 0", textAlign: "center" }}>
+                <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", margin: 0 }}>
+                  ※各料理の説明文はAIによる参考情報（推論）です。
+                </p>
+              </div>
+
               {/* Restaurant Header */}
               {menu.restaurantName && (
-                <div className="menu-header">
+                <div className="menu-header" style={{ paddingTop: "1rem" }}>
                   <h2 className="menu-restaurant-name">{menu.restaurantName}</h2>
                   {menu.restaurantVibe && (
                     <p className="menu-vibe">{menu.restaurantVibe}</p>
@@ -884,17 +890,7 @@ export default function Home() {
                             {dish.price && <span className="menu-item-price">{dish.price}</span>}
                           </div>
                           {dish.description && (
-                            <div className="menu-item-description" style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px" }}>
-                              <span style={{
-                                display: "inline-block", fontSize: "0.65rem", color: "var(--primary)",
-                                textTransform: "uppercase", letterSpacing: "0.05em",
-                                border: "1px solid rgba(255,75,43,0.3)", padding: "2px 6px",
-                                borderRadius: "4px", alignSelf: "flex-start", opacity: 0.9
-                              }}>
-                                📝 参考情報 (AI補足)
-                              </span>
-                              <p style={{ margin: 0 }}>{dish.description}</p>
-                            </div>
+                            <p className="menu-item-description">{dish.description}</p>
                           )}
                         </div>
                       </div>
