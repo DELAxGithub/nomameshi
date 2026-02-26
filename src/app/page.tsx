@@ -815,47 +815,42 @@ export default function Home() {
           </div>
 
           {/* Capture area for Save Image */}
-          <div ref={captureRef}>
-            {/* Hero Table Image */}
-            <div className="menu-hero">
-              {heroLoading ? (
-                <div className="menu-hero-loading skeleton" style={{ height: "40vh", width: "100%", borderRadius: "var(--radius-md)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ animation: "pulse 2s infinite" }}>
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                    <polyline points="21 15 16 10 5 21"></polyline>
-                  </svg>
-                  <p style={{ marginTop: "1rem", color: "rgba(255,255,255,0.4)", fontSize: "0.9rem", letterSpacing: "0.05em" }}>
-                    Generating table spread...
-                  </p>
-                </div>
-              ) : heroImage ? (
-                <div style={{ position: "relative" }} className="animate-fade-in">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={heroImage} alt="Table spread" className="menu-hero-img" />
-                  <div style={{
-                    position: "absolute", bottom: "12px", right: "12px",
-                    background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.8)",
-                    padding: "4px 8px", borderRadius: "4px", fontSize: "0.7rem",
-                    backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "4px"
-                  }}>
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                    ★ AI Generated Image
+          <div ref={captureRef} className="menu-result-container">
+            {/* Background Image Layer */}
+            {(heroLoading || heroImage || heroError) && (
+              <div className="menu-bg-layer no-print">
+                {heroLoading ? (
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(10,10,10,0.8)" }}>
+                    <div className="loading-spinner"></div>
                   </div>
-                </div>
-              ) : heroError ? (
-                <div className="menu-hero-error" style={{ height: "40vh", width: "100%", borderRadius: "var(--radius-md)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "1px dashed rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
-                  <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>{heroError}</p>
-                  <button onClick={() => menu && generateTableImage(menu.sections)} style={{
-                    background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
-                    color: "var(--foreground)", padding: "8px 16px", borderRadius: "20px",
-                    cursor: "pointer", fontSize: "0.85rem"
-                  }}>
-                    Retry Image Generation
-                  </button>
-                </div>
-              ) : null}
-            </div>
+                ) : heroImage ? (
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={heroImage} alt="Table spread background" className="menu-bg-image animate-fade-in" />
+                    <div style={{
+                      position: "absolute", bottom: "12px", right: "12px", zIndex: 5,
+                      background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.8)",
+                      padding: "4px 8px", borderRadius: "4px", fontSize: "0.7rem",
+                      backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "4px"
+                    }}>
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                      ★ AI Generated Image
+                    </div>
+                  </>
+                ) : heroError ? (
+                  <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(10,10,10,0.8)" }}>
+                    <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>{heroError}</p>
+                    <button onClick={() => menu && generateTableImage(menu.sections)} style={{
+                      background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
+                      color: "var(--foreground)", padding: "8px 16px", borderRadius: "20px",
+                      cursor: "pointer", fontSize: "0.85rem"
+                    }}>
+                      Retry Image Generation
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+            )}
 
             {/* Menu Card */}
             <div className="menu-card">

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
         });
 
         const result = await model.generateContent(
-            `Generate a realistic overhead photo of a beautifully arranged restaurant table spread featuring these dishes: ${dishList}. Shot from directly above, warm natural lighting, dishes on a rustic wooden table with plates, bowls, and utensils. Professional food photography style, appetizing presentation.`
+            `Generate a realistic 9:16 vertical smartphone-ratio photo of a restaurant table spread featuring these dishes: ${dishList}. Shot from directly above, cinematic dark lighting with ample dark negative space. Dishes should be arranged vertically on a dark rustic wooden or slate table. Professional food photography style, appetizing presentation but with a dark, sophisticated, moody backdrop that allows bright text to be easily readable over the image.`
         );
 
         const parts = result.response.candidates?.[0]?.content?.parts || [];
