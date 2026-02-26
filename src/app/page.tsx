@@ -539,6 +539,8 @@ export default function Home() {
           // We shouldn't hit this if fullText has content because of the streamError catch above, but just in case
           msg = "Connection lost, but showing partial results.";
         }
+      } else if (err.message && err.message.includes("Load failed")) {
+        msg = "Network connection dropped by 5G carrier. Please try again on Wi-Fi or with a smaller image.";
       } else {
         msg = err.message || msg;
       }

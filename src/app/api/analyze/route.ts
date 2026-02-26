@@ -98,7 +98,12 @@ export async function POST(req: Request) {
         });
 
         return new Response(stream, {
-            headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+            headers: {
+                'Content-Type': 'text/plain; charset=utf-8',
+                'Cache-Control': 'no-cache, no-transform',
+                'Connection': 'keep-alive',
+                'Transfer-Encoding': 'chunked'
+            }
         });
 
     } catch (error) {
