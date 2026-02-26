@@ -765,6 +765,11 @@ export default function Home() {
               <p key={tipIndex} className="animate-fade-in" style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: "1.4", fontStyle: "italic", minHeight: "2.8rem" }}>
                 {getTipText(detectedCountry)}
               </p>
+              <div style={{ marginTop: "1rem", paddingTop: "0.5rem", borderTop: "1px dashed rgba(255,255,255,0.1)", textAlign: "center" }}>
+                <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.4)", margin: 0 }}>
+                  ※以降表示される料理の説明文はAIによる参考情報（推論）です。
+                </p>
+              </div>
             </div>
           ) : (
             <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
@@ -854,12 +859,6 @@ export default function Home() {
 
             {/* Menu Card */}
             <div className="menu-card">
-              <div style={{ padding: "1.5rem 1.5rem 0", textAlign: "center" }}>
-                <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", margin: 0 }}>
-                  ※各料理の説明文はAIによる参考情報（推論）です。
-                </p>
-              </div>
-
               {/* Restaurant Header */}
               {menu.restaurantName && (
                 <div className="menu-header" style={{ paddingTop: "1rem" }}>
