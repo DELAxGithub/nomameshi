@@ -376,7 +376,7 @@ export default function Home() {
     setHeroLoading(true);
     setHeroError(null);
     const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 15000); // 15s timeout for image
+    const timeoutId = setTimeout(() => abortController.abort(), 30000); // 30s timeout for image
 
     try {
       const allDishes = sections.flatMap(s => s.dishes.map(d => d.imageQuery));
@@ -395,7 +395,7 @@ export default function Home() {
     } catch (err: any) {
       console.error("Table image generation failed:", err);
       if (err.name === 'AbortError') {
-        setHeroError("Image generation timed out.");
+        setHeroError("Image generation timed out. Your connection might be slow.");
       } else {
         setHeroError("Failed to generate image.");
       }
@@ -420,7 +420,7 @@ export default function Home() {
     }
 
     const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 45000); // 45s timeout
+    const timeoutId = setTimeout(() => abortController.abort(), 60000); // 60s timeout
 
     let fullText = "";
 
@@ -530,7 +530,7 @@ export default function Home() {
 
       let msg = "Analysis failed. Please try again.";
       if (err.name === 'AbortError') {
-        msg = "Connection timed out. The restaurant's connection might be poor.";
+        msg = "Analysis timed out. Please check your mobile connection or try a smaller image.";
       } else if (err.message && err.message.includes("Failed to fetch")) {
         // Only show offline if we don't have partial text
         if (!fullText) {
@@ -555,7 +555,7 @@ export default function Home() {
     }
   };
 
-  const blobToDataUrl = async (blob: Blob, maxEdge = 1600): Promise<string> => {
+  const blobToDataUrl = async (blob: Blob, maxEdge = 1280): Promise<string> => {
     // Explicitly handle EXIF orientation to prevent rotated images from mobile devices
     const bitmap = await createImageBitmap(blob, { imageOrientation: "from-image" });
     const longestEdge = Math.max(bitmap.width, bitmap.height);
@@ -568,8 +568,8 @@ export default function Home() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
-    // Use 0.75 JPEG compression to significantly reduce payload size for overseas networks
-    return canvas.toDataURL("image/jpeg", 0.75);
+    // Use 0.70 JPEG compression to further reduce payload size for 5G/overseas networks
+    return canvas.toDataURL("image/jpeg", 0.70);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
