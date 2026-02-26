@@ -341,6 +341,7 @@ export default function Home() {
   const [menu, setMenu] = useState<MenuResult | null>(null);
   const [heroImage, setHeroImage] = useState<string | null>(null);
   const [heroLoading, setHeroLoading] = useState(false);
+  const [heroError, setHeroError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [targetLang, setTargetLang] = useState("Japanese");
   const [selectedRegion, setSelectedRegion] = useState("auto");
@@ -370,20 +371,33 @@ export default function Home() {
 
   const generateTableImage = async (sections: Section[]) => {
     setHeroLoading(true);
+    setHeroError(null);
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => abortController.abort(), 15000); // 15s timeout for image
+
     try {
       const allDishes = sections.flatMap(s => s.dishes.map(d => d.imageQuery));
       const res = await fetch("/api/search-image", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ dishes: allDishes }),
+        signal: abortController.signal,
       });
       const data = await res.json();
       if (data.imageUrl) {
         setHeroImage(data.imageUrl);
+      } else {
+        setHeroError("Failed to generate image.");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Table image generation failed:", err);
+      if (err.name === 'AbortError') {
+        setHeroError("Image generation timed out.");
+      } else {
+        setHeroError("Failed to generate image.");
+      }
     } finally {
+      clearTimeout(timeoutId);
       setHeroLoading(false);
     }
   };
@@ -392,6 +406,7 @@ export default function Home() {
     setAnalyzing(true);
     setMenu(null);
     setHeroImage(null);
+    setHeroError(null);
     setError(null);
     setDetectedCountry(selectedRegion === "auto" ? null : selectedRegion);
 
@@ -537,9 +552,11 @@ export default function Home() {
     }
   };
 
-  const blobToDataUrl = async (blob: Blob, maxWidth = 1600): Promise<string> => {
-    const bitmap = await createImageBitmap(blob);
-    const scale = bitmap.width > maxWidth ? maxWidth / bitmap.width : 1;
+  const blobToDataUrl = async (blob: Blob, maxEdge = 1600): Promise<string> => {
+    // Explicitly handle EXIF orientation to prevent rotated images from mobile devices
+    const bitmap = await createImageBitmap(blob, { imageOrientation: "from-image" });
+    const longestEdge = Math.max(bitmap.width, bitmap.height);
+    const scale = longestEdge > maxEdge ? maxEdge / longestEdge : 1;
     const w = Math.round(bitmap.width * scale);
     const h = Math.round(bitmap.height * scale);
     const canvas = document.createElement("canvas");
@@ -548,7 +565,8 @@ export default function Home() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
-    return canvas.toDataURL("image/jpeg", 0.8);
+    // Use 0.75 JPEG compression to significantly reduce payload size for overseas networks
+    return canvas.toDataURL("image/jpeg", 0.75);
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -807,8 +825,30 @@ export default function Home() {
                   </p>
                 </div>
               ) : heroImage ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroImage} alt="Table spread" className="menu-hero-img animate-fade-in" />
+                <div style={{ position: "relative" }} className="animate-fade-in">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={heroImage} alt="Table spread" className="menu-hero-img" />
+                  <div style={{
+                    position: "absolute", bottom: "12px", right: "12px",
+                    background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.8)",
+                    padding: "4px 8px", borderRadius: "4px", fontSize: "0.7rem",
+                    backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "4px"
+                  }}>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    ★ AI Generated Image
+                  </div>
+                </div>
+              ) : heroError ? (
+                <div className="menu-hero-error" style={{ height: "40vh", width: "100%", borderRadius: "var(--radius-md)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", border: "1px dashed rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)" }}>
+                  <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>{heroError}</p>
+                  <button onClick={() => menu && generateTableImage(menu.sections)} style={{
+                    background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
+                    color: "var(--foreground)", padding: "8px 16px", borderRadius: "20px",
+                    cursor: "pointer", fontSize: "0.85rem"
+                  }}>
+                    Retry Image Generation
+                  </button>
+                </div>
               ) : null}
             </div>
 
@@ -844,7 +884,17 @@ export default function Home() {
                             {dish.price && <span className="menu-item-price">{dish.price}</span>}
                           </div>
                           {dish.description && (
-                            <p className="menu-item-description">{dish.description}</p>
+                            <div className="menu-item-description" style={{ display: "flex", flexDirection: "column", gap: "4px", marginTop: "4px" }}>
+                              <span style={{
+                                display: "inline-block", fontSize: "0.65rem", color: "var(--primary)",
+                                textTransform: "uppercase", letterSpacing: "0.05em",
+                                border: "1px solid rgba(255,75,43,0.3)", padding: "2px 6px",
+                                borderRadius: "4px", alignSelf: "flex-start", opacity: 0.9
+                              }}>
+                                📝 参考情報 (AI補足)
+                              </span>
+                              <p style={{ margin: 0 }}>{dish.description}</p>
+                            </div>
                           )}
                         </div>
                       </div>
