@@ -117,37 +117,52 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
   },
   "ES": {
     "Japanese": [
-      "💡 豆知識: スペインの朝食は2回。7時に軽くコーヒーだけ、10〜11時にボカディージョで本命の一食。",
-      "💡 豆知識: ランチのピークは14〜15時。13時にレストランへ入ると「まだ準備中」な空気になることも。",
-      "💡 豆知識: メヌー・デル・ディア（Menú del día）はスペインの節約ランチ。前菜・メイン・デザート付きで€10〜13が相場。",
-      "💡 豆知識: パエリアは地中海沿岸生まれの「昼メシ」。夜メニューにあるのはほぼ観光客向けです。",
-      "💡 豆知識: お会計は待っていてもなかなか来ない。こちらから「La cuenta, por favor!（お勘定を）」と言うのが普通。",
-      "💡 豆知識: 飲まない日の最強選択肢はモスト（Mosto）。発酵させていないブドウ果汁でバルで気軽に頼めます。"
+      "💡 豆知識: スペインの朝食は2回。7時にコーヒーだけ、10〜11時にボカディージョで本命の一食。この時間帯がカフェで一番空いてWi-Fiも快適。",
+      "💡 豆知識: ランチのピークは14〜15時、ディナーは21時以降。12時半に仕事を片付けて、バルでピンチョスをつまみながら待つのがノマドの流儀。",
+      "💡 豆知識: バルは朝のコーヒー1杯で2時間居座っても普通に許容される。ただ昼のピーク時にPC占領はNG。注文ペースに合わせよう。",
+      "💡 豆知識: メヌー・デル・ディア（Menú del día）はスペイン最強の節約ランチ。前菜・メイン・デザート・パン・ドリンク付きで€10〜13が相場。",
+      "💡 豆知識: 夕方18〜20時のメリエンダは仕事の区切りに最適。チュロス・コン・チョコラテでカロリーチャージしつつ夜モードへ切り替えよう。",
+      "💡 豆知識: パエリアは地中海沿岸生まれの「昼メシ」。夜メニューにあるのはほぼ観光客向け。ランチ限定の店で食べるのが正解。",
+      "💡 豆知識: パン・コン・トマテは自分でトマトをこすらせてくれる店が本物。完成品が出てくる観光地バルより断然うまい。",
+      "💡 豆知識: ガンバス・アル・アヒージョを食べ終わったら残ったオイルにパンを浸すのが現地流。「¿Me pone más pan?」と言えばパーフェクト。",
+      "💡 豆知識: クロケタスは店の実力が一番わかる一品。冷凍品は衣が厚く油っぽい。最初にこれを頼んで手作りか見極めるのが通の使い方。",
+      "💡 豆知識: メニューに「a la madrileña」とあればトマトと玉ねぎベースのシンプル煮込み。見た目より味が深い首都の家庭味。",
+      "💡 豆知識: 「A la gallega」は茹でてパプリカパウダーとオリーブオイルをかけるだけ。タコが定番で、素材の良さで全部持っていく。",
+      "💡 豆知識: 「A la vasca」は白ワインとオリーブオイルで乳化させたソース仕立て。魚料理に多く、見た目は地味でも旨味の密度が高い。",
+      "💡 豆知識: 「A la andaluza」はたいてい揚げ物。魚介や野菜を薄衣でカラッと揚げるのが得意技。ペスカイート・フリートは南スペインの夏の定番。",
+      "💡 豆知識: 「A la catalana」はニンニク・トマト・オイルのソフレジットソースが基本。酸味と甘みのバランスで他地方より少し洗練された印象。",
+      "💡 豆知識: 「美味しい！」は ¡Riquísimo!（リキシモ！）で2割増し伝わる。BuenoやDeliciosoより感情が乗って、店のおばちゃんの反応が段違い。",
+      "💡 豆知識: 注文は ¡Oiga!（オイガ！）か目線で呼ぶ。ウェイターが多い店は目が合った瞬間に軽く顎を引くだけで通じることも。",
+      "💡 豆知識: お会計は待っていてもなかなか来ない。「¡La cuenta, por favor!」と自分から言いに行くのが普通。知らずに30分待つ人を何人も見た。",
+      "💡 豆知識: 最初の一杯は Una caña（ウナ・カーニャ）。小さめの生ビールで€1〜2。カーニャをおかわりしながらバルをはしごするのがローカル流。",
+      "💡 豆知識: カジュアルにワインなら Vino de la casa 一択。ボトル€5〜8、グラス€1〜2。リオハ産を置いてる店はワインへの意識が高い。",
+      "💡 豆知識: 飲まない日の最強選択肢は Mosto（モスト）。発酵させていないブドウ果汁で、バルで普通に頼める。ノンアル感なしで溶け込める。",
+      "💡 豆知識: ティント・デ・ベラーノはサングリアより現地感がある。赤ワインをレモネードで割っただけの庶民の夏の定番。サングリアは観光地仕様が多い。",
+      "💡 豆知識: 食後はコルタード（Cortado）でシメるのが自然な流れ。カフェ・コン・レチェより小さくエスプレッソより柔らかい——大人のコーヒー。"
     ],
     "English": [
-      "💡 Tip: Tapas are often free with drinks in parts of Andalusia!",
-      "💡 Tip: Dinner time in Spain is very late, typically starting around 9:00 PM or 10:00 PM.",
-      "💡 Tip: You generally ask for the bill at your table by saying 'La cuenta, por favor'."
-    ],
-    "Chinese": [
-      "💡 提示：在安达卢西亚等地区，点饮料通常会免费赠送塔帕斯（Tapas）小吃！",
-      "💡 提示：西班牙人的晚餐时间非常晚，通常在晚上9点或10点才开始。",
-      "💡 提示：通常是在座位上买单，可以对服务员说\"La cuenta, por favor\"（请结账）。"
-    ],
-    "Korean": [
-      "💡 팁: 안달루시아 등 일부 지역에서는 음료를 주문하면 무료 타파스가 나오는 경우가 있습니다!",
-      "💡 팁: 스페인의 저녁 식사 시간은 매우 늦어서, 보통 밤 9시나 10시쯤 시작됩니다.",
-      "💡 팁: 계산은 테이블에서 하며, 직원에게 '라 꿴따, 뽀르 파보르(계산서 부탁합니다)'라고 말합니다."
-    ],
-    "Spanish": [
-      "💡 Consejo: ¡Las tapas suelen ser gratis con las bebidas en partes de Andalucía!",
-      "💡 Consejo: La cena en España suele ser bastante tarde, alrededor de las 21:00 o 22:00 horas.",
-      "💡 Consejo: Se suele pedir la cuenta en la mesa diciendo 'La cuenta, por favor'."
-    ],
-    "French": [
-      "💡 Astuce: Les tapas sont souvent accompagnées de boissons en Andalousie !",
-      "💡 Astuce: Le dîner en Espagne est très tardif, généralement vers 21h ou 22h.",
-      "💡 Astuce: Vous demandez l'addition à table en disant « La cuenta, por favor »."
+      "💡 Tip: Spaniards eat breakfast twice — a quick coffee at 7am, then a Bocadillo around 10–11am. That second window is when cafés are emptiest and Wi-Fi is usable.",
+      "💡 Tip: Lunch peaks at 2–3pm; dinner doesn't start until 9pm. Wrap up work by 12:30, graze on pintxos at a bar, and wait — that's the nomad way.",
+      "💡 Tip: A café will let you nurse a single coffee for two hours in the morning. But camping out during the lunch rush? That's a one-way ticket to side-eye.",
+      "💡 Tip: Menú del día is the best-value meal in Spain — starter, main, dessert, bread, and a drink for €10–13. Skip the tourist drag and ask a local instead.",
+      "💡 Tip: Merienda (6–8pm snack break) is a natural end-of-workday ritual. Churros con chocolate are flowing — the perfect moment to shift into evening mode.",
+      "💡 Tip: Paella is a lunchtime dish from Valencia. If it's on the dinner menu, it's aimed at tourists. Find a place that only serves it at lunch.",
+      "💡 Tip: Pan con tomate is best when they hand you the tomato and let you do it yourself. The DIY version beats the pre-made tourist bar version every time.",
+      "💡 Tip: After finishing gambas al ajillo, dip your bread into the leftover garlic oil. Say \"¿Me pone más pan?\" and you've earned your honorary local card.",
+      "💡 Tip: Croquetas are the ultimate litmus test for a kitchen. Frozen ones have thick, greasy breading. Order these first to know if the place is worth staying for.",
+      "💡 Tip: See \"a la madrileña\" on the menu? That means a simple tomato-and-onion braise — Madrid's home-cooking style. Humble-looking, but deep in flavor.",
+      "💡 Tip: \"A la gallega\" means boiled and dressed with paprika and olive oil. Most often with octopus (Pulpo). Zero fuss, all flavor.",
+      "💡 Tip: \"A la vasca\" usually means a white wine sauce emulsified with olive oil. Common with fish — understated on the plate, but the umami hits hard.",
+      "💡 Tip: \"A la andaluza\" almost always means fried. Thin, crispy batter on seafood or vegetables. Pescaíto frito is the go-to on a summer afternoon in the south.",
+      "💡 Tip: \"A la catalana\" is built on sofregit — slow-cooked garlic, tomato, and olive oil. Dishes balance acidity and sweetness in a more refined way.",
+      "💡 Tip: Skip \"Bueno\" — say ¡Riquísimo! (ree-KEE-see-mo) when the food is good. It carries real emotion, and the reaction from whoever served it is immediately warmer.",
+      "💡 Tip: To get a waiter's attention, say ¡Oiga! or just make eye contact. A subtle chin-lift when eyes meet is usually enough.",
+      "💡 Tip: The check won't come to you — say ¡La cuenta, por favor! and go find someone if needed. Plenty of visitors have waited 30 minutes for a bill that was never coming.",
+      "💡 Tip: Start with una caña — a small draft beer (~200ml) for €1–2. The classic Spanish night is hopping between bars, one caña at a time.",
+      "💡 Tip: For wine without the fuss, order vino de la casa — a bottle runs €5–8, a glass €1–2. If the house wine is from Rioja, the bar takes its wine seriously.",
+      "💡 Tip: On a no-alcohol day, order Mosto — unfermented grape juice. No one blinks, and you still feel like you belong at the bar.",
+      "💡 Tip: Tinto de verano (red wine + lemon soda) is more local than sangria. Sangria tends to be the tourist-menu version; this is what people actually drink.",
+      "💡 Tip: End a meal with a Cortado — espresso with a splash of hot milk. Smaller than café con leche, smoother than straight espresso. The natural signal the meal is done."
     ]
   },
   "FR": {
@@ -353,6 +368,16 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [targetLang, setTargetLang] = useState("Japanese");
   const [selectedRegion, setSelectedRegion] = useState("auto");
+
+  // Restore saved region & language from localStorage
+  useEffect(() => {
+    try {
+      const savedRegion = localStorage.getItem("nomameshi_region");
+      const savedLang = localStorage.getItem("nomameshi_lang");
+      if (savedRegion && REGIONS.some(r => r.code === savedRegion)) setSelectedRegion(savedRegion);
+      if (savedLang && LANGUAGES.some(l => l.code === savedLang)) setTargetLang(savedLang);
+    } catch {}
+  }, []);
   const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
   const [tipIndex, setTipIndex] = useState(0);
   const [shuffledTipIndices, setShuffledTipIndices] = useState<number[]>([]);
@@ -696,10 +721,8 @@ export default function Home() {
   });
 
   const regionLabel = REGIONS.find(r => r.code === selectedRegion)?.label || "Auto-Detect";
-  const langLabel = LANGUAGES.find(l => l.code === targetLang)?.label || "Japanese";
 
   const [showRegionPicker, setShowRegionPicker] = useState(false);
-  const [showLangPicker, setShowLangPicker] = useState(false);
 
   return (
     <main className="container" style={{ minHeight: "100vh", padding: "2rem 0" }}>
@@ -728,74 +751,37 @@ export default function Home() {
         /* ===== SCAN MODE ===== */
         <div className="animate-fade-in" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
-          {/* Region & Language selectors */}
-          <div style={{ display: "flex", gap: "12px", position: "relative" }}>
-            {/* Region selector */}
-            <div style={{ flex: 1, position: "relative" }}>
-              <button
-                onClick={() => { setShowRegionPicker(!showRegionPicker); setShowLangPicker(false); }}
-                disabled={analyzing}
-                style={selectorBtn(showRegionPicker)}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-                </svg>
-                <span style={{ flex: 1, textAlign: "left" }}>{regionLabel}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
-              </button>
-              {showRegionPicker && (
-                <div style={{
-                  position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
-                  background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
-                }}>
-                  {REGIONS.map(region => (
-                    <button key={region.code} onClick={() => { setSelectedRegion(region.code); setShowRegionPicker(false); }} style={{
-                      display: "block", width: "100%", padding: "10px 16px", border: "none",
-                      background: selectedRegion === region.code ? "var(--surface-highlight)" : "transparent",
-                      color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
-                      cursor: "pointer", textAlign: "left",
-                    }}>
-                      {REGION_FLAGS[region.code] ? `${REGION_FLAGS[region.code]} ` : ""}{region.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Language selector */}
-            <div style={{ flex: 1, position: "relative" }}>
-              <button
-                onClick={() => { setShowLangPicker(!showLangPicker); setShowRegionPicker(false); }}
-                disabled={analyzing}
-                style={selectorBtn(showLangPicker)}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M5 8l6 6" /><path d="M4 14l6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" />
-                  <path d="M22 22l-5-10-5 10" /><path d="M14 18h6" />
-                </svg>
-                <span style={{ flex: 1, textAlign: "left" }}>{langLabel}</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
-              </button>
-              {showLangPicker && (
-                <div style={{
-                  position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
-                  background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
-                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
-                }}>
-                  {LANGUAGES.map(lang => (
-                    <button key={lang.code} onClick={() => { setTargetLang(lang.code); setShowLangPicker(false); }} style={{
-                      display: "block", width: "100%", padding: "10px 16px", border: "none",
-                      background: targetLang === lang.code ? "var(--surface-highlight)" : "transparent",
-                      color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
-                      cursor: "pointer", textAlign: "left",
-                    }}>
-                      {lang.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+          {/* Region selector */}
+          <div style={{ position: "relative" }}>
+            <button
+              onClick={() => { setShowRegionPicker(!showRegionPicker); }}
+              disabled={analyzing}
+              style={selectorBtn(showRegionPicker)}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+              </svg>
+              <span style={{ flex: 1, textAlign: "left" }}>{regionLabel}</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+            </button>
+            {showRegionPicker && (
+              <div style={{
+                position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
+                background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
+              }}>
+                {REGIONS.map(region => (
+                  <button key={region.code} onClick={() => { setSelectedRegion(region.code); setShowRegionPicker(false); try { localStorage.setItem("nomameshi_region", region.code); } catch {} }} style={{
+                    display: "block", width: "100%", padding: "10px 16px", border: "none",
+                    background: selectedRegion === region.code ? "var(--surface-highlight)" : "transparent",
+                    color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                    cursor: "pointer", textAlign: "left",
+                  }}>
+                    {REGION_FLAGS[region.code] ? `${REGION_FLAGS[region.code]} ` : ""}{region.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Upload Area */}
