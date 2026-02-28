@@ -12,13 +12,13 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://menumenu-three.vercel.app";
+const siteUrl = "https://nomameshi.vercel.app";
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
-  themeColor: "#050505",
+  themeColor: "#FCFBF9",
 };
 
 export const metadata: Metadata = {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   },
   appleWebApp: {
     capable: true,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
     title: "Nomameshi",
   },
   formatDetection: {

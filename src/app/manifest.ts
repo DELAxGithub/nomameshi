@@ -2,8 +2,8 @@ import { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
     return {
-        name: 'menumenu',
-        short_name: 'menumenu',
+        name: 'Nomameshi',
+        short_name: 'Nomameshi',
         description: 'Don\'t just read the menu. See the flavor.',
         start_url: '/',
         display: 'standalone',

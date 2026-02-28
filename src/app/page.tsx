@@ -45,6 +45,11 @@ const REGIONS = [
   { code: "TW", label: "Taiwan" }
 ];
 
+const REGION_FLAGS: Record<string, string> = {
+  "JP": "🇯🇵", "IT": "🇮🇹", "ES": "🇪🇸", "FR": "🇫🇷",
+  "US": "🇺🇸", "KR": "🇰🇷", "TH": "🇹🇭", "TW": "🇹🇼",
+};
+
 const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
   "JP": {
     "Japanese": [
@@ -58,7 +63,7 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
       "💡 Tip: Never stick your chopsticks vertically into a bowl of rice; it's considered bad luck."
     ],
     "Chinese": [
-      "💡 提示：在日本，居酒屋通常会收取“小菜费”（座席费），而且没有付小费的习惯。",
+      "💡 提示：在日本，居酒屋通常会收取\"小菜费\"（座席费），而且没有付小费的习惯。",
       "💡 提示：吃拉面或荞麦面时发出声音是可以接受的，这表示食物很好吃！",
       "💡 提示：绝对不要把筷子垂直插在米饭上，这在日本文化中很不吉利。"
     ],
@@ -127,7 +132,7 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
     "Chinese": [
       "💡 提示：在安达卢西亚等地区，点饮料通常会免费赠送塔帕斯（Tapas）小吃！",
       "💡 提示：西班牙人的晚餐时间非常晚，通常在晚上9点或10点才开始。",
-      "💡 提示：通常是在座位上买单，可以对服务员说“La cuenta, por favor”（请结账）。"
+      "💡 提示：通常是在座位上买单，可以对服务员说\"La cuenta, por favor\"（请结账）。"
     ],
     "Korean": [
       "💡 팁: 안달루시아 등 일부 지역에서는 음료를 주문하면 무료 타파스가 나오는 경우가 있습니다!",
@@ -190,7 +195,7 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
     ],
     "Chinese": [
       "💡 提示：目前美国的标准小费比例大约在 18% 到 25% 之间。",
-      "💡 提示：美国餐厅的分量通常很大，如果吃不完，向服务员要一个“To-go box（打包盒）”是非常普遍的。",
+      "💡 提示：美国餐厅的分量通常很大，如果吃不完，向服务员要一个\"To-go box（打包盒）\"是非常普遍的。",
       "💡 提示：在许多休闲餐厅和快餐店，软饮是可以免费续杯（Refill）的。"
     ],
     "Korean": [
@@ -287,7 +292,7 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
     "Chinese": [
       "💡 提示：在台湾夜市，人们通常习惯在摊位旁的小桌子上迅速吃完，而不是边走边吃。",
       "💡 提示：在很多餐厅，水或茶通常是自助的。",
-      "💡 提示：结账通常是吃完后拿着单子去柜台“买单”，或者在某些小吃店是点餐时先付款。"
+      "💡 提示：结账通常是吃完后拿着单子去柜台\"买单\"，或者在某些小吃店是点餐时先付款。"
     ],
     "Korean": [
       "💡 팁: 대만 야시장에서는 돌아다니며 먹기보다 제공된 작은 테이블에서 빨리 먹는 것이 일반적입니다.",
@@ -318,8 +323,8 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
     ],
     "Chinese": [
       "💡 提示：探索地道美食是了解新文化最好的方式。",
-      "💡 提示：学会用当地语言说“谢谢”，能够拉近你与餐厅服务员的距离。",
-      "💡 提示：如果不确定点什么，不妨试试“主厨推荐”，这通常是旅行中最棒的美味回忆。"
+      "💡 提示：学会用当地语言说\"谢谢\"，能够拉近你与餐厅服务员的距离。",
+      "💡 提示：如果不确定点什么，不妨试试\"主厨推荐\"，这通常是旅行中最棒的美味回忆。"
     ],
     "Korean": [
       "💡 팁: 현지의 맛을 즐기는 것은 새로운 문화를 이해하는 가장 좋은 방법입니다!",
@@ -350,33 +355,55 @@ export default function Home() {
   const [selectedRegion, setSelectedRegion] = useState("auto");
   const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
   const [tipIndex, setTipIndex] = useState(0);
+  const [shuffledTipIndices, setShuffledTipIndices] = useState<number[]>([]);
 
-  // Rotation logic for tips when analyzing
+  // Shuffle tip indices when region or language changes
+  const getResolvedCountry = () => {
+    if (analyzing && detectedCountry) return detectedCountry;
+    return selectedRegion === "auto" ? null : selectedRegion;
+  };
+
+  useEffect(() => {
+    const country = getResolvedCountry();
+    const defaultCountry = "default";
+    const tipObj = CULTURAL_TIPS[country || defaultCountry] || CULTURAL_TIPS[defaultCountry];
+    const tipsArray = tipObj[targetLang] || tipObj["English"];
+    // Fisher-Yates shuffle
+    const indices = Array.from({ length: tipsArray.length }, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    setShuffledTipIndices(indices);
+    setTipIndex(0);
+  }, [selectedRegion, targetLang, detectedCountry]);
+
+  // Rotation logic for tips — rotate when analyzing OR when a specific region is selected
+  const shouldRotateTips = analyzing || selectedRegion !== "auto";
   useEffect(() => {
     let interval: NodeJS.Timeout;
-    if (analyzing) {
+    if (shouldRotateTips) {
       interval = setInterval(() => {
         setTipIndex((prev) => prev + 1);
-      }, 3500); // Rotate every 3.5 seconds
-    } else {
-      setTipIndex(0); // Reset when not analyzing
+      }, 3500);
     }
     return () => clearInterval(interval);
-  }, [analyzing]);
+  }, [shouldRotateTips]);
 
-  // Determine the tip language based on the targetLang code
   const getTipText = (countryCode: string | null) => {
     const defaultCountry = "default";
     const tipObj = CULTURAL_TIPS[countryCode || defaultCountry] || CULTURAL_TIPS[defaultCountry];
     const tipsArray = tipObj[targetLang] || tipObj["English"];
-    return tipsArray[tipIndex % tipsArray.length];
+    if (shuffledTipIndices.length === 0) return tipsArray[0];
+    const idx = shuffledTipIndices[tipIndex % shuffledTipIndices.length];
+    return tipsArray[idx];
   };
 
   const generateTableImage = async (sections: Section[]) => {
     setHeroLoading(true);
     setHeroError(null);
     const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 30000); // 30s timeout for image
+    const timeoutId = setTimeout(() => abortController.abort(), 30000);
 
     try {
       const allDishes = sections.flatMap(s => s.dishes.map(d => d.imageQuery));
@@ -420,7 +447,7 @@ export default function Home() {
     }
 
     const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 60000); // 60s timeout
+    const timeoutId = setTimeout(() => abortController.abort(), 60000);
 
     let fullText = "";
 
@@ -462,13 +489,11 @@ export default function Home() {
         }
       } catch (streamError: any) {
         console.warn("Stream interrupted, attempting partial parse. Error:", streamError);
-        // If we have no text at all, we must throw. Otherwise, proceed to parse whatever we have.
         if (!fullText.trim()) throw streamError;
       } finally {
         clearTimeout(timeoutId);
       }
 
-      // Final JSON parse after stream finishes
       const cleanedText = fullText.replace(/```json/g, "").replace(/```/g, "").trim();
       let data;
       try {
@@ -504,7 +529,7 @@ export default function Home() {
           data = JSON.parse(fixedText);
           console.log("Successfully repaired truncated JSON.");
         } catch (repairError) {
-          throw parseError; // Throw original error if repair fails
+          throw parseError;
         }
       }
 
@@ -532,11 +557,9 @@ export default function Home() {
       if (err.name === 'AbortError') {
         msg = "Analysis timed out. Please check your mobile connection or try a smaller image.";
       } else if (err.message && err.message.includes("Failed to fetch")) {
-        // Only show offline if we don't have partial text
         if (!fullText) {
           msg = "Internet connection lost. Please check your signal.";
         } else {
-          // We shouldn't hit this if fullText has content because of the streamError catch above, but just in case
           msg = "Connection lost, but showing partial results.";
         }
       } else if (err.message && err.message.includes("Load failed")) {
@@ -545,7 +568,6 @@ export default function Home() {
         msg = err.message || msg;
       }
 
-      // If we got partial text but not enough to even form 'sections' or 'dishes', show the error
       if (!fullText && !menu) {
         setError(msg);
       } else if (!menu) {
@@ -558,7 +580,6 @@ export default function Home() {
   };
 
   const blobToDataUrl = async (blob: Blob, maxEdge = 1280): Promise<string> => {
-    // Explicitly handle EXIF orientation to prevent rotated images from mobile devices
     const bitmap = await createImageBitmap(blob, { imageOrientation: "from-image" });
     const longestEdge = Math.max(bitmap.width, bitmap.height);
     const scale = longestEdge > maxEdge ? maxEdge / longestEdge : 1;
@@ -570,7 +591,6 @@ export default function Home() {
     const ctx = canvas.getContext("2d")!;
     ctx.drawImage(bitmap, 0, 0, w, h);
     bitmap.close();
-    // Use 0.70 JPEG compression to further reduce payload size for 5G/overseas networks
     return canvas.toDataURL("image/jpeg", 0.70);
   };
 
@@ -607,7 +627,7 @@ export default function Home() {
     setSaving(true);
     try {
       const canvas = await html2canvas(captureRef.current, {
-        backgroundColor: "#0A0A0A",
+        backgroundColor: "#1E2432",
         scale: 2,
         useCORS: true,
       });
@@ -651,7 +671,7 @@ export default function Home() {
       }
       lines.push("");
     }
-    lines.push("Translated by Nomameshi\nhttps://menumenu-three.vercel.app");
+    lines.push("Translated by Nomameshi\nhttps://nomameshi.vercel.app");
     const text = lines.join("\n");
 
     if (navigator.share) {
@@ -664,15 +684,32 @@ export default function Home() {
     }
   };
 
+  /* ===== Shared inline style objects ===== */
+
+  const selectorBtn = (active: boolean) => ({
+    display: "flex" as const, alignItems: "center" as const, gap: "10px",
+    flex: 1, padding: "12px 16px", borderRadius: "12px",
+    border: `1px solid ${active ? "var(--primary)" : "var(--border)"}`,
+    background: active ? "rgba(232,90,79,0.06)" : "var(--surface)",
+    color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+    fontWeight: 500 as const, cursor: "pointer" as const,
+  });
+
+  const regionLabel = REGIONS.find(r => r.code === selectedRegion)?.label || "Auto-Detect";
+  const langLabel = LANGUAGES.find(l => l.code === targetLang)?.label || "Japanese";
+
+  const [showRegionPicker, setShowRegionPicker] = useState(false);
+  const [showLangPicker, setShowLangPicker] = useState(false);
+
   return (
     <main className="container" style={{ minHeight: "100vh", padding: "2rem 0" }}>
       {/* Header */}
-      <div className="animate-fade-in no-print" style={{ textAlign: "center", marginBottom: "3rem", marginTop: "2rem" }}>
-        <h1 style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>
-          <span className="gradient-text">Nomameshi</span>
+      <div className="animate-fade-in no-print" style={{ marginBottom: "2rem", marginTop: "1.5rem" }}>
+        <h1 className="nomameshi-logo" style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}>
+          noma<span className="accent">meshi</span>
         </h1>
-        <p style={{ color: "var(--foreground-muted)", fontSize: "1rem" }}>
-          Don&apos;t just read the menu. <span style={{ color: "var(--foreground)" }}>See the flavor.</span>
+        <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem" }}>
+          Your local meal companion
         </p>
       </div>
 
@@ -688,117 +725,225 @@ export default function Home() {
       )}
 
       {!menu ? (
-        /* SCAN MODE */
-        <div className="animate-fade-in glass-panel" style={{ padding: "3rem 2rem", textAlign: "center" }}>
-          <div style={{ marginBottom: "2rem", position: "relative", display: "inline-block" }}>
+        /* ===== SCAN MODE ===== */
+        <div className="animate-fade-in" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+
+          {/* Region & Language selectors */}
+          <div style={{ display: "flex", gap: "12px", position: "relative" }}>
+            {/* Region selector */}
+            <div style={{ flex: 1, position: "relative" }}>
+              <button
+                onClick={() => { setShowRegionPicker(!showRegionPicker); setShowLangPicker(false); }}
+                disabled={analyzing}
+                style={selectorBtn(showRegionPicker)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                <span style={{ flex: 1, textAlign: "left" }}>{regionLabel}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+              </button>
+              {showRegionPicker && (
+                <div style={{
+                  position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
+                  background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
+                }}>
+                  {REGIONS.map(region => (
+                    <button key={region.code} onClick={() => { setSelectedRegion(region.code); setShowRegionPicker(false); }} style={{
+                      display: "block", width: "100%", padding: "10px 16px", border: "none",
+                      background: selectedRegion === region.code ? "var(--surface-highlight)" : "transparent",
+                      color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                      cursor: "pointer", textAlign: "left",
+                    }}>
+                      {REGION_FLAGS[region.code] ? `${REGION_FLAGS[region.code]} ` : ""}{region.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Language selector */}
+            <div style={{ flex: 1, position: "relative" }}>
+              <button
+                onClick={() => { setShowLangPicker(!showLangPicker); setShowRegionPicker(false); }}
+                disabled={analyzing}
+                style={selectorBtn(showLangPicker)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--secondary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 8l6 6" /><path d="M4 14l6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" />
+                  <path d="M22 22l-5-10-5 10" /><path d="M14 18h6" />
+                </svg>
+                <span style={{ flex: 1, textAlign: "left" }}>{langLabel}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
+              </button>
+              {showLangPicker && (
+                <div style={{
+                  position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
+                  background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
+                }}>
+                  {LANGUAGES.map(lang => (
+                    <button key={lang.code} onClick={() => { setTargetLang(lang.code); setShowLangPicker(false); }} style={{
+                      display: "block", width: "100%", padding: "10px 16px", border: "none",
+                      background: targetLang === lang.code ? "var(--surface-highlight)" : "transparent",
+                      color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                      cursor: "pointer", textAlign: "left",
+                    }}>
+                      {lang.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Upload Area */}
+          <div style={{
+            background: "var(--surface)", border: "1.5px solid var(--border)", borderRadius: "20px",
+            padding: "40px 32px", display: "flex", flexDirection: "column", alignItems: "center",
+            gap: "20px", minHeight: "280px", justifyContent: "center",
+          }}>
+            {/* Camera icon circle */}
             <div style={{
-              position: "absolute", inset: "-15px", borderRadius: "50%",
-              border: "2px solid var(--primary)", opacity: analyzing ? 0.5 : 0,
-              animation: analyzing ? "pulse 1.5s infinite" : "none"
-            }}></div>
-            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke={analyzing ? "var(--primary)" : "#555"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-              <circle cx="12" cy="13" r="4" />
-            </svg>
-          </div>
+              width: "80px", height: "80px", borderRadius: "50%", background: "var(--surface-highlight)",
+              display: "flex", alignItems: "center", justifyContent: "center", position: "relative",
+            }}>
+              {analyzing ? (
+                <div style={{ width: "32px", height: "32px", border: "3px solid rgba(232,90,79,0.2)", borderRadius: "50%", borderTopColor: "var(--primary)", animation: "spin 1s ease-in-out infinite" }} />
+              ) : (
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+              )}
+            </div>
 
-          <label htmlFor="menu-upload" className="btn-primary" style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: "100%", opacity: analyzing ? 0.8 : 1,
-            pointerEvents: analyzing ? "none" : "auto", gap: "10px"
-          }}>
-            {analyzing ? (<><div className="loading-spinner"></div>Analyzing Menu...</>) : "Examine Menu"}
-          </label>
-          <input id="menu-upload" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }} disabled={analyzing} />
+            <div style={{ textAlign: "center" }}>
+              <h2 style={{ fontSize: "1.25rem", fontWeight: 600, marginBottom: "6px", color: "var(--foreground)" }}>
+                {analyzing ? "Analyzing menu..." : "Scan a menu"}
+              </h2>
+              <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem" }}>
+                {analyzing ? "Detecting dishes and translating" : "Take a photo or upload from gallery"}
+              </p>
+            </div>
 
-          <button onClick={handlePaste} disabled={analyzing} style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            width: "100%", marginTop: "0.75rem", padding: "0.85rem 1.5rem",
-            background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)",
-            borderRadius: "12px", color: "var(--foreground-muted)", fontSize: "1rem",
-            cursor: analyzing ? "default" : "pointer", opacity: analyzing ? 0.5 : 1, gap: "8px",
-          }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-            </svg>
-            Paste Screenshot
-          </button>
+            {/* Buttons row */}
+            <div style={{ display: "flex", gap: "12px", width: "100%" }}>
+              <label htmlFor="menu-upload" style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                padding: "14px 20px", borderRadius: "12px", background: "var(--primary)", color: "#FFFFFF",
+                fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "0.95rem",
+                cursor: analyzing ? "default" : "pointer", opacity: analyzing ? 0.6 : 1,
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                  <circle cx="12" cy="13" r="4" />
+                </svg>
+                Scan
+              </label>
+              <input id="menu-upload" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }} disabled={analyzing} />
 
-          {/* Region selector */}
-          <div style={{ marginTop: "2rem" }}>
-            <p style={{ fontSize: "0.8rem", color: "var(--foreground-muted)", marginBottom: "0.5rem" }}>Where are you eating?</p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px" }}>
-              {REGIONS.map(region => (
-                <button key={region.code} onClick={() => setSelectedRegion(region.code)} disabled={analyzing} style={{
-                  padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
-                  border: selectedRegion === region.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
-                  background: selectedRegion === region.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
-                  color: selectedRegion === region.code ? "var(--primary)" : "var(--foreground-muted)",
-                  opacity: analyzing ? 0.5 : 1,
-                }}>
-                  {region.label}
-                </button>
-              ))}
+              <button onClick={handlePaste} disabled={analyzing} style={{
+                flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
+                padding: "14px 20px", borderRadius: "12px", background: "var(--surface)",
+                border: "1px solid var(--border)", color: "var(--foreground)",
+                fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "0.95rem",
+                cursor: analyzing ? "default" : "pointer", opacity: analyzing ? 0.6 : 1,
+              }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+                </svg>
+                Upload
+              </button>
             </div>
           </div>
 
-          {/* Language selector */}
-          <div style={{ marginTop: "1.5rem" }}>
-            <p style={{ fontSize: "0.8rem", color: "var(--foreground-muted)", marginBottom: "0.5rem" }}>Translate menu into</p>
-            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "6px" }}>
-              {LANGUAGES.map(lang => (
-                <button key={lang.code} onClick={() => setTargetLang(lang.code)} disabled={analyzing} style={{
-                  padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem", cursor: "pointer",
-                  border: targetLang === lang.code ? "1px solid var(--primary)" : "1px solid rgba(255,255,255,0.12)",
-                  background: targetLang === lang.code ? "rgba(255,75,43,0.15)" : "rgba(255,255,255,0.04)",
-                  color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
-                  opacity: analyzing ? 0.5 : 1,
-                }}>
-                  {lang.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
+          {/* Tips Section */}
           {analyzing ? (
-            <div className="animate-fade-in" style={{ marginTop: "1.5rem", padding: "1rem", background: "rgba(255,255,255,0.02)", borderRadius: "12px", border: "1px dashed rgba(255,255,255,0.1)" }}>
-              <p style={{ fontSize: "0.75rem", color: "var(--primary)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.5rem" }}>
-                {detectedCountry ? `Detected Region: ${detectedCountry}` : "Detecting Region..."}
-              </p>
-              {/* key forces a re-render/animation on index change */}
-              <p key={tipIndex} className="animate-fade-in" style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: "1.4", fontStyle: "italic", minHeight: "2.8rem" }}>
-                {getTipText(detectedCountry)}
-              </p>
-              <div style={{ marginTop: "1rem", paddingTop: "0.5rem", borderTop: "1px dashed rgba(255,255,255,0.1)", textAlign: "center" }}>
-                <p style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.4)", margin: 0 }}>
-                  ※以降表示される料理の説明文はAIによる参考情報（推論）です。
-                </p>
+            <div className="animate-fade-in" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {/* LOCAL TIP header */}
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{ width: "24px", height: "1px", background: "var(--accent)" }} />
+                <span style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "2px", color: "var(--accent)", fontFamily: "var(--font-heading)" }}>
+                  LOCAL TIP
+                </span>
               </div>
+
+              {/* Tip card */}
+              <div style={{
+                background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
+                padding: "20px",
+              }}>
+                <p key={tipIndex} className="animate-fade-in" style={{
+                  fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5,
+                  minHeight: "3rem", marginBottom: "12px",
+                }}>
+                  {getTipText(detectedCountry)}
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  {detectedCountry && REGION_FLAGS[detectedCountry] && (
+                    <span style={{ fontSize: "0.9rem" }}>{REGION_FLAGS[detectedCountry]}</span>
+                  )}
+                  <span style={{ fontSize: "0.75rem", color: "var(--foreground-muted)", fontWeight: 500 }}>
+                    {detectedCountry ? REGIONS.find(r => r.code === detectedCountry)?.label || detectedCountry : "Detecting..."}
+                  </span>
+                </div>
+              </div>
+
+              {/* AI disclaimer */}
+              <p style={{ fontSize: "0.65rem", color: "var(--foreground-muted)", textAlign: "center" }}>
+                ※以降表示される料理の説明文はAIによる参考情報（推論）です。
+              </p>
             </div>
           ) : (
-            <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "#666" }}>
-              Take a photo or paste a screenshot.
-            </p>
+            /* Tip section when idle */
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div style={{ width: "24px", height: "1px", background: "var(--accent)" }} />
+                <span style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "2px", color: "var(--accent)", fontFamily: "var(--font-heading)" }}>
+                  LOCAL TIP
+                </span>
+              </div>
+              <div style={{
+                background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
+                padding: "20px",
+              }}>
+                <p key={tipIndex} className="animate-fade-in" style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5, marginBottom: "12px" }}>
+                  {getTipText(selectedRegion === "auto" ? null : selectedRegion)}
+                </p>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  {selectedRegion !== "auto" && REGION_FLAGS[selectedRegion] && (
+                    <span style={{ fontSize: "0.9rem" }}>{REGION_FLAGS[selectedRegion]}</span>
+                  )}
+                  <span style={{ fontSize: "0.75rem", color: "var(--foreground-muted)", fontWeight: 500 }}>
+                    {selectedRegion === "auto" ? "Select a region for tips" : REGIONS.find(r => r.code === selectedRegion)?.label}
+                  </span>
+                </div>
+              </div>
+            </div>
           )}
         </div>
       ) : (
-        /* MENU RESULT MODE */
+        /* ===== MENU RESULT MODE ===== */
         <div className="animate-fade-in">
           {/* Toolbar */}
-          <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.5rem" }}>
+          <div className="no-print" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
             <button onClick={() => { setMenu(null); setHeroImage(null); }} style={{
               background: "none", border: "none", color: "var(--foreground-muted)",
-              cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "0.9rem"
+              cursor: "pointer", display: "flex", alignItems: "center", gap: "5px", fontSize: "0.9rem",
+              fontFamily: "var(--font-heading)",
             }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M12 19l-7-7 7-7" /></svg>
-              Scan another
+              Back
             </button>
             <div style={{ display: "flex", gap: "8px" }}>
               <button onClick={handleShare} style={{
-                background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "8px", color: "var(--foreground-muted)", cursor: "pointer",
-                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px"
+                background: "var(--surface)", border: "1px solid var(--border)",
+                borderRadius: "10px", color: "var(--foreground-muted)", cursor: "pointer",
+                padding: "8px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px",
+                fontFamily: "var(--font-heading)",
               }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" /><polyline points="16 6 12 2 8 6" /><line x1="12" y1="2" x2="12" y2="15" />
@@ -806,10 +951,10 @@ export default function Home() {
                 Share
               </button>
               <button onClick={handleSaveImage} disabled={saving} style={{
-                background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
-                borderRadius: "8px", color: "var(--foreground-muted)", cursor: saving ? "default" : "pointer",
-                padding: "6px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px",
-                opacity: saving ? 0.5 : 1,
+                background: "var(--surface)", border: "1px solid var(--border)",
+                borderRadius: "10px", color: "var(--foreground-muted)", cursor: saving ? "default" : "pointer",
+                padding: "8px 14px", fontSize: "0.85rem", display: "flex", alignItems: "center", gap: "6px",
+                opacity: saving ? 0.5 : 1, fontFamily: "var(--font-heading)",
               }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -825,8 +970,8 @@ export default function Home() {
             {(heroLoading || heroImage || heroError) && (
               <div className="menu-bg-layer no-print">
                 {heroLoading ? (
-                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(10,10,10,0.8)" }}>
-                    <div className="loading-spinner"></div>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(30,36,50,0.6)" }}>
+                    <div className="loading-spinner" style={{ borderColor: "rgba(255,255,255,0.2)", borderTopColor: "#FFFFFF" }}></div>
                   </div>
                 ) : heroImage ? (
                   <>
@@ -834,23 +979,22 @@ export default function Home() {
                     <img src={heroImage} alt="Table spread background" className="menu-bg-image animate-fade-in" />
                     <div style={{
                       position: "absolute", bottom: "12px", right: "12px", zIndex: 5,
-                      background: "rgba(0,0,0,0.6)", color: "rgba(255,255,255,0.8)",
-                      padding: "4px 8px", borderRadius: "4px", fontSize: "0.7rem",
+                      background: "rgba(0,0,0,0.5)", color: "rgba(255,255,255,0.75)",
+                      padding: "4px 8px", borderRadius: "4px", fontSize: "0.65rem",
                       backdropFilter: "blur(4px)", display: "flex", alignItems: "center", gap: "4px"
                     }}>
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
-                      ★ AI Generated Image
+                      AI Generated
                     </div>
                   </>
                 ) : heroError ? (
-                  <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(10,10,10,0.8)" }}>
-                    <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem", marginBottom: "1rem" }}>{heroError}</p>
+                  <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "rgba(30,36,50,0.7)" }}>
+                    <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.85rem", marginBottom: "1rem" }}>{heroError}</p>
                     <button onClick={() => menu && generateTableImage(menu.sections)} style={{
-                      background: "transparent", border: "1px solid rgba(255,255,255,0.2)",
-                      color: "var(--foreground)", padding: "8px 16px", borderRadius: "20px",
-                      cursor: "pointer", fontSize: "0.85rem"
+                      background: "transparent", border: "1px solid rgba(255,255,255,0.25)",
+                      color: "#FFFFFF", padding: "8px 16px", borderRadius: "10px",
+                      cursor: "pointer", fontSize: "0.85rem", fontFamily: "var(--font-heading)",
                     }}>
-                      Retry Image Generation
+                      Retry
                     </button>
                   </div>
                 ) : null}
@@ -861,7 +1005,7 @@ export default function Home() {
             <div className="menu-card">
               {/* Restaurant Header */}
               {menu.restaurantName && (
-                <div className="menu-header" style={{ paddingTop: "1rem" }}>
+                <div className="menu-header">
                   <h2 className="menu-restaurant-name">{menu.restaurantName}</h2>
                   {menu.restaurantVibe && (
                     <p className="menu-vibe">{menu.restaurantVibe}</p>
@@ -900,7 +1044,7 @@ export default function Home() {
 
               {/* Footer */}
               <div className="menu-footer">
-                <p>Translated by <span className="gradient-text">Nomameshi</span></p>
+                <p>Translated by <span className="nomameshi-logo-reversed" style={{ fontSize: "inherit" }}>noma<span className="accent">meshi</span></span></p>
               </div>
             </div>
           </div>{/* /captureRef */}
