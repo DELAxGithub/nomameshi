@@ -1,15 +1,18 @@
 :root {
-  --background: #050505;
-  --surface: #121212;
-  --surface-highlight: #1E1E1E;
-  --foreground: #EDEDED;
-  --foreground-muted: #A1A1AA;
-  --primary: #FF4B2B;
-  --primary-glow: rgba(255, 75, 43, 0.4);
-  --secondary: #FF416C;
-  --accent: #FFD700;
-  --gradient-main: linear-gradient(135deg, #FF4B2B 0%, #FF416C 100%);
-  --font-body: var(--font-inter), sans-serif;
+  /* ===== NOMAMESHI WARM REBRAND ===== */
+  --background: #FCFBF9;
+  --surface: #FFFFFF;
+  --surface-highlight: #F5F4F2;
+  --foreground: #1E2432;
+  --foreground-muted: #8A8A8A;
+  --primary: #E85A4F;
+  --primary-glow: rgba(232, 90, 79, 0.2);
+  --secondary: #8A9178;
+  --accent: #C9A86C;
+  --accent-light: #D4C4A8;
+  --gradient-main: linear-gradient(135deg, #E85A4F 0%, #D94A3F 100%);
+  --border: #EFEFEF;
+  --font-body: var(--font-outfit), var(--font-inter), sans-serif;
   --font-heading: var(--font-outfit), sans-serif;
   --radius-sm: 8px;
   --radius-md: 16px;
@@ -43,9 +46,9 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
 }
 
 .container {
@@ -55,31 +58,59 @@ h6 {
 }
 
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
 }
 
 .gradient-text {
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
+}
+
+/* ===== LOGO WORDMARK ===== */
+.nomameshi-logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--foreground);
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  display: inline-block;
+  cursor: default;
+  user-select: none;
+}
+
+.nomameshi-logo .accent {
+  color: var(--primary);
+}
+
+/* Reversed version for dark/photo backgrounds */
+.nomameshi-logo-reversed {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: -0.04em;
+  text-transform: lowercase;
+  display: inline-block;
+  cursor: default;
+  user-select: none;
+}
+
+.nomameshi-logo-reversed .accent {
+  color: var(--primary);
 }
 
 .btn-primary {
-  background: var(--gradient-main);
+  background: var(--primary);
   color: white;
   border: none;
-  padding: 16px 32px;
-  border-radius: var(--radius-lg);
+  padding: 14px 24px;
+  border-radius: 12px;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: 0 2px 8px var(--primary-glow);
   width: 100%;
   text-align: center;
 }
@@ -136,7 +167,7 @@ h6 {
 }
 
 .skeleton {
-  background: linear-gradient(90deg, #1e1e1e 25%, #2a2a2a 50%, #1e1e1e 75%);
+  background: linear-gradient(90deg, #F5F4F2 25%, #EFEFEF 50%, #F5F4F2 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: var(--radius-sm);
@@ -145,16 +176,16 @@ h6 {
 .loading-spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
+  border: 3px solid rgba(232, 90, 79, 0.2);
   border-radius: 50%;
   border-top-color: var(--primary);
   animation: spin 1s ease-in-out infinite;
 }
 
 .error-message {
-  background: rgba(255, 65, 108, 0.1);
-  border: 1px solid var(--secondary);
-  color: var(--secondary);
+  background: rgba(232, 90, 79, 0.08);
+  border: 1px solid var(--primary);
+  color: var(--primary);
   padding: 1rem;
   border-radius: var(--radius-sm);
   margin-bottom: 1rem;
@@ -169,7 +200,7 @@ h6 {
 .menu-result-container {
   position: relative;
   width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
   margin-bottom: 2rem;
 }
@@ -189,33 +220,63 @@ h6 {
   object-fit: cover;
 }
 
+/* Gradient overlay on background image — very light to keep food vivid */
+.menu-bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 100%);
+  z-index: 1;
+}
+
+/* === Liquid Glass card — blur=0, food fully visible === */
 .menu-card {
   position: relative;
   z-index: 10;
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: saturate(200%);
+  -webkit-backdrop-filter: saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 20px;
+  margin: 16px;
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15),
+              inset 0 2px 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Inner shine — glass surface light refraction */
+.menu-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.20) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 60%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
 
 .menu-header {
   text-align: center;
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 1.5rem 1.5rem 1.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .menu-restaurant-name {
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
+  font-size: 1.4rem;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--foreground);
+  color: #FFFFFF;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
 }
 
 .menu-vibe {
-  margin-top: 0.4rem;
+  margin-top: 0.3rem;
   font-size: 0.85rem;
-  color: var(--foreground-muted);
+  color: rgba(255, 255, 255, 0.65);
   font-style: italic;
 }
 
@@ -225,13 +286,13 @@ h6 {
 }
 
 .menu-section+.menu-section {
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .menu-section-header {
   margin-bottom: 1rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.12);
 }
 
 .menu-section-title {
@@ -240,11 +301,12 @@ h6 {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-weight: 600;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .menu-section-original {
   font-size: 0.75rem;
-  color: var(--foreground-muted);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.05em;
 }
 
@@ -257,7 +319,7 @@ h6 {
 
 .menu-item {
   padding: 0.6rem 0;
-  border-bottom: 1px dotted rgba(255, 255, 255, 0.04);
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.12);
 }
 
 .menu-item:last-child {
@@ -287,38 +349,41 @@ h6 {
 .menu-item-translated {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--foreground);
+  color: #FFFFFF;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 .menu-item-original {
   font-size: 0.75rem;
-  color: var(--foreground-muted);
+  color: rgba(255, 255, 255, 0.65);
   font-style: italic;
 }
 
 .menu-item-price {
-  font-size: 0.9rem;
-  color: var(--accent);
+  font-size: 0.85rem;
+  color: #FFFFFF;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
+  background: var(--primary);
+  padding: 4px 10px;
+  border-radius: 6px;
 }
 
 .menu-item-description {
   font-size: 0.8rem;
-  color: var(--foreground-muted);
-  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.5;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
-
-/* Hero Table Image (Removed old static block styles) */
 
 /* Footer */
 .menu-footer {
   text-align: center;
   padding: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
   font-size: 0.75rem;
-  color: var(--foreground-muted);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* ===== PRINT STYLES ===== */
@@ -355,6 +420,7 @@ h6 {
     border: 1px solid #ddd;
     box-shadow: none;
     border-radius: 0 !important;
+    margin: 0 !important;
   }
 
   .menu-restaurant-name {
@@ -378,7 +444,8 @@ h6 {
   }
 
   .menu-item-price {
-    color: #8B6914 !important;
+    color: #fff !important;
+    background: #8B6914 !important;
   }
 
   .menu-item-description {
@@ -394,9 +461,7 @@ h6 {
   }
 
   .gradient-text {
-    color: #FF4B2B !important;
-    background: none !important;
-    -webkit-background-clip: initial !important;
+    color: #E85A4F !important;
   }
 
   .menu-section-header {
