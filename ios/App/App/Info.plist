@@ -49,6 +49,8 @@
 	<string>Nomameshi needs camera access to photograph restaurant menus for translation.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Nomameshi needs photo library access to select menu images for translation.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Nomameshi needs permission to save captured menu photos.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 </dict>

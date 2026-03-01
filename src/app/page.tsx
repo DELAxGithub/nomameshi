@@ -643,8 +643,11 @@ export default function Home() {
         if (photo.dataUrl) {
           await analyzeImage(photo.dataUrl);
         }
-      } catch {
-        // user cancelled
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (msg.toLowerCase().includes("cancel")) return;
+        console.error("Camera error:", msg);
+        alert("Camera error: " + msg);
       }
     } else {
       document.getElementById("menu-upload")?.click();
