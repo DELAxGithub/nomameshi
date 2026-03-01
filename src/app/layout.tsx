@@ -18,6 +18,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
+  viewportFit: "cover",
   themeColor: "#FCFBF9",
 };
 
@@ -32,6 +33,7 @@ export const metadata: Metadata = {
     siteName: "Nomameshi",
     type: "website",
     locale: "en_US",
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Nomameshi — See the Flavor" }],
   },
   twitter: {
     card: "summary_large_image",
@@ -55,6 +57,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className={`${inter.variable} ${outfit.variable}`}>
         {children}
       </body>

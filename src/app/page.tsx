@@ -2,6 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
+import {
+  analyzeMenuImage,
+  generateTableImage as generateTableImageService,
+} from "@/lib/gemini-service";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { Share as CapShare } from "@capacitor/share";
+import { StatusBar, Style } from "@capacitor/status-bar";
+import { isNative } from "@/lib/platform";
 
 interface Dish {
   originalName: string;
@@ -417,6 +425,9 @@ export default function Home() {
       if (savedRegion && REGIONS.some(r => r.code === savedRegion)) setSelectedRegion(savedRegion);
       if (savedLang && LANGUAGES.some(l => l.code === savedLang)) setTargetLang(savedLang);
     } catch {}
+    if (isNative()) {
+      StatusBar.setStyle({ style: Style.Light }).catch(() => {});
+    }
   }, []);
   const [detectedCountry, setDetectedCountry] = useState<string | null>(null);
   const [tipIndex, setTipIndex] = useState(0);
@@ -467,32 +478,19 @@ export default function Home() {
   const generateTableImage = async (sections: Section[]) => {
     setHeroLoading(true);
     setHeroError(null);
-    const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 30000);
 
     try {
       const allDishes = sections.flatMap(s => s.dishes.map(d => d.imageQuery));
-      const res = await fetch("/api/search-image", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dishes: allDishes }),
-        signal: abortController.signal,
-      });
-      const data = await res.json();
-      if (data.imageUrl) {
-        setHeroImage(data.imageUrl);
+      const imageUrl = await generateTableImageService(allDishes);
+      if (imageUrl) {
+        setHeroImage(imageUrl);
       } else {
         setHeroError("Failed to generate image.");
       }
     } catch (err: any) {
       console.error("Table image generation failed:", err);
-      if (err.name === 'AbortError') {
-        setHeroError("Image generation timed out. Your connection might be slow.");
-      } else {
-        setHeroError("Failed to generate image.");
-      }
+      setHeroError("Failed to generate image.");
     } finally {
-      clearTimeout(timeoutId);
       setHeroLoading(false);
     }
   };
@@ -511,52 +509,21 @@ export default function Home() {
       return;
     }
 
-    const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 60000);
-
     let fullText = "";
 
     try {
-      const res = await fetch("/api/analyze", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ image: dataUrl, targetLang, selectedRegion }),
-        signal: abortController.signal,
-      });
-
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("API Error:", errorText);
-        throw new Error(`Analysis failed: ${res.status}`);
-      }
-
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("Stream not supported");
-
-      const decoder = new TextDecoder("utf-8");
       let countryFound = false;
 
-      try {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
+      for await (const chunk of analyzeMenuImage(dataUrl, targetLang, selectedRegion)) {
+        fullText += chunk;
 
-          const chunk = decoder.decode(value, { stream: true });
-          fullText += chunk;
-
-          if (!countryFound) {
-            const match = fullText.match(/"detected_country_code"\s*:\s*"([A-Z]{2})"/);
-            if (match) {
-              setDetectedCountry(match[1]);
-              countryFound = true;
-            }
+        if (!countryFound) {
+          const match = fullText.match(/"detected_country_code"\s*:\s*"([A-Z]{2})"/);
+          if (match) {
+            setDetectedCountry(match[1]);
+            countryFound = true;
           }
         }
-      } catch (streamError: any) {
-        console.warn("Stream interrupted, attempting partial parse. Error:", streamError);
-        if (!fullText.trim()) throw streamError;
-      } finally {
-        clearTimeout(timeoutId);
       }
 
       const cleanedText = fullText.replace(/```json/g, "").replace(/```/g, "").trim();
@@ -615,20 +582,15 @@ export default function Home() {
       setMenu(menuData);
       generateTableImage(menuData.sections);
     } catch (err: any) {
-      clearTimeout(timeoutId);
       console.error("Failed to analyze", err);
 
       let msg = "Analysis failed. Please try again.";
-      if (err.name === 'AbortError') {
-        msg = "Analysis timed out. Please check your mobile connection or try a smaller image.";
-      } else if (err.message && err.message.includes("Failed to fetch")) {
+      if (err.message && err.message.includes("Failed to fetch")) {
         if (!fullText) {
           msg = "Internet connection lost. Please check your signal.";
         } else {
           msg = "Connection lost, but showing partial results.";
         }
-      } else if (err.message && err.message.includes("Load failed")) {
-        msg = "Network connection dropped by 5G carrier. Please try again on Wi-Fi or with a smaller image.";
       } else {
         msg = err.message || msg;
       }
@@ -664,6 +626,29 @@ export default function Home() {
     if (!file) return;
     const dataUrl = await blobToDataUrl(file);
     await analyzeImage(dataUrl);
+  };
+
+  const handleScan = async () => {
+    if (analyzing) return;
+    if (isNative()) {
+      try {
+        const photo = await Camera.getPhoto({
+          quality: 80,
+          allowEditing: false,
+          resultType: CameraResultType.DataUrl,
+          source: CameraSource.Prompt,
+          width: 1280,
+          height: 1280,
+        });
+        if (photo.dataUrl) {
+          await analyzeImage(photo.dataUrl);
+        }
+      } catch {
+        // user cancelled
+      }
+    } else {
+      document.getElementById("menu-upload")?.click();
+    }
   };
 
   const handlePaste = async () => {
@@ -739,7 +724,11 @@ export default function Home() {
     lines.push("Translated by Nomameshi\nhttps://nomameshi.vercel.app");
     const text = lines.join("\n");
 
-    if (navigator.share) {
+    if (isNative()) {
+      try {
+        await CapShare.share({ title: "Nomameshi", text });
+      } catch { /* user cancelled */ }
+    } else if (navigator.share) {
       try {
         await navigator.share({ title: "Nomameshi", text });
       } catch { /* user cancelled */ }
@@ -874,18 +863,19 @@ export default function Home() {
 
             {/* Buttons row */}
             <div style={{ display: "flex", gap: "12px", width: "100%" }}>
-              <label htmlFor="menu-upload" style={{
+              <button onClick={handleScan} disabled={analyzing} style={{
                 flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 padding: "14px 20px", borderRadius: "12px", background: "var(--primary)", color: "#FFFFFF",
                 fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: "0.95rem",
                 cursor: analyzing ? "default" : "pointer", opacity: analyzing ? 0.6 : 1,
+                border: "none",
               }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
                   <circle cx="12" cy="13" r="4" />
                 </svg>
                 Scan
-              </label>
+              </button>
               <input id="menu-upload" type="file" accept="image/*" onChange={handleFileUpload} style={{ display: "none" }} disabled={analyzing} />
 
               <button onClick={handlePaste} disabled={analyzing} style={{
