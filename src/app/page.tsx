@@ -450,7 +450,7 @@ export default function Home() {
     if (shouldRotateTips) {
       interval = setInterval(() => {
         setTipIndex((prev) => prev + 1);
-      }, 3500);
+      }, 4500);
     }
     return () => clearInterval(interval);
   }, [shouldRotateTips]);
@@ -916,9 +916,9 @@ export default function Home() {
               </div>
 
               {/* Tip card */}
-              <div style={{
+              <div onClick={() => setTipIndex((prev) => prev + 1)} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
-                padding: "20px",
+                padding: "20px", cursor: "pointer",
               }}>
                 <p key={tipIndex} className="animate-fade-in" style={{
                   fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5,
@@ -950,9 +950,9 @@ export default function Home() {
                   LOCAL TIP
                 </span>
               </div>
-              <div style={{
+              <div onClick={() => setTipIndex((prev) => prev + 1)} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
-                padding: "20px",
+                padding: "20px", cursor: "pointer",
               }}>
                 <p key={tipIndex} className="animate-fade-in" style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5, marginBottom: "12px" }}>
                   {getTipText(selectedRegion === "auto" ? null : selectedRegion)}
