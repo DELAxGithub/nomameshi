@@ -747,52 +747,55 @@ export default function Home() {
         /* ===== SCAN MODE ===== */
         <div className="animate-fade-in" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 
-          {/* Region selector */}
-          <div style={{ position: "relative" }}>
-            <button
-              onClick={() => { setShowRegionPicker(!showRegionPicker); }}
-              disabled={analyzing}
-              style={selectorBtn(showRegionPicker)}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
-              </svg>
-              <span style={{ flex: 1, textAlign: "left" }}>{regionLabel}</span>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
-            </button>
-            {showRegionPicker && (
-              <div style={{
-                position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
-                background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
-              }}>
-                {REGIONS.map(region => (
-                  <button key={region.code} onClick={() => { setSelectedRegion(region.code); setShowRegionPicker(false); try { localStorage.setItem("nomameshi_region", region.code); } catch {} }} style={{
-                    display: "block", width: "100%", padding: "10px 16px", border: "none",
-                    background: selectedRegion === region.code ? "var(--surface-highlight)" : "transparent",
-                    color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
-                    cursor: "pointer", textAlign: "left",
-                  }}>
-                    {REGION_FLAGS[region.code] ? `${REGION_FLAGS[region.code]} ` : ""}{region.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Language toggle */}
-          <div style={{ display: "flex", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px", overflow: "hidden" }}>
-            {LANGUAGES.map(lang => (
-              <button key={lang.code} onClick={() => { setTargetLang(lang.code); try { localStorage.setItem("nomameshi_lang", lang.code); } catch {} }} disabled={analyzing} style={{
-                flex: 1, padding: "10px 16px", border: "none", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
-                fontWeight: targetLang === lang.code ? 600 : 400, cursor: "pointer",
-                background: targetLang === lang.code ? "var(--surface-highlight)" : "transparent",
-                color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
-                transition: "all 0.2s ease",
-              }}>
-                {lang.label}
+          {/* Region & Language selectors */}
+          <div style={{ display: "flex", gap: "10px" }}>
+            {/* Region selector */}
+            <div style={{ position: "relative", flex: 1 }}>
+              <button
+                onClick={() => { setShowRegionPicker(!showRegionPicker); }}
+                disabled={analyzing}
+                style={selectorBtn(showRegionPicker)}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" />
+                </svg>
+                <span style={{ flex: 1, textAlign: "left" }}>{regionLabel}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ABABAB" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
               </button>
-            ))}
+              {showRegionPicker && (
+                <div style={{
+                  position: "absolute", top: "calc(100% + 6px)", left: 0, right: 0, zIndex: 50,
+                  background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.08)", overflow: "hidden",
+                }}>
+                  {REGIONS.map(region => (
+                    <button key={region.code} onClick={() => { setSelectedRegion(region.code); setShowRegionPicker(false); try { localStorage.setItem("nomameshi_region", region.code); } catch {} }} style={{
+                      display: "block", width: "100%", padding: "10px 16px", border: "none",
+                      background: selectedRegion === region.code ? "var(--surface-highlight)" : "transparent",
+                      color: "var(--foreground)", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                      cursor: "pointer", textAlign: "left",
+                    }}>
+                      {REGION_FLAGS[region.code] ? `${REGION_FLAGS[region.code]} ` : ""}{region.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Language toggle */}
+            <div style={{ display: "flex", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px", overflow: "hidden" }}>
+              {LANGUAGES.map(lang => (
+                <button key={lang.code} onClick={() => { setTargetLang(lang.code); try { localStorage.setItem("nomameshi_lang", lang.code); } catch {} }} disabled={analyzing} style={{
+                  padding: "10px 14px", border: "none", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                  fontWeight: targetLang === lang.code ? 600 : 400, cursor: "pointer",
+                  background: targetLang === lang.code ? "var(--surface-highlight)" : "transparent",
+                  color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
+                  transition: "all 0.2s ease",
+                }}>
+                  {lang.label}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Upload Area */}
