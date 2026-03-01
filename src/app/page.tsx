@@ -27,10 +27,6 @@ interface MenuResult {
 const LANGUAGES = [
   { code: "Japanese", label: "日本語" },
   { code: "English", label: "English" },
-  { code: "Chinese", label: "中文" },
-  { code: "Korean", label: "한국어" },
-  { code: "Spanish", label: "Español" },
-  { code: "French", label: "Français" },
 ];
 
 const REGIONS = [
@@ -782,6 +778,21 @@ export default function Home() {
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Language toggle */}
+          <div style={{ display: "flex", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "12px", overflow: "hidden" }}>
+            {LANGUAGES.map(lang => (
+              <button key={lang.code} onClick={() => { setTargetLang(lang.code); try { localStorage.setItem("nomameshi_lang", lang.code); } catch {} }} disabled={analyzing} style={{
+                flex: 1, padding: "10px 16px", border: "none", fontSize: "0.9rem", fontFamily: "var(--font-heading)",
+                fontWeight: targetLang === lang.code ? 600 : 400, cursor: "pointer",
+                background: targetLang === lang.code ? "var(--surface-highlight)" : "transparent",
+                color: targetLang === lang.code ? "var(--primary)" : "var(--foreground-muted)",
+                transition: "all 0.2s ease",
+              }}>
+                {lang.label}
+              </button>
+            ))}
           </div>
 
           {/* Upload Area */}
