@@ -128,8 +128,16 @@ export default function PrivacyPolicy() {
           Contact
         </h2>
         <p>
-          If you have questions about this Privacy Policy, please contact us at
-          the support page on our website.
+          If you have questions about this Privacy Policy, please contact us
+          via our{" "}
+          <a href="/support" style={{ color: "#E85A4F" }}>
+            Support page
+          </a>{" "}
+          or email{" "}
+          <a href="mailto:h.kodera@gmail.com" style={{ color: "#E85A4F" }}>
+            h.kodera@gmail.com
+          </a>
+          .
         </p>
       </section>
     </main>
