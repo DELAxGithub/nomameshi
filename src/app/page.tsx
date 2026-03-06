@@ -466,6 +466,25 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [shouldRotateTips]);
 
+  const tipTouchStartX = useRef<number | null>(null);
+
+  const goNextTip = () => setTipIndex((prev) => prev + 1);
+  const goPrevTip = () => {
+    const len = shuffledTipIndices.length || 1;
+    setTipIndex((prev) => ((prev % len) - 1 + len) % len);
+  };
+  const handleTipTouchStart = (e: React.TouchEvent) => {
+    tipTouchStartX.current = e.touches[0].clientX;
+  };
+  const handleTipTouchEnd = (e: React.TouchEvent) => {
+    if (tipTouchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - tipTouchStartX.current;
+    tipTouchStartX.current = null;
+    if (Math.abs(delta) < 40) return;
+    if (delta < 0) goNextTip();
+    else goPrevTip();
+  };
+
   const getTipText = (countryCode: string | null) => {
     const defaultCountry = "default";
     const tipObj = CULTURAL_TIPS[countryCode || defaultCountry] || CULTURAL_TIPS[defaultCountry];
@@ -909,7 +928,7 @@ export default function Home() {
               </div>
 
               {/* Tip card */}
-              <div onClick={() => setTipIndex((prev) => prev + 1)} style={{
+              <div onClick={goNextTip} onTouchStart={handleTipTouchStart} onTouchEnd={handleTipTouchEnd} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
                 padding: "20px", cursor: "pointer",
               }}>
@@ -943,7 +962,7 @@ export default function Home() {
                   LOCAL TIP
                 </span>
               </div>
-              <div onClick={() => setTipIndex((prev) => prev + 1)} style={{
+              <div onClick={goNextTip} onTouchStart={handleTipTouchStart} onTouchEnd={handleTipTouchEnd} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
                 padding: "20px", cursor: "pointer",
               }}>
