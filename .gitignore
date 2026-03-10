@@ -45,3 +45,10 @@ menuphoto/
 ios/App/Pods/
 ios/App/App/public/
 ios/App/DerivedData/
+
+# Local test files
+test-*.js
+list-models.js
+
+# iOS App Store
+Store/
