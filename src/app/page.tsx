@@ -164,7 +164,47 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
       "💡ビール＋レモンソーダの「clara」はマドリッドでは「¿con casera o con limón?」と聞かれ、カタルーニャでは「champú」、バスクでは「lejía」と呼ぶ。暑い日のライトなお酒にぴったり。",
       "💡夏の「café con hielo」はホットエスプレッソと氷入りグラスが別々に出てくる。砂糖はホットのうちに溶かしてから氷に注ぐのがコツ。バレンシアではレモンの皮とシナモンを添えた「café del tiempo」もあるよ。",
       "💡「una sin（ウナ・シン）」と言えばノンアルビールが出てくる。スペインは欧州有数のノンアルビール大国で、全主要ブランドに0.0%があり生で出す店も多い。誰もジャッジしないから安心してバル文化を楽しめる。",
-      "💡ビールサイズの呼び名は地域でカオス。バスクの極小「zurito」、マドリッドの中ジョッキ「doble」、背の高いグラス「tubo」、大ジョッキ「jarra」。小さいサイズで頼むのがスペイン流——最後まで冷たいまま飲めるからね。"
+      "💡ビールサイズの呼び名は地域でカオス。バスクの極小「zurito」、マドリッドの中ジョッキ「doble」、背の高いグラス「tubo」、大ジョッキ「jarra」。小さいサイズで頼むのがスペイン流——最後まで冷たいまま飲めるからね。",
+      "💡カナリア諸島の名物「パパス・アルガーダス（Papas arrugadas）」は、小粒のジャガイモを塩茹でしたもの。ピリ辛の赤ソース「モホ・ピコン（Mojo picón）」をたっぷりつけて食べるのが定番。シンプルだけどビールに最高に合います！",
+      "💡アラゴン地方の「ミガス（Migas aragonesas）」は、固くなったパン粉をラードやニンニク、チョリソと炒めた伝統料理。上に目玉焼きや、意外にも「ぶどう」を添えて食べるのが現地流。塩気と甘みのバランスが絶妙です。",
+      "💡ナバラ地方の「白アスパラガス（Espárragos blancos）」は、春の王様。缶詰でも驚くほど高品質で、太くて柔らかいのが特徴。マヨネーズやヴィネグレットソースでシンプルに頂くのが、素材の味を一番楽しめます。",
+      "💡メニューにある「プリメーロ（Primero）」は前菜（スープやサラダ）、「セグンド（Segundo）」は主菜（肉や魚）を指します。メヌー・デル・ディアでは両方から1品ずつ選ぶのが基本。お腹の空き具合に合わせて調整しましょう。",
+      "💡グループで注文するなら「パラ・コンパルティール（Para compartir）」と言えば、料理をシェアする意思が伝わります。取り皿（プラト・ペケーニョ / plato pequeño）を人数分持ってきてくれるので、色々試したい時に便利です。",
+      "💡料理のサイズ選びに迷ったら「ラシオン（Ración）」は1皿、「メディア・ラシオン（Media ración）」は半分サイズ。1人の時はメディア、2人以上ならラシオンを数皿頼んでシェアするのがスペイン流のスマートな注文です。",
+      "💡市場（メルカード）でオリーブオイルを買うなら「ビルヘン・エキストラ（Virgen Extra）」を選びましょう。地域名入りのD.O.マークがあるものは、厳しい基準をクリアした最高級品。お土産にも自分用にも間違いなしです。",
+      "💡チーズを買う時は熟成度をチェック。「ティエルノ（Tierno）」は10日ほどで柔らかく、「クラード（Curado）」は半年以上で濃厚な味わい。その中間の「セミクラード（Semicurado）」が、日本人には一番親しみやすい味かも！",
+      "💡スペインは子連れでの食事にとても寛容です。夜22時過ぎのレストランで子供が走り回っていても、周囲は温かく見守るのが日常風景。ベビーカーでの入店も、段差があれば誰かが必ず助けてくれる優しい文化です。",
+      "💡冬から春にかけてのカタロニア名物「カルソッツ（Calçots）」。長ネギを真っ黒に丸焼きにして、皮を剥いてロメスコソースに浸して食べます。よだれかけをして豪快に頬張る「カルソターダ（宴会）」は、この時期だけの楽しみ！",
+      "💡メニューに「デ・テンポラーダ（de temporada）」とあれば旬の食材、「デ・メルカード（de mercado）」は市場直送の鮮魚などを意味します。迷ったらこれらが付いた料理を頼むのが、その日のベストを食べる近道です。",
+      "💡食事中にスマホをずっと触るのは、スペインでは少しマナー違反。「会話（ソブレメサ）」を楽しむ時間を大切にする文化なので、写真はサッと撮って、あとは目の前の相手と食事に集中するのが現地流のリスペクトです。",
+      "💡食物アレルギーがある場合は「テンゴ・アレルヒア・ア...（Tengo alergia a...）」と伝えましょう。EU法により、全ての飲食店にアレルゲン表示（14項目）の開示が義務付けられているので、メニューのアイコンも要チェック！",
+      "💡「アグア（Agua）」を頼むと「コン・ガス（Con gas / 炭酸あり）」か「シン・ガス（Sin gas / 炭酸なし）」か聞かれます。冷たすぎない水が欲しい時は「デル・ティエンポ（del tiempo / 常温で）」と添えると完璧です。",
+      "💡美味しい時は「¡ブエニシモ!（¡Buenísimo!）」や「¡ケ・リコ!（¡Qué rico!）」と言ってみましょう。ウェイターさんがニコニコしながら「グラシアス！（ありがとう）」と返してくれて、場の空気が一気に和みます。",
+      "💡セビージャなどの春祭り（フェリア）期間中、飲食店は特別メニューや価格になることがあります。この時期の名物は「レブヒート（Rebujito）」。シェリー酒をセブンアップ等のソーダで割った、爽やかで飲みすぎ注意なカクテルです。",
+      "💡ムルシア地方の「サラナゴージョ（Zarangollo）」は、ズッキーニと玉ねぎを卵でとじた優しい味のスクランブルエッグ。野菜の甘みが引き立っていて、重い食事が続いた時の朝食や軽い夕食にぴったりな癒やしメニューです。",
+      "💡カンタブリア地方の「ソバオ・パシエゴ（Sobao pasiego）」は、バターを贅沢に使ったしっとり重厚なパウンドケーキ。朝食にコーヒーに浸して食べるのが現地流。これ一つでランチまでお腹が持つほどパワフルな美味しさです！",
+      "💡レストラン予約（Reserva）は、週末のディナーや人気の店なら必須。最近はGoogleマップや公式サイトからオンライン予約できる店も増えています。当日の場合は、13時頃か20時頃に直接行って空きを聞くのが狙い目です。",
+      "💡バルのカウンターに並ぶタパス。指差して「エステ（これ）」で注文可能ですが、温め直して（Calentar / カレンタール）くれる料理も多いです。中には「ピンチョ・デ・トルティージャ」のように冷めたままの方が美味しいものもあります。",
+      "💡伝統的なカフェの安価な豆は、焙煎時に砂糖を加える「トッレファクト（Torrefacto）」が多く、独特の苦味があります。サードウェーブ系の「スペシャルティコーヒー（Café de especialidad）」店を探せば、欧州基準のフラットホワイトに出会えますよ！",
+      "💡バルでのPC作業は基本的に歓迎されません。特にランチタイム（14〜16時）の占領はマナー違反。作業をするなら「ワークフレンドリー」を掲げるカフェか、コワーキングスペースへ。伝統的な店ではスマホを置いて会話を楽しむのが現地の「粋」です。",
+      "💡「メヌー・デル・ディア（日替わり定食）」は、ノマドの最強の味方。€12〜15で前菜・主菜・デザート・飲み物（ワインも可！）が付くので、自炊するより安くて栄養バランスも取れます。平日のランチはこれ一択です！",
+      "💡14時〜17時の「シエスタ」時間は、多くの個人商店や飲食店が閉まります。15時を過ぎるとランチ難民になりがち。仕事のミーティングを入れるなら、この「魔の時間」を避けて、スペインのリズムに合わせるのがコツです。",
+      "💡スーパー「メルカドーナ（Mercadona）」の惣菜コーナーや、街の「アサドール・デ・ポヨ（Asador de Pollos / ローストチキン店）」は自炊が面倒なノマドの救世主。安くて旨い丸焼きチキン（Pollo Asado）は、数食分のタンパク質源になります。",
+      "💡スペインの水道水（Agua del grifo）は飲めますが、地域（特に沿岸部）によっては石灰分が多く味が気になることも。長期滞在なら「BRITA」などの浄水ポットを買うか、5Lや8Lの特大ボトルをスーパーでまとめ買いするのが賢い選択です。",
+      "💡外食の予約やデリバリーには「TheFork（予約）」や「Glovo（配達）」のアプリが必須。特に週末の夜は人気店がすぐ埋まるので、木曜くらいまでにアプリでポチッとしておくと、ノマド仲間との会食がスムーズに進みます。",
+      "💡仕事終わりの一杯は「アフターワーク（Afterwork）」と呼ばれ、19時頃からバルが賑わいます。「Una caña, por favor（ビール一杯ください）」で、無料の小皿タパスが付いてくる店を見つけたら、そこがあなたのサードプレイスになります。",
+      "💡ベジタリアンやビーガンなら「フムス（Hummus）」や「エスパニョーラ（ポテトオムレツ）」以外に、「ピスト（Pisto）」がおすすめ。スペイン版ラタトゥイユで、野菜たっぷりでヘルシー。最近の都市部にはビーガン専用のバルも急増中です！",
+      "💡バルでお会計をする際、もし忙しそうな店員さんと目が合わなければ、空中でペンを動かして書くジェスチャーをすれば「お会計（La cuenta）」の合図。大声で叫ぶよりスマートで、現地に馴染んでいる感が出せます。",
+      "💡マラガなどアンダルシアの海辺（チリンギート）なら、「エスぺト（Espeto）」を。イワシの串焼きで、炭火の香ばしさがたまりません。PCを閉じて、波音を聞きながらこれを食べるのが、スペイン・ノマド生活の最高のご褒美です。",
+      "💡日曜日はスーパーが完全に閉まります（一部のコンビニ的な店を除く）。土曜日のうちに食料を確保しておくのが、月曜朝にひもじい思いをしないための鉄則。ノマドにとっての「日曜の買い出し」は、スペイン生活の重要ルーチンです。",
+      "💡小腹が空いたら「ボカディージョ（Bocadillo）」。スペイン風バゲットサンドで、生ハムやチーズ、時にはイカフライ（Calamares）が挟まっています。€4〜7程度で持ち運びも楽なので、サイクリング中の補給食にも最適です。",
+      "💡コーヒーのミルクは、多くのカフェで「オーツミルク（Leche de avena）」に変更可能です。ただ、日本のように無料ではないことが多く、＋€0.20〜0.50ほどかかるのが一般的。注文時に「コン・レチェ・デ・アベナ」と言えば通じます。",
+      "💡チップ（Propina）は義務ではありませんが、サービスが良かったら小銭（€0.50〜2程度）をテーブルに残すのがスマート。デジタル決済が進んでいますが、お礼代わりの「小銭」を常に数枚持っておくと、現地の人との距離がグッと縮まります。",
+      "💡スペインの夜は長いです。ディナーに誘われたら「21時」が標準。19時だとまだ店が空いていないことも。早めに空腹を感じたら「タパスを1つ摘んで一杯飲む」という、ディナーへの助走を楽しむのがスペイン流ノマドの生きる術です。",
+      "💡市場（メルカード）の魚屋や肉屋では、整理券がない場合は「親の顔（誰が最後か）」を確認します。「¿Quién es el último?（キエン・エス・エル・ウルティモ？ / 最後は誰？）」と聞いて、自分の前の人を把握するのが、市場での暗黙のルールです。",
+      "💡長期滞在者の味方、多機能カード「Revolut」や「Apple Pay」はスペインのほぼ全域（バルや市場でも）で使えます。ただし、€5以下の少額だと「Solo efectivo（現金のみ）」と言われることもあるので、バックアップに€10札は持っておきましょう。",
+      "💡自炊でパエリアに挑戦するなら、米の品種「ボンバ（Arroz Bomba）」を探しましょう。出汁をよく吸い、煮崩れしにくいので失敗が少ないです。現地のノマド仲間を招いて「パエリア・パーティー」を開けば、一気にコミュニティの中心になれますよ！",
+      "💡深夜、仕事の区切りにお腹が空いたら「レセナ（Recena）」。スペイン語で「夜食」を意味します。深夜営業のケバブ屋や、24時間営業のカフェでのチョコラテ＆チュロスは、締め切り直前のノマドの脳に染み渡ります。"
     ],
     "English": [
       "💡Spaniards eat breakfast twice — a quick coffee at 7am, then a Bocadillo around 10–11am. That second window is when cafés are emptiest and Wi-Fi is usable.",
@@ -210,7 +250,47 @@ const CULTURAL_TIPS: Record<string, Record<string, string[]>> = {
       "💡A \"clara\" (beer + lemon soda) goes by different names everywhere: \"champú\" in Catalonia, \"lejía\" in the Basque Country. In Madrid they'll ask \"¿con casera o con limón?\" — sweet soda or real lemon.",
       "💡Summer \"café con hielo\" arrives as hot espresso plus a separate glass of ice. Dissolve your sugar while it's hot, then pour over ice. In Valencia, \"café del tiempo\" comes with a lemon peel and cinnamon.",
       "💡Say \"una sin\" for a non-alcoholic beer — Spain is one of Europe's biggest NA beer markets. Every major brand has a 0.0% version, many on tap. Nobody judges; you'll fit right in at the bar.",
-      "💡Beer size names are chaos across Spain: tiny \"zurito\" in the Basque Country, \"doble\" in Madrid, tall glass \"tubo,\" big mug \"jarra.\" Order small — the Spanish way is to keep it cold till the last sip."
+      "💡Beer size names are chaos across Spain: tiny \"zurito\" in the Basque Country, \"doble\" in Madrid, tall glass \"tubo,\" big mug \"jarra.\" Order small — the Spanish way is to keep it cold till the last sip.",
+      "💡Canary Islands' specialty \"Papas arrugadas\" are small potatoes boiled in salt water. They are best enjoyed with \"Mojo picón,\" a spicy red sauce. It's a simple yet perfect snack to pair with a cold beer!",
+      "💡Aragon's \"Migas aragonesas\" is a traditional dish of sautéed breadcrumbs with garlic and chorizo. It's often served with a fried egg and, surprisingly, grapes! The balance of salty and sweet is uniquely delicious.",
+      "💡White asparagus from Navarra is the king of spring vegetables. Even canned versions are remarkably high quality, known for being thick and tender. Enjoy them simply with mayonnaise or vinaigrette to savor their delicate flavor.",
+      "💡\"Primero\" on a menu refers to the first course (soup/salad), and \"Segundo\" to the main course (meat/fish). For a Menú del Día, you typically choose one from each. Pace yourself as it's often more food than it looks!",
+      "💡When ordering for a group, say \"Para compartir\" to indicate you'd like to share. The waiter will bring extra small plates (plato pequeño), making it easier to try a variety of dishes together.",
+      "💡Choosing sizes: \"Ración\" is a full portion, while \"Media ración\" is a half portion. For solo diners, a media is usually enough. For groups, it's common to order several full raciones to share among everyone.",
+      "💡At the market, look for \"Virgen Extra\" olive oil. Bottles with the D.O. (Designation of Origin) mark are premium oils that meet strict regional standards. It's the perfect gift or souvenir for your own kitchen.",
+      "💡Check the age when buying cheese: \"Tierno\" is soft (aged ~10 days), \"Curado\" is rich and hard (aged 6+ months), and \"Semicurado\" is right in between. Semicurado is often the most crowd-pleasing for its balanced flavor.",
+      "💡Spain is incredibly welcoming to children. It's normal to see kids at restaurants even after 10 PM. Don't worry about bringing a stroller; locals are always happy to help you with steps or finding space.",
+      "💡\"Calçots\" is a Catalan spring tradition of grilling long onions until charred. You peel the skin, dip them in Romesco sauce, and eat them whole while wearing a bib. This seasonal feast is called a \"Calçotada.\"",
+      "💡\"De temporada\" means seasonal ingredients, and \"De mercado\" implies fresh market-to-table items. Choosing dishes with these labels is the best way to ensure you're getting the freshest food available that day.",
+      "💡Constant phone use at the table is frowned upon in Spain. Since socializing and \"sobremesa\" (post-meal talk) are highly valued, take your photos quickly and focus on the conversation and the meal.",
+      "💡If you have allergies, say \"Tengo alergia a...\" (I am allergic to...). Under EU law, all restaurants must disclose 14 major allergens. Look for icons on the menu or ask the staff for the allergen list.",
+      "💡When ordering \"Agua,\" you'll be asked \"Con gas\" (sparkling) or \"Sin gas\" (still). If you prefer water at room temperature, ask for it \"del tiempo.\"",
+      "💡When the food is delicious, say \"¡Buenísimo!\" or \"¡Qué rico!\" It's a great way to compliment the chef and staff, and you'll likely get a big smile and a warm \"Gracias!\" in return.",
+      "💡During \"Feria\" festivals (like in Seville), look for \"Rebujito.\" It's a refreshing mix of Sherry and lemon-lime soda. It's delicious and easy to drink, but be careful—it's stronger than it tastes!",
+      "💡Murcia's \"Zarangollo\" is a comforting dish of scrambled eggs with zucchini and onions. It's light and highlights the sweetness of the vegetables—perfect for a light dinner or breakfast after heavy meals.",
+      "💡Cantabria's \"Sobao pasiego\" is a rich, buttery sponge cake. Locals love dipping it into their morning coffee. It's incredibly dense and flavorful—one piece will keep you energized until lunch!",
+      "💡Reservations (Reserva) are essential for popular spots or weekend dinners. Many places now offer online booking via Google Maps. For last-minute spots, try walking in right when they open for lunch (around 1 PM) or dinner (8 PM).",
+      "💡You can order tapas by pointing and saying \"Este.\" Many bar items can be reheated (Calentar), but some things, like \"Pincho de tortilla,\" are often traditionally enjoyed at room temperature. Don't be afraid to ask!",
+      "💡Traditional coffee often uses \"Torrefacto\" beans roasted with sugar, giving it a burnt, bitter taste. For your morning fix, look for \"Specialty Coffee\" shops to find high-quality beans and the perfect Flat White you're used to in London or Berlin.",
+      "💡Laptops in traditional bars are a big no-no, especially during the peak lunch hours (2-4 PM). If you need to grind, head to work-friendly cafes or coworking spaces. In local bars, put the screen away and soak in the social vibe.",
+      "💡The \"Menú del Día\" is a nomad's secret weapon. For €12-15, you get a 3-course meal plus a drink (even wine!). It's often cheaper and healthier than cooking for yourself. It's the ultimate Spanish \"business lunch.\"",
+      "💡Many shops and restaurants close for \"Siesta\" between 2 PM and 5 PM. Don't get caught without lunch after 3 PM! Adjust your deep-work blocks or meetings to avoid this gap when the city goes quiet.",
+      "💡Too busy coding to cook? Check out \"Mercadona\" prepared meals or local \"Asador de Pollos\" for a whole roasted chicken. It's delicious, cheap, and provides enough protein for several meals. A nomad classic!",
+      "💡Tap water is safe to drink, but the taste varies—coastal areas often have high mineral content. For a long stay, grab a water filter pitcher (like BRITA) or stock up on 5L or 8L jugs from the supermarket to save money and plastic.",
+      "💡Download \"TheFork\" for reservations and \"Glovo\" for deliveries. Popular spots fill up fast on weekends, so use the apps to book your table by Thursday. It makes organizing social dinners with fellow nomads so much easier.",
+      "💡Post-work drinks are a ritual. Head out around 7 PM for an \"Afterwork\" session. Find a bar that serves a free tapa with your beer (\"Una caña\"), and you've found your new favorite neighborhood hangout.",
+      "💡Eating plant-based? Beyond Tortilla, look for \"Pisto\"—a delicious Spanish ratatouille. While Spain is meat-heavy, modern cities now have a booming vegan scene. Check apps like HappyCow to find the best green spots near you.",
+      "💡Can't catch the waiter's eye for the bill? Use the \"air-writing\" gesture (miming writing on your palm). It's the universal sign for \"La cuenta, por favor\" and looks much more local than shouting across the bar.",
+      "💡Living near the coast like Malaga? You must try \"Espeto\"—sardines skewered and grilled over an open fire on the beach. Close your laptop, head to a Chiringuito (beach bar), and enjoy the ultimate Spanish nomad reward.",
+      "💡Sunday is a total shutdown for supermarkets. Make it a routine to stock your fridge on Saturday, or you'll be left with empty shelves on Monday morning. Don't let the \"Sunday closure\" surprise your work-week meal prep!",
+      "💡Need a quick desk lunch? Grab a \"Bocadillo\"—a Spanish baguette sandwich. Whether it's jamón, cheese, or fried squid, it's hearty and portable. Also the perfect fuel for a long weekend cycling trip!",
+      "💡Most modern cafes offer \"Leche de avena\" (oat milk). Expect a small surcharge of €0.20–0.50. Just say \"con leche de avena\" when ordering your coffee to keep your caffeine fix dairy-free.",
+      "💡Tipping isn't mandatory, but leaving some small change (€0.50–2) for good service is appreciated. Even in a cashless world, having a few coins for a \"propina\" helps you build rapport with the staff at your regular local bar.",
+      "💡Dinner starts late—9 PM is the standard. Many kitchens don't even open until 8 or 8:30 PM. If you're hungry early, do a \"pre-dinner\" tapa and a drink. It's the best way to bridge the gap and stay social.",
+      "💡At local markets, there's often no queue, just a social order. Ask \"¿Quién es el último?\" (Who is the last one?) to find your place. It's a great way to start a conversation and show you know the local drill.",
+      "💡Digital banking like Revolut and Apple Pay works almost everywhere, from bars to market stalls. However, some small shops may require cash for purchases under €5. Always keep a €10 note as a backup for your morning churros!",
+      "💡Level up your home cooking with \"Arroz Bomba.\" This rice variety absorbs more broth without getting mushy, making it perfect for paella. Hosting a paella night is the fastest way to turn your nomad neighbors into lifelong friends.",
+      "💡Working late? You need a \"Recena\" (late-night snack). Whether it's a quick kebab or a 24-hour chocolate and churros spot, a midnight fuel-up is a rite of passage for any developer or producer in Spain."
     ]
   },
   "FR": {
@@ -455,6 +535,7 @@ export default function Home() {
   }, [selectedRegion, targetLang, detectedCountry]);
 
   // Rotation logic for tips — rotate when analyzing OR when a specific region is selected
+  // tipIndex in deps so swipe/tap resets the timer (otherwise you get 1s before next auto-advance)
   const shouldRotateTips = analyzing || selectedRegion !== "auto";
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -464,7 +545,7 @@ export default function Home() {
       }, 4500);
     }
     return () => clearInterval(interval);
-  }, [shouldRotateTips]);
+  }, [shouldRotateTips, tipIndex]);
 
   const tipTouchStartX = useRef<number | null>(null);
 

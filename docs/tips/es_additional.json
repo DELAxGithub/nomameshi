@@ -1,0 +1,327 @@
+{
+  "region": "ES",
+  "version": "2.0",
+  "date": "2026-03-16",
+  "tips": [
+    {
+      "id": "es_045",
+      "category": "地方料理",
+      "ja": "💡カナリア諸島の名物「パパス・アルガーダス（Papas arrugadas）」は、小粒のジャガイモを塩茹でしたもの。ピリ辛の赤ソース「モホ・ピコン（Mojo picón）」をたっぷりつけて食べるのが定番。シンプルだけどビールに最高に合います！",
+      "en": "💡Canary Islands' specialty \"Papas arrugadas\" are small potatoes boiled in salt water. They are best enjoyed with \"Mojo picón,\" a spicy red sauce. It's a simple yet perfect snack to pair with a cold beer!",
+      "tags": ["canarias", "potato", "regional", "tapas"],
+      "source_notes": "カナリア諸島の代表的サイドディッシュ"
+    },
+    {
+      "id": "es_046",
+      "category": "地方料理",
+      "ja": "💡アラゴン地方の「ミガス（Migas aragonesas）」は、固くなったパン粉をラードやニンニク、チョリソと炒めた伝統料理。上に目玉焼きや、意外にも「ぶどう」を添えて食べるのが現地流。塩気と甘みのバランスが絶妙です。",
+      "en": "💡Aragon's \"Migas aragonesas\" is a traditional dish of sautéed breadcrumbs with garlic and chorizo. It's often served with a fried egg and, surprisingly, grapes! The balance of salty and sweet is uniquely delicious.",
+      "tags": ["aragon", "bread", "regional", "traditional"],
+      "source_notes": "羊飼いの料理がルーツの素朴な名物"
+    },
+    {
+      "id": "es_047",
+      "category": "料理知識",
+      "ja": "💡ナバラ地方の「白アスパラガス（Espárragos blancos）」は、春の王様。缶詰でも驚くほど高品質で、太くて柔らかいのが特徴。マヨネーズやヴィネグレットソースでシンプルに頂くのが、素材の味を一番楽しめます。",
+      "en": "💡White asparagus from Navarra is the king of spring vegetables. Even canned versions are remarkably high quality, known for being thick and tender. Enjoy them simply with mayonnaise or vinaigrette to savor their delicate flavor.",
+      "tags": ["navarra", "vegetable", "seasonal", "premium"],
+      "source_notes": "ナバラ州特産。4〜6月が旬"
+    },
+    {
+      "id": "es_048",
+      "category": "実用",
+      "ja": "💡メニューにある「プリメーロ（Primero）」は前菜（スープやサラダ）、「セグンド（Segundo）」は主菜（肉や魚）を指します。メヌー・デル・ディアでは両方から1品ずつ選ぶのが基本。お腹の空き具合に合わせて調整しましょう。",
+      "en": "💡\"Primero\" on a menu refers to the first course (soup/salad), and \"Segundo\" to the main course (meat/fish). For a Menú del Día, you typically choose one from each. Pace yourself as it's often more food than it looks!",
+      "tags": ["menu", "ordering", "practical"],
+      "source_notes": "スペインのコース構造の基本"
+    },
+    {
+      "id": "es_049",
+      "category": "実用",
+      "ja": "💡グループで注文するなら「パラ・コンパルティール（Para compartir）」と言えば、料理をシェアする意思が伝わります。取り皿（プラト・ペケーニョ / plato pequeño）を人数分持ってきてくれるので、色々試したい時に便利です。",
+      "en": "💡When ordering for a group, say \"Para compartir\" to indicate you'd like to share. The waiter will bring extra small plates (plato pequeño), making it easier to try a variety of dishes together.",
+      "tags": ["ordering", "sharing", "group", "phrases"],
+      "source_notes": "シェア文化の定着"
+    },
+    {
+      "id": "es_050",
+      "category": "実用",
+      "ja": "💡料理のサイズ選びに迷ったら「ラシオン（Ración）」は1皿、「メディア・ラシオン（Media ración）」は半分サイズ。1人の時はメディア、2人以上ならラシオンを数皿頼んでシェアするのがスペイン流のスマートな注文です。",
+      "en": "💡Choosing sizes: \"Ración\" is a full portion, while \"Media ración\" is a half portion. For solo diners, a media is usually enough. For groups, it's common to order several full raciones to share among everyone.",
+      "tags": ["portion", "ordering", "practical", "tapas"],
+      "source_notes": "サイズ表記の基本"
+    },
+    {
+      "id": "es_051",
+      "category": "市場・買い物",
+      "ja": "💡市場（メルカード）でオリーブオイルを買うなら「ビルヘン・エキストラ（Virgen Extra）」を選びましょう。地域名入りのD.O.マークがあるものは、厳しい基準をクリアした最高級品。お土産にも自分用にも間違いなしです。",
+      "en": "💡At the market, look for \"Virgen Extra\" olive oil. Bottles with the D.O. (Designation of Origin) mark are premium oils that meet strict regional standards. It's the perfect gift or souvenir for your own kitchen.",
+      "tags": ["market", "shopping", "olive oil", "souvenir"],
+      "source_notes": "オイルの選び方のコツ"
+    },
+    {
+      "id": "es_052",
+      "category": "市場・買い物",
+      "ja": "💡チーズを買う時は熟成度をチェック。「ティエルノ（Tierno）」は10日ほどで柔らかく、「クラード（Curado）」は半年以上で濃厚な味わい。その中間の「セミクラード（Semicurado）」が、日本人には一番親しみやすい味かも！",
+      "en": "💡Check the age when buying cheese: \"Tierno\" is soft (aged ~10 days), \"Curado\" is rich and hard (aged 6+ months), and \"Semicurado\" is right in between. Semicurado is often the most crowd-pleasing for its balanced flavor.",
+      "tags": ["market", "shopping", "cheese", "cheese guide"],
+      "source_notes": "熟成度の名称"
+    },
+    {
+      "id": "es_053",
+      "category": "マナー",
+      "ja": "💡スペインは子連れでの食事にとても寛容です。夜22時過ぎのレストランで子供が走り回っていても、周囲は温かく見守るのが日常風景。ベビーカーでの入店も、段差があれば誰かが必ず助けてくれる優しい文化です。",
+      "en": "💡Spain is incredibly welcoming to children. It's normal to see kids at restaurants even after 10 PM. Don't worry about bringing a stroller; locals are always happy to help you with steps or finding space.",
+      "tags": ["etiquette", "family", "kids", "culture"],
+      "source_notes": "子連れ旅行者への安心材料"
+    },
+    {
+      "id": "es_054",
+      "category": "料理知識",
+      "ja": "💡冬から春にかけてのカタロニア名物「カルソッツ（Calçots）」。長ネギを真っ黒に丸焼きにして、皮を剥いてロメスコソースに浸して食べます。よだれかけをして豪快に頬張る「カルソターダ（宴会）」は、この時期だけの楽しみ！",
+      "en": "💡\"Calçots\" is a Catalan spring tradition of grilling long onions until charred. You peel the skin, dip them in Romesco sauce, and eat them whole while wearing a bib. This seasonal feast is called a \"Calçotada.\"",
+      "tags": ["catalonia", "seasonal", "vegetable", "tradition"],
+      "source_notes": "1月〜4月限定の重要トピック"
+    },
+    {
+      "id": "es_055",
+      "category": "料理知識",
+      "ja": "💡メニューに「デ・テンポラーダ（de temporada）」とあれば旬の食材、「デ・メルカード（de mercado）」は市場直送の鮮魚などを意味します。迷ったらこれらが付いた料理を頼むのが、その日のベストを食べる近道です。",
+      "en": "💡\"De temporada\" means seasonal ingredients, and \"De mercado\" implies fresh market-to-table items. Choosing dishes with these labels is the best way to ensure you're getting the freshest food available that day.",
+      "tags": ["menu", "ordering", "seasonal", "fresh"],
+      "source_notes": "鮮度の見極め"
+    },
+    {
+      "id": "es_056",
+      "category": "マナー",
+      "ja": "💡食事中にスマホをずっと触るのは、スペインでは少しマナー違反。「会話（ソブレメサ）」を楽しむ時間を大切にする文化なので、写真はサッと撮って、あとは目の前の相手と食事に集中するのが現地流のリスペクトです。",
+      "en": "💡Constant phone use at the table is frowned upon in Spain. Since socializing and \"sobremesa\" (post-meal talk) are highly valued, take your photos quickly and focus on the conversation and the meal.",
+      "tags": ["etiquette", "social", "phone manners"],
+      "source_notes": "会話重視の文化"
+    },
+    {
+      "id": "es_057",
+      "category": "実用",
+      "ja": "💡食物アレルギーがある場合は「テンゴ・アレルヒア・ア...（Tengo alergia a...）」と伝えましょう。EU法により、全ての飲食店にアレルゲン表示（14項目）の開示が義務付けられているので、メニューのアイコンも要チェック！",
+      "en": "💡If you have allergies, say \"Tengo alergia a...\" (I am allergic to...). Under EU law, all restaurants must disclose 14 major allergens. Look for icons on the menu or ask the staff for the allergen list.",
+      "tags": ["allergy", "practical", "safety", "ordering"],
+      "source_notes": "法的義務に関する実用知識"
+    },
+    {
+      "id": "es_058",
+      "category": "ドリンク",
+      "ja": "💡「アグア（Agua）」を頼むと「コン・ガス（Con gas / 炭酸あり）」か「シン・ガス（Sin gas / 炭酸なし）」か聞かれます。冷たすぎない水が欲しい時は「デル・ティエンポ（del tiempo / 常温で）」と添えると完璧です。",
+      "en": "💡When ordering \"Agua,\" you'll be asked \"Con gas\" (sparkling) or \"Sin gas\" (still). If you prefer water at room temperature, ask for it \"del tiempo.\"",
+      "tags": ["drink", "water", "ordering", "phrases"],
+      "source_notes": "水の注文詳細"
+    },
+    {
+      "id": "es_059",
+      "category": "スペイン語",
+      "ja": "💡美味しい時は「¡ブエニシモ!（¡Buenísimo!）」や「¡ケ・リコ!（¡Qué rico!）」と言ってみましょう。ウェイターさんがニコニコしながら「グラシアス！（ありがとう）」と返してくれて、場の空気が一気に和みます。",
+      "en": "💡When the food is delicious, say \"¡Buenísimo!\" or \"¡Qué rico!\" It's a great way to compliment the chef and staff, and you'll likely get a big smile and a warm \"Gracias!\" in return.",
+      "tags": ["phrases", "compliment", "communication"],
+      "source_notes": "コミュニケーションフレーズ"
+    },
+    {
+      "id": "es_060",
+      "category": "地方文化",
+      "ja": "💡セビージャなどの春祭り（フェリア）期間中、飲食店は特別メニューや価格になることがあります。この時期の名物は「レブヒート（Rebujito）」。シェリー酒をセブンアップ等のソーダで割った、爽やかで飲みすぎ注意なカクテルです。",
+      "en": "💡During \"Feria\" festivals (like in Seville), look for \"Rebujito.\" It's a refreshing mix of Sherry and lemon-lime soda. It's delicious and easy to drink, but be careful—it's stronger than it tastes!",
+      "tags": ["andalusia", "festival", "drink", "seasonal"],
+      "source_notes": "4月のフェリア等の文化"
+    },
+    {
+      "id": "es_061",
+      "category": "地方料理",
+      "ja": "💡ムルシア地方の「サラナゴージョ（Zarangollo）」は、ズッキーニと玉ねぎを卵でとじた優しい味のスクランブルエッグ。野菜の甘みが引き立っていて、重い食事が続いた時の朝食や軽い夕食にぴったりな癒やしメニューです。",
+      "en": "💡Murcia's \"Zarangollo\" is a comforting dish of scrambled eggs with zucchini and onions. It's light and highlights the sweetness of the vegetables—perfect for a light dinner or breakfast after heavy meals.",
+      "tags": ["murcia", "egg", "vegetable", "regional"],
+      "source_notes": "ムルシアの家庭料理"
+    },
+    {
+      "id": "es_062",
+      "category": "地方料理",
+      "ja": "💡カンタブリア地方の「ソバオ・パシエゴ（Sobao pasiego）」は、バターを贅沢に使ったしっとり重厚なパウンドケーキ。朝食にコーヒーに浸して食べるのが現地流。これ一つでランチまでお腹が持つほどパワフルな美味しさです！",
+      "en": "💡Cantabria's \"Sobao pasiego\" is a rich, buttery sponge cake. Locals love dipping it into their morning coffee. It's incredibly dense and flavorful—one piece will keep you energized until lunch!",
+      "tags": ["cantabria", "sweet", "breakfast", "regional"],
+      "source_notes": "カンタブリアの銘菓"
+    },
+    {
+      "id": "es_063",
+      "category": "実用",
+      "ja": "💡レストラン予約（Reserva）は、週末のディナーや人気の店なら必須。最近はGoogleマップや公式サイトからオンライン予約できる店も増えています。当日の場合は、13時頃か20時頃に直接行って空きを聞くのが狙い目です。",
+      "en": "💡Reservations (Reserva) are essential for popular spots or weekend dinners. Many places now offer online booking via Google Maps. For last-minute spots, try walking in right when they open for lunch (around 1 PM) or dinner (8 PM).",
+      "tags": ["practical", "reservation", "booking"],
+      "source_notes": "予約文化の現状"
+    },
+    {
+      "id": "es_064",
+      "category": "バル文化",
+      "ja": "💡バルのカウンターに並ぶタパス。指差して「エステ（これ）」で注文可能ですが、温め直して（Calentar / カレンタール）くれる料理も多いです。中には「ピンチョ・デ・トルティージャ」のように冷めたままの方が美味しいものもあります。",
+      "en": "💡You can order tapas by pointing and saying \"Este.\" Many bar items can be reheated (Calentar), but some things, like \"Pincho de tortilla,\" are often traditionally enjoyed at room temperature. Don't be afraid to ask!",
+      "tags": ["bar", "ordering", "tapas", "practical"],
+      "source_notes": "温め直し等の細かい作法"
+    },
+    {
+      "id": "es_065",
+      "category": "ドリンク",
+      "ja": "💡伝統的なカフェの安価な豆は、焙煎時に砂糖を加える「トッレファクト（Torrefacto）」が多く、独特の苦味があります。サードウェーブ系の「スペシャルティコーヒー（Café de especialidad）」店を探せば、欧州基準のフラットホワイトに出会えますよ！",
+      "en": "💡Traditional coffee often uses \"Torrefacto\" beans roasted with sugar, giving it a burnt, bitter taste. For your morning fix, look for \"Specialty Coffee\" shops to find high-quality beans and the perfect Flat White you're used to in London or Berlin.",
+      "tags": ["coffee", "nomad", "digital-nomad", "specialty-coffee"],
+      "source_notes": "ノマドが最も気にするコーヒーの質について"
+    },
+    {
+      "id": "es_066",
+      "category": "ノマド",
+      "ja": "💡バルでのPC作業は基本的に歓迎されません。特にランチタイム（14〜16時）の占領はマナー違反。作業をするなら「ワークフレンドリー」を掲げるカフェか、コワーキングスペースへ。伝統的な店ではスマホを置いて会話を楽しむのが現地の「粋」です。",
+      "en": "💡Laptops in traditional bars are a big no-no, especially during the peak lunch hours (2-4 PM). If you need to grind, head to work-friendly cafes or coworking spaces. In local bars, put the screen away and soak in the social vibe.",
+      "tags": ["nomad", "etiquette", "laptop", "coworking"],
+      "source_notes": "PC作業の境界線"
+    },
+    {
+      "id": "es_067",
+      "category": "コスパ",
+      "ja": "💡「メヌー・デル・ディア（日替わり定食）」は、ノマドの最強の味方。€12〜15で前菜・主菜・デザート・飲み物（ワインも可！）が付くので、自炊するより安くて栄養バランスも取れます。平日のランチはこれ一択です！",
+      "en": "💡The \"Menú del Día\" is a nomad's secret weapon. For €12-15, you get a 3-course meal plus a drink (even wine!). It's often cheaper and healthier than cooking for yourself. It's the ultimate Spanish \"business lunch.\"",
+      "tags": ["lunch", "budget", "nomad", "healthy"],
+      "source_notes": "自炊派ノマドへの外食推奨"
+    },
+    {
+      "id": "es_068",
+      "category": "食事時間",
+      "ja": "💡14時〜17時の「シエスタ」時間は、多くの個人商店や飲食店が閉まります。15時を過ぎるとランチ難民になりがち。仕事のミーティングを入れるなら、この「魔の時間」を避けて、スペインのリズムに合わせるのがコツです。",
+      "en": "💡Many shops and restaurants close for \"Siesta\" between 2 PM and 5 PM. Don't get caught without lunch after 3 PM! Adjust your deep-work blocks or meetings to avoid this gap when the city goes quiet.",
+      "tags": ["schedule", "lifestyle", "nomad", "practical"],
+      "source_notes": "時間管理の注意点"
+    },
+    {
+      "id": "es_069",
+      "category": "実用",
+      "ja": "💡スーパー「メルカドーナ（Mercadona）」の惣菜コーナーや、街の「アサドール・デ・ポヨ（Asador de Pollos / ローストチキン店）」は自炊が面倒なノマドの救世主。安くて旨い丸焼きチキン（Pollo Asado）は、数食分のタンパク質源になります。",
+      "en": "💡Too busy coding to cook? Check out \"Mercadona\" prepared meals or local \"Asador de Pollos\" for a whole roasted chicken. It's delicious, cheap, and provides enough protein for several meals. A nomad classic!",
+      "tags": ["shopping", "budget", "chicken", "meal-prep"],
+      "source_notes": "時短・タンパク質補給"
+    },
+    {
+      "id": "es_070",
+      "category": "ドリンク",
+      "ja": "💡スペインの水道水（Agua del grifo）は飲めますが、地域（特に沿岸部）によっては石灰分が多く味が気になることも。長期滞在なら「BRITA」などの浄水ポットを買うか、5Lや8Lの特大ボトルをスーパーでまとめ買いするのが賢い選択です。",
+      "en": "💡Tap water is safe to drink, but the taste varies—coastal areas often have high mineral content. For a long stay, grab a water filter pitcher (like BRITA) or stock up on 5L or 8L jugs from the supermarket to save money and plastic.",
+      "tags": ["water", "practical", "shopping", "health"],
+      "source_notes": "水事情と節約"
+    },
+    {
+      "id": "es_071",
+      "category": "実用",
+      "ja": "💡外食の予約やデリバリーには「TheFork（予約）」や「Glovo（配達）」のアプリが必須。特に週末の夜は人気店がすぐ埋まるので、木曜くらいまでにアプリでポチッとしておくと、ノマド仲間との会食がスムーズに進みます。",
+      "en": "💡Download \"TheFork\" for reservations and \"Glovo\" for deliveries. Popular spots fill up fast on weekends, so use the apps to book your table by Thursday. It makes organizing social dinners with fellow nomads so much easier.",
+      "tags": ["apps", "delivery", "reservation", "practical"],
+      "source_notes": "必須アプリの紹介"
+    },
+    {
+      "id": "es_072",
+      "category": "バル文化",
+      "ja": "💡仕事終わりの一杯は「アフターワーク（Afterwork）」と呼ばれ、19時頃からバルが賑わいます。「Una caña, por favor（ビール一杯ください）」で、無料の小皿タパスが付いてくる店を見つけたら、そこがあなたのサードプレイスになります。",
+      "en": "💡Post-work drinks are a ritual. Head out around 7 PM for an \"Afterwork\" session. Find a bar that serves a free tapa with your beer (\"Una caña\"), and you've found your new favorite neighborhood hangout.",
+      "tags": ["bar", "social", "beer", "tradition"],
+      "source_notes": "無料タパス文化とコミュニティ"
+    },
+    {
+      "id": "es_073",
+      "category": "料理知識",
+      "ja": "💡ベジタリアンやビーガンなら「フムス（Hummus）」や「エスパニョーラ（ポテトオムレツ）」以外に、「ピスト（Pisto）」がおすすめ。スペイン版ラタトゥイユで、野菜たっぷりでヘルシー。最近の都市部にはビーガン専用のバルも急増中です！",
+      "en": "💡Eating plant-based? Beyond Tortilla, look for \"Pisto\"—a delicious Spanish ratatouille. While Spain is meat-heavy, modern cities now have a booming vegan scene. Check apps like HappyCow to find the best green spots near you.",
+      "tags": ["vegan", "vegetarian", "healthy", "vegetable"],
+      "source_notes": "食事制限への対応"
+    },
+    {
+      "id": "es_074",
+      "category": "バル文化",
+      "ja": "💡バルでお会計をする際、もし忙しそうな店員さんと目が合わなければ、空中でペンを動かして書くジェスチャーをすれば「お会計（La cuenta）」の合図。大声で叫ぶよりスマートで、現地に馴染んでいる感が出せます。",
+      "en": "💡Can't catch the waiter's eye for the bill? Use the \"air-writing\" gesture (miming writing on your palm). It's the universal sign for \"La cuenta, por favor\" and looks much more local than shouting across the bar.",
+      "tags": ["etiquette", "phrases", "bar", "practical"],
+      "source_notes": "ノンバーバルコミュニケーション"
+    },
+    {
+      "id": "es_075",
+      "category": "地方文化",
+      "ja": "💡マラガなどアンダルシアの海辺（チリンギート）なら、「エスぺト（Espeto）」を。イワシの串焼きで、炭火の香ばしさがたまりません。PCを閉じて、波音を聞きながらこれを食べるのが、スペイン・ノマド生活の最高のご褒美です。",
+      "en": "💡Living near the coast like Malaga? You must try \"Espeto\"—sardines skewered and grilled over an open fire on the beach. Close your laptop, head to a Chiringuito (beach bar), and enjoy the ultimate Spanish nomad reward.",
+      "tags": ["malaga", "seafood", "beach", "seasonal"],
+      "source_notes": "マラガ拠点に合わせたチップ"
+    },
+    {
+      "id": "es_076",
+      "category": "実用",
+      "ja": "💡日曜日はスーパーが完全に閉まります（一部のコンビニ的な店を除く）。土曜日のうちに食料を確保しておくのが、月曜朝にひもじい思いをしないための鉄則。ノマドにとっての「日曜の買い出し」は、スペイン生活の重要ルーチンです。",
+      "en": "💡Sunday is a total shutdown for supermarkets. Make it a routine to stock your fridge on Saturday, or you'll be left with empty shelves on Monday morning. Don't let the \"Sunday closure\" surprise your work-week meal prep!",
+      "tags": ["shopping", "sunday", "lifestyle", "practical"],
+      "source_notes": "日曜定休の注意喚起"
+    },
+    {
+      "id": "es_077",
+      "category": "料理知識",
+      "ja": "💡小腹が空いたら「ボカディージョ（Bocadillo）」。スペイン風バゲットサンドで、生ハムやチーズ、時にはイカフライ（Calamares）が挟まっています。€4〜7程度で持ち運びも楽なので、サイクリング中の補給食にも最適です。",
+      "en": "💡Need a quick desk lunch? Grab a \"Bocadillo\"—a Spanish baguette sandwich. Whether it's jamón, cheese, or fried squid, it's hearty and portable. Also the perfect fuel for a long weekend cycling trip!",
+      "tags": ["sandwich", "lunch", "budget", "cycling"],
+      "source_notes": "軽食・サイクリングのお供"
+    },
+    {
+      "id": "es_078",
+      "category": "ドリンク",
+      "ja": "💡コーヒーのミルクは、多くのカフェで「オーツミルク（Leche de avena）」に変更可能です。ただ、日本のように無料ではないことが多く、＋€0.20〜0.50ほどかかるのが一般的。注文時に「コン・レチェ・デ・アベナ」と言えば通じます。",
+      "en": "💡Most modern cafes offer \"Leche de avena\" (oat milk). Expect a small surcharge of €0.20–0.50. Just say \"con leche de avena\" when ordering your coffee to keep your caffeine fix dairy-free.",
+      "tags": ["coffee", "oat-milk", "vegan", "ordering"],
+      "source_notes": "代替ミルクの普及状況"
+    },
+    {
+      "id": "es_079",
+      "category": "マナー",
+      "ja": "💡チップ（Propina）は義務ではありませんが、サービスが良かったら小銭（€0.50〜2程度）をテーブルに残すのがスマート。デジタル決済が進んでいますが、お礼代わりの「小銭」を常に数枚持っておくと、現地の人との距離がグッと縮まります。",
+      "en": "💡Tipping isn't mandatory, but leaving some small change (€0.50–2) for good service is appreciated. Even in a cashless world, having a few coins for a \"propina\" helps you build rapport with the staff at your regular local bar.",
+      "tags": ["etiquette", "money", "tipping", "local"],
+      "source_notes": "チップの最新ニュアンス"
+    },
+    {
+      "id": "es_080",
+      "category": "実用",
+      "ja": "💡スペインの夜は長いです。ディナーに誘われたら「21時」が標準。19時だとまだ店が空いていないことも。早めに空腹を感じたら「タパスを1つ摘んで一杯飲む」という、ディナーへの助走を楽しむのがスペイン流ノマドの生きる術です。",
+      "en": "💡Dinner starts late—9 PM is the standard. Many kitchens don't even open until 8 or 8:30 PM. If you're hungry early, do a \"pre-dinner\" tapa and a drink. It's the best way to bridge the gap and stay social.",
+      "tags": ["schedule", "dinner", "social", "lifestyle"],
+      "source_notes": "遅い夕食への適応"
+    },
+    {
+      "id": "es_081",
+      "category": "市場・買い物",
+      "ja": "💡市場（メルカード）の魚屋や肉屋では、整理券がない場合は「親の顔（誰が最後か）」を確認します。「¿Quién es el último?（キエン・エス・エル・ウルティモ？ / 最後は誰？）」と聞いて、自分の前の人を把握するのが、市場での暗黙のルールです。",
+      "en": "💡At local markets, there's often no queue, just a social order. Ask \"¿Quién es el último?\" (Who is the last one?) to find your place. It's a great way to start a conversation and show you know the local drill.",
+      "tags": ["market", "shopping", "phrases", "local"],
+      "source_notes": "市場での並び方"
+    },
+    {
+      "id": "es_082",
+      "category": "実用",
+      "ja": "💡長期滞在者の味方、多機能カード「Revolut」や「Apple Pay」はスペインのほぼ全域（バルや市場でも）で使えます。ただし、€5以下の少額だと「Solo efectivo（現金のみ）」と言われることもあるので、バックアップに€10札は持っておきましょう。",
+      "en": "💡Digital banking like Revolut and Apple Pay works almost everywhere, from bars to market stalls. However, some small shops may require cash for purchases under €5. Always keep a €10 note as a backup for your morning churros!",
+      "tags": ["money", "practical", "payment", "revolut"],
+      "source_notes": "支払い事情とRevolut"
+    },
+    {
+      "id": "es_083",
+      "category": "料理知識",
+      "ja": "💡自炊でパエリアに挑戦するなら、米の品種「ボンバ（Arroz Bomba）」を探しましょう。出汁をよく吸い、煮崩れしにくいので失敗が少ないです。現地のノマド仲間を招いて「パエリア・パーティー」を開けば、一気にコミュニティの中心になれますよ！",
+      "en": "💡Level up your home cooking with \"Arroz Bomba.\" This rice variety absorbs more broth without getting mushy, making it perfect for paella. Hosting a paella night is the fastest way to turn your nomad neighbors into lifelong friends.",
+      "tags": ["rice", "paella", "cooking", "social"],
+      "source_notes": "自炊とソーシャライズ"
+    },
+    {
+      "id": "es_084",
+      "category": "実用",
+      "ja": "💡深夜、仕事の区切りにお腹が空いたら「レセナ（Recena）」。スペイン語で「夜食」を意味します。深夜営業のケバブ屋や、24時間営業のカフェでのチョコラテ＆チュロスは、締め切り直前のノマドの脳に染み渡ります。",
+      "en": "💡Working late? You need a \"Recena\" (late-night snack). Whether it's a quick kebab or a 24-hour chocolate and churros spot, a midnight fuel-up is a rite of passage for any developer or producer in Spain.",
+      "tags": ["night-out", "snack", "late-night", "nomad"],
+      "source_notes": "夜食文化"
+    }
+  ]
+}
