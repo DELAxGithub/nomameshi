@@ -542,7 +542,7 @@ export default function Home() {
     if (shouldRotateTips) {
       interval = setInterval(() => {
         setTipIndex((prev) => prev + 1);
-      }, 4500);
+      }, 8000);
     }
     return () => clearInterval(interval);
   }, [shouldRotateTips, tipIndex]);
@@ -1011,8 +1011,10 @@ export default function Home() {
               {/* Tip card */}
               <div onClick={goNextTip} onTouchStart={handleTipTouchStart} onTouchEnd={handleTipTouchEnd} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
-                padding: "20px", cursor: "pointer",
+                padding: "20px", cursor: "pointer", position: "relative",
               }}>
+                <span style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "1.2rem", color: "var(--foreground-muted)", opacity: 0.2, pointerEvents: "none", userSelect: "none" }}>‹</span>
+                <span style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "1.2rem", color: "var(--foreground-muted)", opacity: 0.2, pointerEvents: "none", userSelect: "none" }}>›</span>
                 <p key={tipIndex} className="animate-fade-in" style={{
                   fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5,
                   minHeight: "3rem", marginBottom: "12px",
@@ -1045,8 +1047,10 @@ export default function Home() {
               </div>
               <div onClick={goNextTip} onTouchStart={handleTipTouchStart} onTouchEnd={handleTipTouchEnd} style={{
                 background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "16px",
-                padding: "20px", cursor: "pointer",
+                padding: "20px", cursor: "pointer", position: "relative",
               }}>
+                <span style={{ position: "absolute", left: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "1.2rem", color: "var(--foreground-muted)", opacity: 0.2, pointerEvents: "none", userSelect: "none" }}>‹</span>
+                <span style={{ position: "absolute", right: "8px", top: "50%", transform: "translateY(-50%)", fontSize: "1.2rem", color: "var(--foreground-muted)", opacity: 0.2, pointerEvents: "none", userSelect: "none" }}>›</span>
                 <p key={tipIndex} className="animate-fade-in" style={{ fontSize: "0.9rem", color: "var(--foreground)", lineHeight: 1.5, marginBottom: "12px" }}>
                   {getTipText(selectedRegion === "auto" ? null : selectedRegion)}
                 </p>
