@@ -1,0 +1,327 @@
+{
+  "region": "FR",
+  "version": "1.0",
+  "date": "2026-03-17",
+  "tips": [
+    {
+      "id": "fr_004",
+      "category": "地方料理",
+      "ja": "💡リヨンの『ブション（Bouchon）』は、地元の家庭料理を出す伝統的な食堂です。クネル（白身魚のすり身団子）やサラダ・リヨネーズが定番。認定マークのある店を選べば間違いありません。",
+      "en": "💡Lyon's 'Bouchon' restaurants serve traditional local home-style dishes. Try the Quenelle (fish dumpling) or Salade Lyonnaise. Look for the official certification mark for an authentic experience.",
+      "tags": ["lyon", "bouchon", "regional", "traditional"],
+      "source_notes": "リヨンの食文化の核"
+    },
+    {
+      "id": "fr_005",
+      "category": "地方料理",
+      "ja": "💡アルザス地方の『タルト・フランベ（Tarte flambée）』は、薄い生地にクリーム、玉ねぎ、ベーコンをのせて焼いたフランス版ピザです。パリパリの食感で、現地の白ワイン「リースリング」と相性抜群！",
+      "en": "💡Alsace's 'Tarte flambée' is a thin-crust flatbread topped with cream, onions, and lardons. It's crispy and pairs perfectly with a local Riesling white wine!",
+      "tags": ["alsace", "pizza", "wine-pairing", "regional"],
+      "source_notes": "アルザスの定番軽食"
+    },
+    {
+      "id": "fr_006",
+      "category": "地方料理",
+      "ja": "💡ブルターニュ地方では、そば粉の塩味クレープを『ガレット（Galette）』、小麦粉の甘いものを『クレープ』と呼び分けます。本場で食べるなら、飲み物はボウル（ボレ）で供されるシードルが鉄則です。",
+      "en": "💡In Brittany, savory buckwheat crepes are called 'Galettes,' while sweet ones are 'Crepes.' Traditionally, enjoy them with local cider served in a ceramic bowl (bolée).",
+      "tags": ["brittany", "galette", "crepe", "cider"],
+      "source_notes": "ブルターニュの主食文化"
+    },
+    {
+      "id": "fr_007",
+      "category": "マナー",
+      "ja": "💡お店に入ったら必ず『Bonjour（ボンジュール）』、出る時は『Au revoir（オ・ルヴォワール）』と店員さんの目を見て言いましょう。挨拶を省くと冷たい対応をされることもあるほど、最も重要なマナーです。",
+      "en": "💡Always greet staff with 'Bonjour' upon entering and 'Au revoir' when leaving. Making eye contact is key; skipping these greetings is considered very impolite in French culture.",
+      "tags": ["etiquette", "greeting", "communication", "phrases"],
+      "source_notes": "フランス社会の基本ルール"
+    },
+    {
+      "id": "fr_008",
+      "category": "ドリンク",
+      "ja": "💡カフェで『un café（アン・カフェ）』と頼むと、小さなカップのエスプレッソが出てきます。日本式のブラックコーヒーが飲みたい時は『un café allongé（アロンジェ）』と注文しましょう。",
+      "en": "💡Ordering 'un café' in a café will get you a small shot of espresso. If you want something closer to a regular black coffee, ask for 'un café allongé.'",
+      "tags": ["coffee", "cafe", "ordering", "practical"],
+      "source_notes": "コーヒーの注文方法"
+    },
+    {
+      "id": "fr_009",
+      "category": "実用",
+      "ja": "💡レストランで無料のお水が欲しい時は『Une carafe d'eau, s'il vous plaît（ユヌ・カラフ・ドー・シル・ヴ・プレ）』と頼みましょう。ボトル水は有料ですが、カラフなら水道水なので無料です。",
+      "en": "💡To get free water at a restaurant, ask for 'Une carafe d'eau, s'il vous plaît.' Bottled mineral water costs money, but a carafe of tap water is always free.",
+      "tags": ["water", "budget", "practical", "phrases"],
+      "source_notes": "節約の必須テクニック"
+    },
+    {
+      "id": "fr_010",
+      "category": "マナー",
+      "ja": "💡パンは皿の上ではなく、テーブルに直接置くのがフランス流。パン皿がない店も多いです。また、バゲットを一口サイズにちぎる際は、テーブルの上に散らばるパン屑を気にしすぎる必要はありません。",
+      "en": "💡It's perfectly normal in France to place your bread directly on the table rather than on a plate. Don't worry about getting crumbs on the table—it's expected when eating a crusty baguette.",
+      "tags": ["etiquette", "bread", "baguette", "table-manners"],
+      "source_notes": "パンの扱い方"
+    },
+    {
+      "id": "fr_011",
+      "category": "地方文化",
+      "ja": "💡フランスではチーズ（フロマージュ）はデザートの前に出てきます。食後、メイン料理の余韻を楽しみながら、少し残ったワインと一緒に頂くのがフランスの伝統的なコースの順序です。",
+      "en": "💡In France, the cheese course (fromage) comes after the main dish and before dessert. It's traditionally enjoyed with the remaining wine from your meal.",
+      "tags": ["cheese", "culture", "course", "fromage"],
+      "source_notes": "コース料理の順序"
+    },
+    {
+      "id": "fr_012",
+      "category": "実用",
+      "ja": "💡ランチの『Formule（フォミュル）』は、前菜＋メインなど2品か3品を選べるセットメニューで、単品よりずっとお得です。€15〜25程度でフルコース並みの満足感が得られることも！",
+      "en": "💡The 'Formule' is a set lunch menu offering 2 or 3 courses (e.g., starter + main) at a discounted price. It's much cheaper than ordering à la carte, usually costing €15–25.",
+      "tags": ["lunch", "budget", "formule", "practical"],
+      "source_notes": "ランチのコスパ情報"
+    },
+    {
+      "id": "fr_013",
+      "category": "マナー",
+      "ja": "💡食事中は両手をテーブルの上に出しておくのがマナー。膝の上に手を置くのは避けましょう。ただし、肘をつくのはNGです。手首から先をテーブルの端に軽く置くのがスマートな姿勢です。",
+      "en": "💡Keep both hands visible on the table at all times during a meal; don't rest them in your lap. However, avoid putting your elbows on the table—resting your wrists on the edge is best.",
+      "tags": ["etiquette", "table-manners", "posture"],
+      "source_notes": "食事中の姿勢"
+    },
+    {
+      "id": "fr_014",
+      "category": "料理知識",
+      "ja": "💡『Baguette Tradition（トラディション）』は、添加物なしの伝統製法で作られた高品質なバゲットです。普通のバゲットより少し高いですが、小麦の香りが格段に違うので、迷わずこちらを選んで！",
+      "en": "💡Always choose 'Baguette Tradition' over a regular baguette. It's made without additives using traditional methods, offering a much better flavor and aroma for just a few extra cents.",
+      "tags": ["bread", "baguette", "boulangerie", "knowledge"],
+      "source_notes": "パン選びの極意"
+    },
+    {
+      "id": "fr_015",
+      "category": "地方料理",
+      "ja": "💡南仏マルセイユ名物の『ブイヤベース』は、もともと漁師の賄い料理。スープにルイユ（ニンニク唐辛子マヨネーズ）を塗ったパンを浸して食べるのが本場のスタイルです。スープはおかわりさせてくれる店も！",
+      "en": "💡Marseille's famous 'Bouillabaisse' fish stew is traditionally eaten by dipping bread topped with Rouille (garlic-chili mayo) into the soup. Many places will even offer extra helpings of the broth!",
+      "tags": ["provence", "marseille", "seafood", "regional"],
+      "source_notes": "南仏の代表料理"
+    },
+    {
+      "id": "fr_016",
+      "category": "パン・スイーツ",
+      "ja": "💡パン屋（Boulangerie）で買えるクロワッサンやパン・オ・ショコラは『ヴィエノワズリー』と呼ばれ、朝食の定番です。午後には売り切れることも多いので、午前中のうちにゲットしましょう！",
+      "en": "💡Breakfast pastries like croissants and pains au chocolat are called 'Viennoiserie.' They often sell out by the afternoon, so visit your local Boulangerie in the morning for the best selection.",
+      "tags": ["boulangerie", "breakfast", "croissant", "pastry"],
+      "source_notes": "パン屋の活用術"
+    },
+    {
+      "id": "fr_017",
+      "category": "ドリンク",
+      "ja": "💡食前酒『Apéritif（アペリティフ）』の定番は、白ワインに黒スグリのリキュールを加えた『Kir（キール）』。食欲を増進させる効果があり、フランス人がレストランでまず頼む一杯です。",
+      "en": "💡A classic 'Apéritif' is the 'Kir,' a mix of white wine and blackcurrant liqueur. It's meant to stimulate the appetite and is often the first drink French people order at a restaurant.",
+      "tags": ["drink", "aperitif", "wine", "cocktail"],
+      "source_notes": "アペリティフ文化"
+    },
+    {
+      "id": "fr_018",
+      "category": "マナー",
+      "ja": "💡お会計はテーブルで済ませるのが一般的です。店員さんと目が合った時に、空中でペンを走らせるジェスチャーをするか『L'addition, s'il vous plaît（ラディシオン・シル・ヴ・プレ）』と伝えましょう。",
+      "en": "💡Paying at the table is the norm in France. Catch the waiter's eye and make an 'air-writing' gesture or say 'L'addition, s'il vous plaît' to ask for the bill.",
+      "tags": ["etiquette", "payment", "phrases", "practical"],
+      "source_notes": "会計のスマートな方法"
+    },
+    {
+      "id": "fr_019",
+      "category": "カフェ文化",
+      "ja": "💡パリなどの大都市では、テラス席の価格が店内より高く設定されていることがあります。特に一等地のカフェでは、看板のメニューに『Salle（店内）』『Terrasse（テラス）』と別料金が書かれているのでチェック！",
+      "en": "💡In cities like Paris, sitting on the terrace can sometimes be more expensive than sitting inside. Check the menu for 'Salle' (inside) vs. 'Terrasse' prices before picking your spot.",
+      "tags": ["cafe", "paris", "price", "terrace"],
+      "source_notes": "席による価格差"
+    },
+    {
+      "id": "fr_020",
+      "category": "地方料理",
+      "ja": "💡南西部トゥールーズの名物『カスレ』は、白いんげん豆と鴨のコンフィ、ソーセージを長時間煮込んだ超重量級メニュー。お腹を空かせて挑戦しましょう。寒い冬のノマド作業後の栄養補給に最高です。",
+      "en": "💡Toulouse's 'Cassoulet' is a hearty stew of white beans, duck confit, and sausages. It's a very filling dish—perfect for refueling after a long day of work during the cold winter months.",
+      "tags": ["toulouse", "meat", "heavy", "regional"],
+      "source_notes": "南西部の郷土料理"
+    },
+    {
+      "id": "fr_021",
+      "category": "市場・買い物",
+      "ja": "💡マルシェ（市場）は午前中が勝負。朝8時〜13時頃までが一般的です。野菜や果物は自分で触らず、店員さんに『これとこれ（Ceux-ci, s'il vous plaît）』と頼んで取ってもらうのがマナーです。",
+      "en": "💡Outdoor markets (Marché) usually run from 8 AM to 1 PM. It's polite to let the vendor pick the produce for you rather than touching it yourself—just point and say 'Ceux-ci, s'il vous plaît.'",
+      "tags": ["market", "shopping", "etiquette", "fresh"],
+      "source_notes": "マルシェの作法"
+    },
+    {
+      "id": "fr_022",
+      "category": "実用",
+      "ja": "💡フランスのレストランはランチが12時〜14時、ディナーが19時〜21時半頃が標準。その間の時間は閉まってしまう店が多いので注意。通し営業の店を探すなら『Service Continu（セルヴィス・コンティニュ）』の表示を探して。",
+      "en": "💡Most restaurants serve lunch from 12 PM to 2 PM and dinner from 7 PM to 9:30 PM. For food outside these hours, look for places displaying 'Service Continu,' meaning they serve all day.",
+      "tags": ["schedule", "lifestyle", "practical", "opening-hours"],
+      "source_notes": "営業時間への適応"
+    },
+    {
+      "id": "fr_023",
+      "category": "地方料理",
+      "ja": "💡ボルドー名物の『カヌレ』は、もともとワインの清澄作業で余った卵黄を活用するために修道院で作られたお菓子。外はカリッと、中はしっとりした食感が命。本場の専門店の焼き立ては格別です！",
+      "en": "💡Bordeaux's 'Canelé' was originally created by nuns using leftover egg yolks from the wine clarification process. A perfect one is crunchy on the outside and moist inside—try them at a local bakery!",
+      "tags": ["bordeaux", "sweet", "pastry", "regional"],
+      "source_notes": "ボルドーの歴史的銘菓"
+    },
+    {
+      "id": "fr_024",
+      "category": "ドリンク",
+      "ja": "💡ワインをボトル1本も飲めない時は『un pichet（アン・ピシェ）』や『une carafe（ユヌ・カラフ）』で250mlや500mlのハウスワインを頼めます。安くて美味しい、日常のワインの楽しみ方です。",
+      "en": "💡If a full bottle is too much, order 'un pichet' or 'une carafe' of house wine (usually 250ml or 500ml). It's an affordable and high-quality way to enjoy wine like a local.",
+      "tags": ["wine", "drink", "budget", "practical"],
+      "source_notes": "ワインの気軽な注文"
+    },
+    {
+      "id": "fr_025",
+      "category": "フランス語",
+      "ja": "💡美味しい時は『C'est délicieux!（セ・デリシュー）』や『C'était très bon（セテ・トレ・ボン）』と伝えましょう。お店の人が喜んで、その後のサービスがよりフレンドリーになるはずです。",
+      "en": "💡Show your appreciation by saying 'C'est délicieux!' (It's delicious!) or 'C'était très bon' (It was very good). It's a great way to build rapport with the staff.",
+      "tags": ["phrases", "compliment", "communication"],
+      "source_notes": "褒め言葉フレーズ"
+    },
+    {
+      "id": "fr_026",
+      "category": "市場・買い物",
+      "ja": "💡チーズ専門店（フロマージュリー）では、店員さんに『Pour aujourd'hui（プール・オ・ジュルデュイ / 今日食べる用）』と伝えると、今すぐ食べ頃のチーズを選んでくれます。数日後ならその旨を伝えればOK。",
+      "en": "💡At a cheese shop (Fromagerie), tell the staff 'Pour aujourd'hui' if you plan to eat it today. They will pick a cheese that is perfectly ripe and ready for immediate enjoyment.",
+      "tags": ["cheese", "fromagerie", "shopping", "phrases"],
+      "source_notes": "チーズ選びのコツ"
+    },
+    {
+      "id": "fr_027",
+      "category": "マナー",
+      "ja": "💡レストランで店員さんを呼ぶ時に大声を出したり指を鳴らしたりするのは厳禁。目が合った瞬間に軽く手を上げるか、目配せだけで十分通じます。フランスのサービスは『待つこと』も文化の一部です。",
+      "en": "💡Never shout or snap your fingers to get a waiter's attention. A simple hand raise or just making eye contact is the polite way. In France, a slower pace of service is part of the dining experience.",
+      "tags": ["etiquette", "waiter", "communication"],
+      "source_notes": "店員との接し方"
+    },
+    {
+      "id": "fr_028",
+      "category": "料理知識",
+      "ja": "💡メニューに『AOP』や『AOC』のマークがあれば、それは特定の地域と製法の基準をクリアした高品質な証（原産地統制呼称）。特にチーズ、ワイン、バター、鶏肉などはこのマーク付きを選ぶと失敗がありません。",
+      "en": "💡Look for 'AOP' or 'AOC' labels on menus and products. This certification ensures the item is of high quality and produced in a specific region using traditional methods—a gold standard for cheese and wine.",
+      "tags": ["quality", "label", "knowledge", "shopping"],
+      "source_notes": "品質保証マークの知識"
+    },
+    {
+      "id": "fr_029",
+      "category": "コスパ",
+      "ja": "💡節約ランチなら『Boulangerie（パン屋）』のサンドイッチが最強。€4〜7程度でバゲットに上質なハムとバター（ジャンボン・ブール）を挟んだものが買えます。公園でのピクニックランチはノマドの特権！",
+      "en": "💡For a cheap lunch, head to a 'Boulangerie' for a baguette sandwich. A classic 'Jambon-Beurre' (ham and butter) usually costs €4–7 and is delicious—perfect for a quick park picnic.",
+      "tags": ["lunch", "budget", "boulangerie", "picnic"],
+      "source_notes": "パン屋ランチの推奨"
+    },
+    {
+      "id": "fr_030",
+      "category": "カフェ文化",
+      "ja": "💡朝のカフェでクロワッサンを食べるなら、店にパンがなくても『近くのパン屋で買ってくるね』と言って持ち込める店が多いです（飲み物を頼むのが前提）。これぞフランスの緩やかで素敵なカフェ文化です。",
+      "en": "💡If a café doesn't sell pastries, many will let you bring in a croissant from a nearby bakery as long as you order a drink. It's a common and charming part of French morning ritual.",
+      "tags": ["cafe", "breakfast", "pastry", "culture"],
+      "source_notes": "持ち込みの柔軟性"
+    },
+    {
+      "id": "fr_031",
+      "category": "マナー",
+      "ja": "💡チーズの切り方には厳しいルールがあります。円形ならケーキのように、三角形なら先を切り落とさず側面に沿って。全員が中心の美味しい部分（コア）を均等に味わえるように切るのがフランス流の気遣いです。",
+      "en": "💡There are rules for cutting cheese: round cheeses are cut like cakes, and wedges should be cut along the side so everyone gets a piece of the tasty center (the 'heart').",
+      "tags": ["cheese", "etiquette", "table-manners", "fromage"],
+      "source_notes": "チーズの切り方ルール"
+    },
+    {
+      "id": "fr_032",
+      "category": "パン・スイーツ",
+      "ja": "💡『Pâtisserie（パティスリー）』は菓子専門店。ミルフィーユやエクレア、タルト・タタンなど芸術的なスイーツが並びます。多くのパン屋も菓子を置きますが、本当に贅沢したい時は専門店へ行きましょう。",
+      "en": "💡A 'Pâtisserie' is a dedicated pastry shop where you'll find artistic treats like Mille-feuille and Éclairs. While bakeries also sell sweets, visit a Pâtisserie for the most exquisite and refined desserts.",
+      "tags": ["sweet", "patisserie", "dessert", "knowledge"],
+      "source_notes": "専門店とパン屋の使い分け"
+    },
+    {
+      "id": "fr_033",
+      "category": "ドリンク",
+      "ja": "💡カフェで『un café noisette（ノワゼット）』と頼むと、エスプレッソに少量の温かいミルクを垂らした、ヘーゼルナッツ色のコーヒーが出てきます。カフェ・オ・レより重くなく、午後の仕事の合間にぴったり。",
+      "en": "💡Order 'un café noisette' for an espresso with a tiny splash of milk. It's named after its hazelnut color and is a perfect mid-afternoon pick-me-up that's lighter than a café au lait.",
+      "tags": ["coffee", "cafe", "drink", "ordering"],
+      "source_notes": "コーヒーのバリエーション"
+    },
+    {
+      "id": "fr_034",
+      "category": "地方料理",
+      "ja": "💡ノルマンディー地方の『カマンベール』は世界一有名ですが、本場では『AOP Camembert de Normandie』を選んで。無殺菌乳で作られた濃厚な味わいは、スーパーの大量生産品とは別次元の食べ物です。",
+      "en": "💡When in Normandy, look for 'AOP Camembert de Normandie.' Made from raw milk, its intense and complex flavor is worlds apart from the mass-produced versions you'll find in supermarkets.",
+      "tags": ["normandy", "cheese", "quality", "regional"],
+      "source_notes": "本場のチーズ知識"
+    },
+    {
+      "id": "fr_035",
+      "category": "料理知識",
+      "ja": "💡黒板に手書きで書かれた『Plat du jour（プラ・デュ・ジュール）』は本日の一品。その日の市場の仕入れに合わせた旬の料理が、最も新鮮でコスパ良く提供されています。迷ったらこれを頼むのが常連のムーブです。",
+      "en": "💡The 'Plat du jour' (Dish of the Day) written on chalkboards is often your best bet. It's made with fresh ingredients from that morning's market and is usually the best value item on the menu.",
+      "tags": ["menu", "ordering", "fresh", "budget"],
+      "source_notes": "本日の一品の賢い利用"
+    },
+    {
+      "id": "fr_036",
+      "category": "実用",
+      "ja": "💡週末や人気のビストロ、レストランは予約が必須です。電話が苦手なら公式HPやGoogleマップからオンライン予約できる店も増えています。特に金・土のディナーは、数日前にはポチッとしておきましょう。",
+      "en": "💡Reservations are essential for popular bistros and restaurants, especially on weekends. Many now offer online booking via Google Maps or their websites—try to book at least a few days in advance.",
+      "tags": ["reservation", "practical", "booking", "dining"],
+      "source_notes": "予約の重要性"
+    },
+    {
+      "id": "fr_037",
+      "category": "フランス語",
+      "ja": "💡おすすめを聞きたい時は『Qu'est-ce que vous conseillez?（ケスク・ヴ・コンセイエ？）』と言ってみましょう。店員さんの個人的な『好き』を教えてくれることもあり、より豊かな食体験に繋がります。",
+      "en": "💡Ask 'Qu'est-ce que vous conseillez?' to get the waiter's recommendations. They might share their personal favorite, leading to a much more memorable and authentic meal.",
+      "tags": ["phrases", "ordering", "communication"],
+      "source_notes": "おすすめを聞くフレーズ"
+    },
+    {
+      "id": "fr_038",
+      "category": "ドリンク",
+      "ja": "💡お酒を飲まない日の強い味方は『Sirop（シロ）』。ミントやグレナデン（ざくろ）のシロップを水で割ったもので、フランスの子供から大人まで愛されるバル・カフェの定番ドリンクです。ノンアルでも溶け込めますよ！",
+      "en": "💡For a non-alcoholic option, order a 'Sirop.' It's flavored syrup (like mint or grenadine) mixed with water. It's a classic French café staple for adults and children alike—perfect for any social setting.",
+      "tags": ["drink", "non-alcoholic", "cafe", "sirop"],
+      "source_notes": "ノンアルコールドリンクの定番"
+    },
+    {
+      "id": "fr_039",
+      "category": "地方料理",
+      "ja": "💡フランス・バスク地方の『ピペラード』は、トマト、ピーマン、玉ねぎをエスペレット唐辛子で煮込んだ彩り豊かな一品。生ハムや卵を添えてランチに食べるのが最高にヘルシーで元気が出ます。",
+      "en": "💡Basque Country's 'Piperade' is a colorful stew of tomatoes, peppers, and onions seasoned with Espelette pepper. Often served with ham or eggs, it's a healthy and vibrant lunch option.",
+      "tags": ["basque", "vegetable", "healthy", "regional"],
+      "source_notes": "バスクの郷土料理"
+    },
+    {
+      "id": "fr_040",
+      "category": "カフェ文化",
+      "ja": "💡カフェでのPC作業は基本OKですが、ランチのピーク時（12〜14時）に占領するのはマナー違反。作業をしたい時は『WiFi』ステッカーがある店か、コワーキングカフェ（Anticaféなど）を探すのが快適です。",
+      "en": "💡While laptops are usually allowed in cafés, avoid camping out during the lunch rush (12 PM–2 PM). For longer sessions, look for cafés with 'WiFi' signs or visit a dedicated co-working café.",
+      "tags": ["nomad", "laptop", "cafe", "etiquette"],
+      "source_notes": "ノマドの作業マナー"
+    },
+    {
+      "id": "fr_041",
+      "category": "パン・スイーツ",
+      "ja": "💡食後のデザートで迷ったら『Café Gourmand（カフェ・グルマン）』を。エスプレッソに、その店の自慢のプチ・デザートが3〜4種類付いてくる贅沢なセットです。少しずつ色々食べたい欲張りさんにぴったり！",
+      "en": "💡Can't decide on dessert? Order 'Café Gourmand.' It includes an espresso served with 3 or 4 mini-desserts, letting you sample a variety of the chef's sweet creations in one go.",
+      "tags": ["sweet", "cafe", "dessert", "ordering"],
+      "source_notes": "人気のデザートセット"
+    },
+    {
+      "id": "fr_042",
+      "category": "地方料理",
+      "ja": "💡ノルマンディーやブルターニュの北フランスでは、ワインの代わりに『Cidre（シードル）』が主役。アルコール度数が低く、リンゴの爽やかな酸味がガレットや豚肉料理に絶妙に合います。辛口（Brut）がおすすめです。",
+      "en": "💡In Normandy and Brittany, 'Cidre' (cider) often replaces wine at the table. It's lower in alcohol and its apple acidity pairs beautifully with galettes and pork. Try the 'Brut' (dry) variety.",
+      "tags": ["normandy", "brittany", "cider", "drink"],
+      "source_notes": "北仏の飲料文化"
+    },
+    {
+      "id": "fr_043",
+      "category": "マナー",
+      "ja": "💡フランス料理ではソースを残すのはもったいない！バゲットの切れ端を使って皿に残ったソースを拭って食べるのは、マナー違反ではなく、むしろ『美味しい』という最高の賛辞として受け取られます。",
+      "en": "💡Don't leave delicious sauce behind! Using a piece of baguette to wipe your plate clean isn't rude—it's actually seen as a compliment to the chef, showing you enjoyed every drop.",
+      "tags": ["etiquette", "sauce", "table-manners", "compliment"],
+      "source_notes": "皿を拭うマナー"
+    }
+  ]
+}
