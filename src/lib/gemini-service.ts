@@ -5,7 +5,7 @@ const API_KEY = process.env.GEMINI_API_KEY || "";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
 const analyzeModel = genAI.getGenerativeModel({
-  model: "gemini-2.5-flash-lite",
+  model: "gemini-3.1-flash-lite",
   generationConfig: {
     maxOutputTokens: 16384,
     responseMimeType: "application/json",
