@@ -7,7 +7,7 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 const analyzeModel = genAI.getGenerativeModel({
   model: "gemini-2.5-flash-lite",
   generationConfig: {
-    maxOutputTokens: 8192,
+    maxOutputTokens: 16384,
     responseMimeType: "application/json",
   },
 });
@@ -37,7 +37,7 @@ export async function* analyzeMenuImage(
     If it IS a menu, proceed:
     1. **Detect Country**: Detect the country of the menu based on language, currency, vibe, or dish names.
     2. **Detect sections**: Group dishes by the sections visible on the menu.
-    3. **Extract & Translate**: For each dish, extract the original name and translate into natural ${targetLang}.
+    3. **Extract & Translate**: For EVERY SINGLE dish on the menu, extract the original name and translate into natural ${targetLang}. CRITICAL: Do NOT skip or omit any dishes. Include ALL items visible on the menu, even if there are many. Completeness is more important than speed.
     4. **Image query**: For each dish, create a concise English search query for generating an appetizing food photo.
 
     Output JSON only (no markdown code blocks):
