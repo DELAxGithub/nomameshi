@@ -15,6 +15,8 @@ interface Props {
   handleScan: () => void;
   handlePaste: () => void;
   handleFileUpload: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  historyCount: number;
+  onShowHistory: () => void;
   tips: {
     tipIndex: number;
     goNextTip: () => void;
@@ -36,6 +38,8 @@ export function ScanView({
   handleScan,
   handlePaste,
   handleFileUpload,
+  historyCount,
+  onShowHistory,
   tips,
 }: Props) {
   const tipCountryCode = analyzing
@@ -70,6 +74,43 @@ export function ScanView({
         handlePaste={handlePaste}
         handleFileUpload={handleFileUpload}
       />
+
+      {/* History button */}
+      {historyCount > 0 && !analyzing && (
+        <button
+          onClick={onShowHistory}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "8px",
+            padding: "12px",
+            borderRadius: "12px",
+            background: "var(--surface)",
+            border: "1px solid var(--border)",
+            color: "var(--foreground-muted)",
+            fontFamily: "var(--font-heading)",
+            fontWeight: 500,
+            fontSize: "0.9rem",
+            cursor: "pointer",
+          }}
+        >
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M12 8v4l3 3" />
+            <circle cx="12" cy="12" r="10" />
+          </svg>
+          History ({historyCount})
+        </button>
+      )}
 
       {/* Tips Section */}
       <TipCard

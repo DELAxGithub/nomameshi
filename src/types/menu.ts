@@ -18,3 +18,11 @@ export interface MenuResult {
   language?: string;
   sections: Section[];
 }
+
+export interface SavedMenu {
+  id: string;
+  savedAt: number;
+  regionCode: string;
+  targetLang: string;
+  menu: MenuResult;
+}

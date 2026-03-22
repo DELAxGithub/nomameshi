@@ -233,6 +233,13 @@ export function useMenuAnalysis(targetLang: string, selectedRegion: string) {
     setHeroImage(null);
   };
 
+  const loadMenu = (menuData: MenuResult) => {
+    setMenu(menuData);
+    setHeroImage(null);
+    setHeroError(null);
+    setError(null);
+  };
+
   return {
     analyzing,
     menu,
@@ -245,6 +252,7 @@ export function useMenuAnalysis(targetLang: string, selectedRegion: string) {
     handleFileUpload,
     handlePaste,
     resetMenu,
+    loadMenu,
     retryHeroImage: () => menu && generateTableImage(menu.sections),
   };
 }
