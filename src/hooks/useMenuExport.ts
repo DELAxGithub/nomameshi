@@ -63,7 +63,7 @@ export function useMenuExport(menu: MenuResult | null) {
       }
       lines.push("");
     }
-    lines.push("Translated by Nomameshi\nhttps://nomameshi.vercel.app");
+    lines.push("Translated by Nomameshi\nhttps://menumenu-three.vercel.app");
     const text = lines.join("\n");
 
     if (isNative()) {

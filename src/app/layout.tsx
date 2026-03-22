@@ -12,7 +12,7 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
-const siteUrl = "https://nomameshi.vercel.app";
+const siteUrl = "https://menumenu-three.vercel.app";
 
 export const viewport: Viewport = {
   width: "device-width",

@@ -23,7 +23,7 @@ const config: CapacitorConfig = {
     },
   },
   server: {
-    url: "https://nomameshi.vercel.app",
+    url: "https://menumenu-three.vercel.app",
     iosScheme: "capacitor",
   },
 };
