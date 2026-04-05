@@ -49,7 +49,7 @@ export function useMenuAnalysis(targetLang: string, selectedRegion: string) {
     setDetectedCountry(selectedRegion === "auto" ? null : selectedRegion);
 
     if (!navigator.onLine) {
-      setError("Internet connection lost. Please check your signal.");
+      setError("インターネットに接続できません。WiFiやモバイルデータを確認してください。 / No internet connection. Check your WiFi or mobile data.");
       setAnalyzing(false);
       return;
     }
@@ -154,22 +154,40 @@ export function useMenuAnalysis(targetLang: string, selectedRegion: string) {
       generateTableImage(menuData.sections);
     } catch (err: unknown) {
       console.error("Failed to analyze", err);
-      const errMsg =
-        err instanceof Error ? err.message : "Analysis failed. Please try again.";
+      const errCode =
+        err instanceof Error ? err.message : "UNKNOWN";
 
-      let msg = errMsg;
-      if (errMsg.includes("Failed to fetch")) {
-        if (!fullText) {
-          msg = "Internet connection lost. Please check your signal.";
-        } else {
-          msg = "Connection lost, but showing partial results.";
-        }
+      let msg: string;
+      switch (errCode) {
+        case "NETWORK_ERROR":
+          msg = fullText
+            ? "通信が途切れました。途中までの結果を表示しています。 / Connection lost mid-stream. Showing partial results."
+            : "インターネットに接続できません。WiFiやモバイルデータを確認してください。 / No internet connection. Check your WiFi or mobile data.";
+          break;
+        case "TIMEOUT":
+          msg = "サーバーの応答がタイムアウトしました（45秒）。もう一度お試しください。 / Server timed out (45s). Please try again.";
+          break;
+        case "RATE_LIMITED":
+          msg = "リクエストが多すぎます。1分ほどお待ちください。 / Too many requests. Please wait about a minute.";
+          break;
+        case "STREAM_INTERRUPTED":
+          msg = fullText
+            ? "通信が途切れました。途中までの結果を表示しています。 / Connection lost mid-stream. Showing partial results."
+            : "通信中にエラーが発生しました。もう一度お試しください。 / Connection error during analysis. Please try again.";
+          break;
+        default:
+          if (errCode.startsWith("API_ERROR:")) {
+            const status = errCode.split(":")[1];
+            msg = `サーバーエラー (${status})。しばらくしてからお試しください。 / Server error (${status}). Please try again later.`;
+          } else {
+            msg = "メニューの解析に失敗しました。もう一度お試しください。 / Analysis failed. Please try again.";
+          }
       }
 
       if (!fullText && !menu) {
         setError(msg);
       } else if (!menu) {
-        setError(`Could not generate menu structure. ${msg}`);
+        setError(msg);
       }
     } finally {
       setAnalyzing(false);
