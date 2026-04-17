@@ -52,3 +52,14 @@ list-models.js
 
 # iOS App Store
 Store/
+
+# fastlane
+ios/App/vendor/
+ios/App/.bundle/
+ios/App/fastlane/report.xml
+ios/App/fastlane/Preview.html
+ios/App/fastlane/screenshots/
+ios/App/fastlane/test_output/
+ios/App/*.ipa
+ios/App/*.dSYM.zip
+ios/App/*.p8

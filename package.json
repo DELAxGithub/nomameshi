@@ -9,7 +9,8 @@
     "lint": "eslint",
     "build:ios": "next build && npx cap sync ios",
     "cap:sync": "npx cap sync",
-    "cap:open": "npx cap open ios"
+    "cap:open": "npx cap open ios",
+    "ios:beta": "npm run build:ios && cd ios/App && bundle exec fastlane beta"
   },
   "dependencies": {
     "@capacitor/camera": "^8.0.1",
