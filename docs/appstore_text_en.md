@@ -7,44 +7,52 @@ Nomameshi
 
 ## Subtitle (30 chars max)
 ```
-AI Menu Translator with Visuals
+Your local meal companion
 ```
 
 ## Promotional Text (170 chars max, can update anytime without review)
 ```
-See the flavor before you order! Snap any foreign menu and get instant AI translations with beautiful food visuals. Your ultimate dining companion abroad.
+For travelers who skip the tourist traps. Point your camera at a local menu — get translations, a table-spread preview, and curated food-culture tips. Eat like a local.
 ```
 
 ## Description (4000 chars max)
 ```
-Snap a photo of any foreign menu — Nomameshi instantly translates it and generates beautiful AI food visuals so you can see the flavor before you order.
+You want to eat where locals eat — not at the tourist trap with the English menu, but at the tiny taberna with a handwritten board in the back street. Nomameshi is the companion that walks in there with you.
 
-WHAT IT DOES
-• Photograph or upload a restaurant menu in any language
-• Get instant, natural translations powered by Gemini AI
-• See AI-generated images of each dish — no more guessing what you're ordering
-• A cinematic "table spread" hero image brings the entire menu to life
+Point your camera at a foreign menu and Nomameshi instantly translates it, then generates a visual preview of each dish so you can actually see what you're about to order. It's the difference between hesitating outside and walking in with confidence.
 
-SUPPORTED LANGUAGES
-Translates menus from any language into Japanese or English. Optimized for menus from Japan, Italy, Spain, France, USA, Korea, Thailand, and Taiwan.
+WHAT IT'S FOR
+• Local restaurants that don't bother with an English menu
+• Moments when a dish name tells you nothing about what arrives
+• Slow travel days when you want to explore instead of guess
+• Travelers who treat a meal as part of the culture, not just fuel
+
+WHY NOMAMESHI
+• Translation tuned for food — place names, ingredients, and cooking methods with cultural nuance
+• A "table spread" AI visualization so you can see the vibe of the meal before committing
+• Curated local food-culture tips by country (84 for Spain, 43 for France, and more being added)
+• No account, no sign-up. Snap → translate → eat.
+
+SUPPORTED LANGUAGES & REGIONS
+Translates menus from any language into Japanese or English. Optimized for Japan, Italy, Spain, France, USA, Korea, Thailand, and Taiwan — the places where local dining is most rewarding.
 
 SMART FEATURES
 • Auto-detects the menu's country and language
 • Groups dishes by menu sections with prices
-• Provides brief cultural context for unfamiliar dishes
-• Fun food culture tips while you wait
+• Quietly explains unfamiliar ingredients and dishes
+• Rotates regional food-culture tips while you wait
 
-SHARE & SAVE
-• Copy translated text to clipboard
-• Share results via your favorite apps
-• Save the full translation as a beautiful image
+SAVE & SHARE
+• Save the full translation as a beautiful single image
+• Share with travel companions via your favorite apps
+• Your last 20 menus are auto-saved as a travel log
 
-Perfect for travelers, foodies, and anyone who wants to order with confidence abroad. No account required — just point, shoot, and discover.
+Made for slow nomads, foodies, and anyone who believes the best meals aren't on TripAdvisor. Nomameshi isn't a guidebook or a translator — it's the quiet friend at your table who happens to read every menu in the world.
 ```
 
 ## Keywords (100 chars max, comma-separated)
 ```
-menu translator,food photo,AI translate,travel food,restaurant menu,foreign menu,dish image,foodie
+local food,food culture,slow travel,local dining,menu translator,foodie travel,hidden gems,foreign menu
 ```
 
 ## Support URL

@@ -1,16 +1,24 @@
-# Nomameshi (メニュー翻訳＆視覚化アプリ)
+# Nomameshi
 
-**Don't just read the menu. See the flavor.**
+**Your local meal companion — 旅先のローカル食堂、相棒AI**
 
-AI駆動のメニュー翻訳・解析・視覚化アプリ。外国語のメニュー画像を撮影するだけで、料理の構成やレストランの雰囲気を解析し、美しいUIで多言語化して表示します。
+観光客向けの店じゃなくて、地元の人が通う小さな食堂で食べたい。Nomameshi はそういう旅人の食卓の相棒です。外国語メニューを撮るとAIが翻訳し、その料理が実際どう見えるかのビジュアルまで生成。さらに国ごとの食文化Tipsで「料理を待つ時間」まで楽しくなります。
+
+「メニュー翻訳アプリ」はたくさんあります。Nomameshi が違うのは、**翻訳の先に「ローカルで食べる体験」を置いている**ことです。
 
 ## 主要機能
 
-1. **メニューの解析・翻訳** — Gemini APIによるOCR＆構造化翻訳。料理名、説明、価格、レストランの雰囲気を抽出
-2. **テーブルスプレッド画像の自動生成** — AIが料理群のビジュアルを生成し、グラスモーフィズムのカードUIで翻訳をオーバーレイ
-3. **Cultural Tips** — 解析中の待ち時間に、その地域の食文化豆知識を表示（8カ国対応）
-4. **履歴** — 翻訳結果をlocalStorageに自動保存（最大20件）
-5. **共有・保存** — PNG画像エクスポート / ネイティブShare / クリップボード
+1. **料理特化の翻訳** — Gemini APIでメニューをOCRし、料理名・食材・調理法のニュアンスを保った翻訳を生成
+2. **テーブルスプレッド画像** — AI が料理の雰囲気を視覚化した背景を生成、その上にグラスモーフィズムのカードで翻訳をオーバーレイ
+3. **Local Tips** — 国別にキュレーションされた食文化豆知識（スペイン84件・フランス43件ほか拡充中）
+4. **履歴** — 翻訳結果を localStorage に自動保存（最大20件＝旅ログ）
+5. **保存・シェア** — 美しい1枚のPNGとしてエクスポート / ネイティブShare / クリップボード
+
+## ターゲット
+
+- スローノマド（数週間〜数ヶ月単位で海外滞在しながら働く人）
+- 観光客向けより地元の定食屋・バル・タベルナを好む旅人
+- 「旅行ツール」ではなく「日常の食事の道具」として使いたい人
 
 ## Tech Stack
 
@@ -21,6 +29,7 @@ AI駆動のメニュー翻訳・解析・視覚化アプリ。外国語のメニ
 | AI (Image) | Gemini 2.5 Flash Image (`gemini-2.5-flash-image`) |
 | Mobile | Capacitor 8 (iOS) |
 | Hosting | Vercel (SSR + Serverless API Routes) |
+| Design | Pencil.dev (source: `design/nomameshi.pen`) |
 
 ## Architecture
 
@@ -34,19 +43,9 @@ Client (React)           Server (Vercel API Routes)
        └── history (20 items)     └── IP rate limit (10 req/min)
 ```
 
-- APIキーはサーバーサイド専用（`GEMINI_API_KEY`）。クライアントに露出しない
-- IPベースのレートリミット（1分10リクエスト）
-- iOS版はCapacitor経由でVercel URLからリモート読み込み
-
-## 開発ノート
-
-### Geminiモデルの選定
-- **解析**: `gemini-2.5-flash` — OCR精度と速度のバランスを重視。`flash-lite` は速いが品数の多いメニューで抜けが発生するため、`flash` を採用
-- **画像生成**: `gemini-2.5-flash-image` — テーブルスプレッド画像生成用
-- `gemini-3.1-flash-lite` はベンチマーク上優秀だがAPI未公開（2026-03時点）。GA後に検証予定
-
-### コード構成
-page.tsx を61行に圧縮。4 custom hooks / 10 components / 3 data modules に分割済み。
+- API キーはサーバーサイド専用（`GEMINI_API_KEY`）。クライアントに露出しない
+- IP ベースのレートリミット（1分10リクエスト）
+- iOS 版は Capacitor 経由で Vercel URL からリモート読み込み
 
 ## Getting Started
 
@@ -61,16 +60,33 @@ echo "GEMINI_API_KEY=your_key_here" > .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the app.
+Open [http://localhost:3000](http://localhost:3000).
 
 ### iOS Build
 
 ```bash
-npm run build:ios    # Build + sync to iOS
+npm run build:ios    # Next build + cap sync ios
 npx cap open ios     # Open in Xcode
 ```
 
+### TestFlight (fastlane)
+
+```bash
+npm run ios:beta     # Next build → Xcode archive → TestFlight upload
+```
+
+App Store Connect API Key は `~/.appstoreconnect/` に配置、`ASC_*` env vars で読まれます。
+
+## Design System
+
+- **Palette**: Ivory `#FCFBF9` / Charcoal `#1E2432` / Coral `#E85A4F` / Olive `#8A9178` / Soy `#C9A86C`
+- **Logo**: `noma` (Charcoal 700) + `meshi` (Coral 700), letter-spacing -0.04em
+- **Style**: Warm consumer — hero upload card, pill selectors, glassmorphism result cards, food photography background
+
+詳細は `docs/design_review_brief_2026Q1.md` および `design/nomameshi.pen`.
+
 ## Links
 
-- **Web**: https://menumenu-three.vercel.app
+- **Web**: https://nomameshi-delaxs-projects.vercel.app
 - **GitHub**: https://github.com/DELAxGithub/nomameshi
+- **App Store**: Nomameshi (v1.3 進行中)
