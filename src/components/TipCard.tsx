@@ -25,10 +25,19 @@ export function TipCard({
       className={analyzing ? "animate-fade-in" : undefined}
     >
       {/* LOCAL TIP header */}
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <div
-          style={{ width: "24px", height: "1px", background: "var(--accent)" }}
-        />
+      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="var(--accent)"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M12 3l1.9 5.8L20 11l-5.3 3.8L16 21l-4-3-4 3 1.3-6.2L4 11l6.1-2.2z" />
+        </svg>
         <span
           style={{
             fontSize: "0.7rem",
@@ -48,14 +57,24 @@ export function TipCard({
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
         style={{
-          background: "var(--surface)",
-          border: "1px solid var(--border)",
-          borderRadius: "16px",
+          background: "var(--gradient-warm-card)",
+          border: "1px solid var(--border-warm)",
+          borderRadius: "var(--radius-md)",
           padding: "20px",
           cursor: "pointer",
           position: "relative",
+          boxShadow: "var(--shadow-soft)",
         }}
       >
+        <div
+          style={{
+            width: "36px",
+            height: "3px",
+            background: "var(--primary)",
+            borderRadius: "2px",
+            marginBottom: "12px",
+          }}
+        />
         <span
           style={{
             position: "absolute",

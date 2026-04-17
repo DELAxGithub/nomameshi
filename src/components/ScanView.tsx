@@ -51,10 +51,10 @@ export function ScanView({
   return (
     <div
       className="animate-fade-in"
-      style={{ display: "flex", flexDirection: "column", gap: "24px" }}
+      style={{ display: "flex", flexDirection: "column", gap: "24px", width: "100%" }}
     >
       {/* Region & Language selectors */}
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div style={{ display: "flex", gap: "10px", width: "100%", alignItems: "stretch", flexWrap: "wrap" }}>
         <RegionSelector
           selectedRegion={selectedRegion}
           setSelectedRegion={setSelectedRegion}

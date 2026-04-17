@@ -6,11 +6,11 @@ export function Header() {
     >
       <h1
         className="nomameshi-logo"
-        style={{ fontSize: "1.5rem", marginBottom: "0.3rem" }}
+        style={{ fontSize: "1.75rem", marginBottom: "0.35rem" }}
       >
         noma<span className="accent">meshi</span>
       </h1>
-      <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem" }}>
+      <p style={{ color: "var(--secondary)", fontSize: "0.85rem", letterSpacing: "0.02em" }}>
         Your local meal companion
       </p>
     </div>

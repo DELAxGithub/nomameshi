@@ -17,8 +17,11 @@ export function LanguageToggle({
         display: "flex",
         background: "var(--surface)",
         border: "1px solid var(--border)",
-        borderRadius: "12px",
+        borderRadius: "var(--radius-pill)",
         overflow: "hidden",
+        padding: "3px",
+        gap: "2px",
+        flexShrink: 0,
       }}
     >
       {LANGUAGES.map((lang) => (
@@ -27,15 +30,16 @@ export function LanguageToggle({
           onClick={() => setTargetLang(lang.code)}
           disabled={analyzing}
           style={{
-            padding: "10px 14px",
+            padding: "7px 12px",
             border: "none",
-            fontSize: "0.9rem",
+            fontSize: "0.85rem",
             fontFamily: "var(--font-heading)",
-            fontWeight: targetLang === lang.code ? 600 : 400,
+            fontWeight: targetLang === lang.code ? 600 : 500,
             cursor: "pointer",
+            borderRadius: "var(--radius-pill)",
             background:
               targetLang === lang.code
-                ? "var(--surface-highlight)"
+                ? "var(--primary-soft)"
                 : "transparent",
             color:
               targetLang === lang.code

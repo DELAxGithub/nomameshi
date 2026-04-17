@@ -53,7 +53,7 @@ export default function Home() {
   };
 
   return (
-    <main className="container" style={{ minHeight: "100vh", padding: "2rem 0" }}>
+    <main className="container" style={{ minHeight: "100vh", padding: "2rem 20px" }}>
       <Header />
 
       {analysis.error && <ErrorBanner message={analysis.error} />}

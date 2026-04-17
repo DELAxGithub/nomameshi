@@ -14,36 +14,38 @@ export function UploadArea({
   return (
     <div
       style={{
-        background: "var(--surface)",
-        border: "1.5px solid var(--border)",
+        background: "var(--gradient-warm-card)",
+        border: "1.5px solid var(--border-warm)",
         borderRadius: "20px",
-        padding: "40px 32px",
+        padding: "36px 24px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "20px",
-        minHeight: "280px",
+        gap: "22px",
+        minHeight: "300px",
         justifyContent: "center",
+        boxShadow: "var(--shadow-soft)",
       }}
     >
-      {/* Camera icon circle */}
+      {/* Camera icon circle — hero treatment */}
       <div
         style={{
-          width: "80px",
-          height: "80px",
+          width: "104px",
+          height: "104px",
           borderRadius: "50%",
-          background: "var(--surface-highlight)",
+          background: "var(--gradient-hero)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           position: "relative",
+          boxShadow: "var(--shadow-hero)",
         }}
       >
         {analyzing ? (
           <div
             style={{
-              width: "32px",
-              height: "32px",
+              width: "40px",
+              height: "40px",
               border: "3px solid rgba(232,90,79,0.2)",
               borderRadius: "50%",
               borderTopColor: "var(--primary)",
@@ -52,8 +54,8 @@ export function UploadArea({
           />
         ) : (
           <svg
-            width="32"
-            height="32"
+            width="40"
+            height="40"
             viewBox="0 0 24 24"
             fill="none"
             stroke="var(--primary)"
@@ -70,15 +72,16 @@ export function UploadArea({
       <div style={{ textAlign: "center" }}>
         <h2
           style={{
-            fontSize: "1.25rem",
+            fontSize: "1.4rem",
             fontWeight: 600,
             marginBottom: "6px",
             color: "var(--foreground)",
+            letterSpacing: "-0.02em",
           }}
         >
           {analyzing ? "Analyzing menu..." : "Scan a menu"}
         </h2>
-        <p style={{ color: "var(--foreground-muted)", fontSize: "0.9rem" }}>
+        <p style={{ color: "var(--foreground-muted)", fontSize: "0.875rem" }}>
           {analyzing
             ? "Detecting dishes and translating"
             : "Take a photo or upload from gallery"}
@@ -96,7 +99,7 @@ export function UploadArea({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            padding: "14px 20px",
+            padding: "13px 16px",
             borderRadius: "12px",
             background: "var(--primary)",
             color: "#FFFFFF",
@@ -141,7 +144,7 @@ export function UploadArea({
             alignItems: "center",
             justifyContent: "center",
             gap: "8px",
-            padding: "14px 20px",
+            padding: "13px 16px",
             borderRadius: "12px",
             background: "var(--surface)",
             border: "1px solid var(--border)",

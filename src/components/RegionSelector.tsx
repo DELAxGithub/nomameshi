@@ -23,8 +23,8 @@ export function RegionSelector({
     alignItems: "center" as const,
     gap: "10px",
     flex: 1,
-    padding: "12px 16px",
-    borderRadius: "12px",
+    padding: "10px 14px",
+    borderRadius: "var(--radius-pill)",
     border: `1px solid ${showPicker ? "var(--primary)" : "var(--border)"}`,
     background: showPicker ? "rgba(232,90,79,0.06)" : "var(--surface)",
     color: "var(--foreground)",
@@ -35,7 +35,7 @@ export function RegionSelector({
   };
 
   return (
-    <div style={{ position: "relative", flex: 1 }}>
+    <div style={{ position: "relative", flex: 1, minWidth: 0 }}>
       <button
         onClick={() => setShowPicker(!showPicker)}
         disabled={analyzing}
@@ -76,8 +76,8 @@ export function RegionSelector({
             zIndex: 50,
             background: "var(--surface)",
             border: "1px solid var(--border)",
-            borderRadius: "12px",
-            boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
+            borderRadius: "var(--radius-md)",
+            boxShadow: "var(--shadow-soft)",
             overflow: "hidden",
           }}
         >

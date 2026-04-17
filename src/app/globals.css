@@ -1,22 +1,31 @@
 :root {
-  /* ===== NOMAMESHI WARM REBRAND ===== */
+  /* ===== NOMAMESHI WARM REBRAND (V2) ===== */
   --background: #FCFBF9;
   --surface: #FFFFFF;
   --surface-highlight: #F5F4F2;
+  --surface-warm: #FFF8F3;
   --foreground: #1E2432;
   --foreground-muted: #8A8A8A;
   --primary: #E85A4F;
   --primary-glow: rgba(232, 90, 79, 0.2);
+  --primary-soft: #FDECE8;
+  --primary-peach: #FCD5CB;
   --secondary: #8A9178;
   --accent: #C9A86C;
   --accent-light: #D4C4A8;
-  --gradient-main: linear-gradient(135deg, #E85A4F 0%, #D94A3F 100%);
   --border: #EFEFEF;
+  --border-warm: #F0E4DA;
+  --gradient-main: linear-gradient(135deg, #E85A4F 0%, #D94A3F 100%);
+  --gradient-hero: linear-gradient(135deg, #FCD5CB 0%, #FDECE8 50%, #F5F4F2 100%);
+  --gradient-warm-card: linear-gradient(180deg, #FFFFFF 0%, #FFF8F3 100%);
   --font-body: var(--font-outfit), var(--font-inter), sans-serif;
   --font-heading: var(--font-outfit), sans-serif;
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-soft: 0 8px 24px rgba(30, 36, 50, 0.08);
+  --shadow-hero: 0 12px 32px rgba(232, 90, 79, 0.12);
 }
 
 * {
@@ -123,6 +132,31 @@ h6 {
   transform: scale(0.98);
 }
 
+/* ===== UNIVERSAL BUTTON INTERACTIONS ===== */
+button {
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+/* ===== VIEW TRANSITION ===== */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {
@@ -224,27 +258,27 @@ h6 {
   object-fit: cover;
 }
 
-/* Gradient overlay on background image — very light to keep food vivid */
+/* Gradient overlay on background image — stronger top & bottom dim for card readability */
 .menu-bg-layer::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.15) 100%);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.10) 35%, rgba(0,0,0,0.45) 100%);
   z-index: 1;
 }
 
-/* === Liquid Glass card — blur=0, food fully visible === */
+/* === Menu card — solid-leaning dark base + glass highlight for readability on bright bgs === */
 .menu-card {
   position: relative;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: saturate(200%);
-  -webkit-backdrop-filter: saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: rgba(30, 36, 50, 0.78);
+  backdrop-filter: saturate(180%) blur(8px);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 20px;
   margin: 16px;
-  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15),
-              inset 0 2px 12px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.32),
+              inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 /* Inner shine — glass surface light refraction */
@@ -367,14 +401,16 @@ h6 {
 }
 
 .menu-item-price {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: #FFFFFF;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
   background: var(--primary);
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 2px 6px rgba(232, 90, 79, 0.35);
+  letter-spacing: 0.01em;
 }
 
 .menu-item-description {
