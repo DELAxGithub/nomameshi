@@ -19,7 +19,8 @@ platform :ios do
       export_options: {
         teamID: "Z88477N5ZU",
         signingStyle: "automatic"
-      }
+      },
+      xcargs: "-allowProvisioningUpdates"
     )
 
     upload_to_testflight(
