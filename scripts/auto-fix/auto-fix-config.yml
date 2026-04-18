@@ -1,0 +1,41 @@
+project:
+  name: "nomameshi"
+
+build:
+  # nomameshi has no tests yet; lint + build is the guardrail.
+  command: "npm ci && npm run lint && npm run build"
+  max_attempts: 5
+  timeout_seconds: 600
+
+claude:
+  model: "claude-sonnet-4-6"
+  max_context_files: 10
+
+watch:
+  directories:
+    - "src"
+  debounce_seconds: 3
+  include_patterns:
+    - "*.ts"
+    - "*.tsx"
+    - "*.js"
+    - "*.jsx"
+    - "*.css"
+  exclude_patterns:
+    - "node_modules/*"
+    - ".next/*"
+    - "out/*"
+    - "build/*"
+    - "ios/*"
+    - ".DS_Store"
+
+error_detection:
+  critical_patterns:
+    - "error TS[0-9]+"
+    - "Error:.*"
+    - "Syntax error"
+    - "Type error"
+
+github:
+  auto_commit: true
+  commit_message_prefix: "🔧 Auto-fix:"

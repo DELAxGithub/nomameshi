@@ -38,6 +38,9 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# agent-harness work dir
+.auto-fix/
 next-env.d.ts
 menuphoto/
 
