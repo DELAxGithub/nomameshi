@@ -8,11 +8,16 @@
     "start": "next start",
     "lint": "eslint",
     "build:ios": "next build && npx cap sync ios",
+    "build:android": "next build && npx cap sync android",
     "cap:sync": "npx cap sync",
     "cap:open": "npx cap open ios",
+    "cap:open:android": "npx cap open android",
+    "android:assemble": "npm run build:android && cd android && ./gradlew assembleDebug",
+    "android:bundle": "npm run build:android && cd android && ./gradlew bundleRelease",
     "ios:beta": "npm run build:ios && cd ios/App && bundle exec fastlane beta"
   },
   "dependencies": {
+    "@capacitor/android": "^8.3.1",
     "@capacitor/camera": "^8.0.1",
     "@capacitor/cli": "^8.1.0",
     "@capacitor/core": "^8.1.0",

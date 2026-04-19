@@ -10,6 +10,12 @@ const config: CapacitorConfig = {
     backgroundColor: "#FCFBF9",
     scheme: "Nomameshi",
   },
+  android: {
+    backgroundColor: "#FCFBF9",
+    allowMixedContent: false,
+    captureInput: true,
+    webContentsDebuggingEnabled: false,
+  },
   plugins: {
     Camera: {
       promptLabelHeader: "Menu Photo",
@@ -25,6 +31,7 @@ const config: CapacitorConfig = {
   server: {
     url: "https://menumenu-three.vercel.app",
     iosScheme: "capacitor",
+    androidScheme: "https",
   },
 };
 
