@@ -90,7 +90,7 @@ export async function generateTableImage(
     model: "gemini-2.5-flash-image",
     generationConfig: {
       responseModalities: ["IMAGE", "TEXT"],
-    } as any,
+    } as unknown as Parameters<typeof genAI.getGenerativeModel>[0]["generationConfig"],
   });
 
   const result = await model.generateContent(
@@ -100,9 +100,10 @@ export async function generateTableImage(
   const parts = result.response.candidates?.[0]?.content?.parts || [];
 
   for (const part of parts) {
-    if ((part as any).inlineData) {
-      const { data, mimeType } = (part as any).inlineData;
-      return `data:${mimeType};base64,${data}`;
+    const inlineData = (part as { inlineData?: { data: string; mimeType: string } })
+      .inlineData;
+    if (inlineData) {
+      return `data:${inlineData.mimeType};base64,${inlineData.data}`;
     }
   }
 

@@ -10,10 +10,13 @@ export function useUserPreferences() {
   const [selectedRegion, setSelectedRegion] = useState("auto");
 
   useEffect(() => {
+    // localStorage is only available post-hydration; lazy useState init would
+    // cause SSR/CSR mismatch on the server-rendered defaults.
     try {
       const savedRegion = localStorage.getItem("nomameshi_region");
       const savedLang = localStorage.getItem("nomameshi_lang");
       if (savedRegion && REGIONS.some((r) => r.code === savedRegion))
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedRegion(savedRegion);
       if (savedLang && LANGUAGES.some((l) => l.code === savedLang))
         setTargetLang(savedLang);
