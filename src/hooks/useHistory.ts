@@ -26,6 +26,9 @@ export function useHistory() {
   const [history, setHistory] = useState<SavedMenu[]>([]);
 
   useEffect(() => {
+    // localStorage is only available post-hydration; lazy useState init would
+    // cause SSR/CSR mismatch on the server-rendered empty array.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHistory(loadFromStorage());
   }, []);
 

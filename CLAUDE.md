@@ -1,5 +1,10 @@
 # nomameshi - 海外旅行×食 AI アプリ
 
+## Phase: active
+
+> 規律強度・active→beta 昇格ゲートは agent-harness の `project-phase.md` 参照。
+> beta 昇格には Telemetry 層（euroquest ADR-0007 の telemetry-client 横展開）が必要。
+
 旅行先の食情報をAIで提案するiOSアプリ。Tips ES84件+FR43件。
 
 ## Stack
